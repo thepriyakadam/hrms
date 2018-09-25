@@ -225,7 +225,7 @@ module EmployeeAttendancesHelper
           else
             non_pay_leave = non_pay_leave + 1
           end
-        else
+        else#a.count == 1.0
           if a.employee_leav_request.leav_category.is_payble == true
             if a.employee_leav_request.present_status == false
               pay_leave = pay_leave + 0.5
@@ -234,7 +234,7 @@ module EmployeeAttendancesHelper
               pay_leave = pay_leave + 0.5
               present_day = present_day + 0.5
             end
-          else
+          else#is_payble == true
             if a.employee_leav_request.present_status == false
               non_pay_leave = non_pay_leave + 0.5
               absent_day = absent_day + 0.5
@@ -242,10 +242,10 @@ module EmployeeAttendancesHelper
                non_pay_leave = non_pay_leave + 0.5
                present_day = present_day + 0.5
             end
-          end
-        end 
+          end#is_payble == true
+        end#a.count == 1.0 
       else #nil
-      end#
+      end#a.employee_leav_request_id != nil
     end#DO
     arr << pay_leave
     arr << non_pay_leave

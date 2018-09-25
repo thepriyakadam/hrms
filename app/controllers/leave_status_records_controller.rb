@@ -175,10 +175,29 @@ class LeaveStatusRecordsController < ApplicationController
     ActiveRecord::Base.transaction do
       if @leave_status.save
         @employee_leav_request.update(is_first_rejected: true, current_status: 'Rejected')
-        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")   
+        LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected") 
+        #update in attendance
+        @employee_attendance = EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id)
+          @latemark_master = LatemarkMaster.last
+          @employee_attendance.each do |e|
+            if e.employee_week_off_id.present?  
+              e.update(employee_leav_request_id: nil,present: "WO",comment: "Leave Cancelled/WeekOff")
+            elsif e.holiday_id.present?  
+              e.update(employee_leav_request_id: nil,present: "HP",comment: "Leave Cancelled/Holiday")
+            elsif e.in_time.present? && e.out_time.present?
+              if e.working_hrs < @latemark_master.halfday_working_hrs
+                e.update(employee_leav_request_id: nil,present: "HD",comment: "Leave Cancelled/HalfDay")
+              else  
+                e.update(employee_leav_request_id: nil,present: "P",comment: "Leave Cancelled/Present")
+              end #workking_hrs
+            else  
+            e.update(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled/Absent")
+            end 
+          end #do
+
         @employee_leav_request.revert_leave(@employee_leav_request)
       #taken_date:nil
-      EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled")
+      #EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled")
         if @employee_leav_request.leav_category_id = @leav_category.id
           @leave_c_off = LeaveCOff.where(employee_id: @employee_leav_request.employee_id,taken_date: @employee_leav_request.start_date)
           @leave_c_off.update_all(taken_date: nil)
@@ -192,7 +211,7 @@ class LeaveStatusRecordsController < ApplicationController
           redirect_to all_leave_request_list_employee_leav_requests_path
           flash[:alert] = 'Leave Request Rejected Successfully by Admin.'
         end
-      else
+      else#@leave_status.save
         if @employee_leav_request.first_reporter_id == current_user.employee_id
           flash[:alert] = 'Leave Already Rejected. Please refresh page.'
           redirect_to approved_or_rejected_leave_request_manager_self_services_path
@@ -215,9 +234,28 @@ class LeaveStatusRecordsController < ApplicationController
       if @leave_status.save
         @employee_leav_request.update(is_second_rejected: true, current_status: 'Rejected')
         LeaveRecord.where(employee_leav_request_id: @employee_leav_request.id).update_all(status: "Rejected")
+        #update in attendance
+        @employee_attendance = EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id)
+          @latemark_master = LatemarkMaster.last
+          @employee_attendance.each do |e|
+            if e.employee_week_off_id.present?  
+              e.update(employee_leav_request_id: nil,present: "WO",comment: "Leave Cancelled/WeekOff")
+            elsif e.holiday_id.present?  
+              e.update(employee_leav_request_id: nil,present: "HP",comment: "Leave Cancelled/Holiday")
+            elsif e.in_time.present? && e.out_time.present?
+              if e.working_hrs < @latemark_master.halfday_working_hrs
+                e.update(employee_leav_request_id: nil,present: "HD",comment: "Leave Cancelled/HalfDay")
+              else  
+                e.update(employee_leav_request_id: nil,present: "P",comment: "Leave Cancelled/Present")
+              end #workking_hrs
+            else  
+            e.update(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled/Absent")
+            end 
+          end #do
+
         @employee_leav_request.revert_leave(@employee_leav_request)
         @leav_category = LeavCategory.find_by(code: "C.Off")
-        EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled")
+        #EmployeeAttendance.where(employee_leav_request_id: @employee_leav_request.id).update_all(employee_leav_request_id: nil,present: "A",comment: "Leave Cancelled")
       #taken_date:nil
         if @employee_leav_request.leav_category_id = @leav_category.id
           @leave_c_off = LeaveCOff.where(employee_id: @employee_leav_request.employee_id,taken_date: @employee_leav_request.start_date)

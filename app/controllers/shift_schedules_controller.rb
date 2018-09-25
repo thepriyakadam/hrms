@@ -19,7 +19,8 @@ class ShiftSchedulesController < ApplicationController
     joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
     shift_time = ShiftTime.where(cost_center_id: joining_detail.cost_center_id).pluck(:id)
     @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
-     session[:active_tab] = "TimeManagementHod"
+    session[:active_tab] = "TimeManagement"
+    session[:active_tab1] = "TimeManagementHod"
   end
 
   # GET /shift_schedules/1/edit

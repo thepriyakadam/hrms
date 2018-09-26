@@ -219,6 +219,7 @@ module EmployeeAttendancesHelper
     absent_day = 0
     attendances.each do |a|
       if a.employee_leav_request_id != nil
+
         if a.count == 1.0
           if a.employee_leav_request.leav_category.is_payble == true
             pay_leave = pay_leave + 1

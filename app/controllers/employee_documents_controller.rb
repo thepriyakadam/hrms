@@ -1,6 +1,8 @@
 class EmployeeDocumentsController < ApplicationController
   before_action :set_employee_document, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+  skip_before_action :verify_authenticity_token
+
 
   # GET /employee_documents
   # GET /employee_documents.json
@@ -112,7 +114,7 @@ class EmployeeDocumentsController < ApplicationController
       @employee_documents = EmployeeDocument.where(employee_id: @employee.id)
       @flag = false  
     end
-    
+    redirect_to @employee_document, notice: 'Employee Document saved Successfully.'
   end
 
   private

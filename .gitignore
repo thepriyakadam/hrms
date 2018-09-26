@@ -70,4 +70,4 @@ app/views/salaryslips/salary_slip_xls.xls.erb
 
 
 #Attachments
-#/attachments/*
+/attachments/*

@@ -212,11 +212,11 @@ module EmployeeAttendancesHelper
     pay_leave = 0
     non_pay_leave = 0
     present_day = 0
-    gate_pass = 0
-    gate_pas = 0
-    gatepass = 0
-    gatepas = 0
     absent_day = 0
+    #gate_pass = 0
+    #gate_pas = 0
+    #gatepass = 0
+    #gatepas = 0
     attendances.each do |a|
       if a.employee_leav_request_id != nil
 

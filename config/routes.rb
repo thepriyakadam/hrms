@@ -160,6 +160,9 @@ Rails.application.routes.draw do
   resources :listed_companies do
     collection do
       get :view_company
+      get :listed_company
+      get :import_xl
+      post :import
     end
   end
   resources :transport_allowances

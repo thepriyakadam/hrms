@@ -15,12 +15,17 @@
         <%= f.text_field :email, label:'Email', placeholder: 'abc@example.com' %>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col-sm-5">
       <div class="form-group required">
         <%= f.text_area :location, label:'Location', placeholder: 'XYZ' %>
       </div>
     </div>
-    <br />
+    <div class="col-sm-3">
+     <label>Status</label>
+     <%= f.check_box :status,label:'Active' %>
+    </div>
     <div class="col-sm-3">
       <div class="actions" style="padding-top: 20px;">
         <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>

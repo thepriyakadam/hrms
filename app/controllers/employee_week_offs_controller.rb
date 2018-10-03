@@ -85,7 +85,28 @@ class EmployeeWeekOffsController < ApplicationController
     else
       @employee_week_off_ids.each do |eid|
         @emp_week_off = EmployeeWeekOff.find_by_id(eid)
-        EmployeeAttendance.where(employee_week_off_id: eid).destroy_all 
+
+         @employee_attendance = EmployeeAttendance.where(employee_week_off_id: eid)
+          @latemark_master = LatemarkMaster.last
+          @employee_attendance.each do |e|
+            if e.holiday_id.present?  
+              e.update(employee_week_off_id: nil,present: "HP",comment: "WeekOff Cancelled/Holiday")
+            elsif e.in_time.present? && e.out_time.present?
+              if e.working_hrs < @latemark_master.halfday_working_hrs
+                e.update(employee_week_off_id: nil,present: "HD",comment: "WeekOff Cancelled/HalfDay")
+              else  
+                e.update(employee_week_off_id: nil,present: "P",comment: "WeekOff Cancelled/Present")
+              end #workking_hrs
+            elsif e.employee_leav_request_id.present?
+              leave_request = EmployeeLeavRequest.find_by(id: e.employee_leav_request_id)
+              leav_category = LeavCategory.find_by(id: leave_request.leav_category_id)
+              e.update(employee_week_off_id: nil,present: leav_category.code,comment: "WeekOff Cancelled/Leave")
+            else  
+            e.update(employee_week_off_id: nil,present: "A",comment: "WeekOff Cancelled/Absent")
+            end 
+          end #do
+
+        #EmployeeAttendance.where(employee_week_off_id: eid).destroy_all 
         @emp_week_off.destroy
         flash[:notice] = "Revert successfully"
       end

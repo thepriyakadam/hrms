@@ -15,7 +15,7 @@
       <tr>
         <td><%= i = i + 1 %></td>
         <% if shift_time.status == true %>
-         <td><%= shift_time.shift %> - <%= shift_time.try(:name) %></td>
+         <td><%= shift_time.cost_center.try(:name) %> - <%= shift_time.shift %> - <%= shift_time.try(:name) %></td>
         <%else%>
          <td><font color='red'><%= shift_time.shift %> - <%= shift_time.try(:name) %></font></td>
         <%end%>

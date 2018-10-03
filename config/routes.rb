@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       get :show_datewise_attendance
       get :edit_employee_shift
       post :update_shift
+      get :update_shift_for_employee
+      post :update_shift_multiple
+      get :show_employee
     end
   end
   resources :shift_times do
@@ -157,6 +160,9 @@ Rails.application.routes.draw do
   resources :listed_companies do
     collection do
       get :view_company
+      get :listed_company
+      get :import_xl
+      post :import
     end
   end
   resources :transport_allowances
@@ -534,6 +540,7 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :show_system_attendance
       get :detail_attendance_modal
       get :shift_wise_system_base
       get :atten_report
@@ -1847,6 +1854,8 @@ end
       get :travelling_datewise_report
       post :print_travelling_datewise_report
       get :print_travelling_datewise_report
+      post :advance_travel_report
+      get :advance_travel_report
       get :travel_request_id_report
       get :print_travel_request_id_report
       post :print_travel_request_id_report

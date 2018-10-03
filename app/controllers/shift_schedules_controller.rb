@@ -19,7 +19,8 @@ class ShiftSchedulesController < ApplicationController
     joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
     shift_time = ShiftTime.where(cost_center_id: joining_detail.cost_center_id).pluck(:id)
     @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
-     session[:active_tab] = "TimeManagementHod"
+    session[:active_tab] = "TimeManagement"
+    session[:active_tab1] = "TimeManagementHod"
   end
 
   # GET /shift_schedules/1/edit
@@ -177,11 +178,39 @@ class ShiftSchedulesController < ApplicationController
 
   def update_shift
     shift_employee = ShiftEmployee.find(params[:shift_employee_id])
-    shift_time_id = params[:shift_employee][:shift_time_id]
+    shift_schedule_id = params[:shift_employee][:shift_schedule_id]
 
-    shift_employee.update(shift_time_id: shift_time_id)
+    shift_employee.update(shift_schedule_id: shift_schedule_id)
     flash[:notice] = "Updated Successfully!!"
     redirect_to new_shift_schedule_path
+  end
+
+  def update_shift_for_employee
+  end
+
+  def show_employee
+    @shift_id_1 = params[:shift_id_1]
+    @shift_employees = ShiftEmployee.where(shift_time_id: @shift_id_1)
+  end
+
+  def update_shift_multiple
+
+    @shift_id_1 = params[:salary][:shift_id_1]
+    @shift_id_2 = params[:salary][:shift_id_2]
+    
+    shift_employee_ids = params[:shift_employee_ids]
+      if shift_employee_ids.nil?
+        flash[:alert] = "Please Select the Checkbox"
+      else
+        shift_time = ShiftTime.find_by(id: @shift_id_2)
+        shift_employee_ids.each do |e|
+          shift_employee = ShiftEmployee.find_by(id: e)
+          shift_employee.update(shift_time_id: shift_time.id)
+          flash[:notice] = "Updated Successfully"
+          end
+        end
+    redirect_to update_shift_for_employee_shift_schedules_path
+
   end
 
   private

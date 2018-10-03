@@ -3,6 +3,7 @@
     <tr>
       <th>ID</th>  
       <th>Employee Name</th>
+      <th>Date</th>
       <th>Amount</th>
       <th>Action</th>
  
@@ -11,6 +12,7 @@
       <tr>
        <td><%= monthly_arrear.employee.try(:manual_employee_code) %></td>
        <td><%= full_name(monthly_arrear.employee) %></td>
+        <td><%= monthly_arrear.day %></td>
         <td><%= monthly_arrear.amount %></td>
         <td>
            <% if monthly_arrear.is_paid == true %>

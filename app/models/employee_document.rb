@@ -1,7 +1,7 @@
 class EmployeeDocument < ActiveRecord::Base
   belongs_to :employee
   validates :name,presence:true
-  validates :document,presence:true
+  validates :document, presence: true, uniqueness: { case_sensitive: false }
 
   has_attached_file :document,
   :path => "attachments/attach_employee_document/:basename.:extension"

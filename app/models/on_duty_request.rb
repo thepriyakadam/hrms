@@ -84,9 +84,8 @@ class OnDutyRequest < ActiveRecord::Base
             else
             end
         else
-          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id,comment: "OD Request Pending",)
+          EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'A',count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id,comment: "OD Request Pending")
           OdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,status: "Pending", day: i)
-         
         end
       end#for i in self
   end #def
@@ -114,6 +113,9 @@ class OnDutyRequest < ActiveRecord::Base
           ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: true) 
         else
         end
+      else
+        EmployeeAttendance.create(employee_id: self.employee_id, day: i, present: 'OD',count: 1,department_id: self.employee.try(:department_id),on_duty_request_id: self.id,comment: "On Duty")
+        ParticularOdRecord.create(employee_id: self.employee_id,on_duty_request_id: self.id,leave_date: i,is_full: false)
       end#flag == true
     end#i in
   end

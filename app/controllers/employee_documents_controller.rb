@@ -64,6 +64,7 @@ class EmployeeDocumentsController < ApplicationController
         # format.json { render :show, status: :ok, location: @employee_document }
         @employee_documents = @employee.employee_documents
         # EmployeeMailer.employee_document_create(@employee,@employee_document).deliver_now
+
         format.js { @flag = true }
       else
         # format.html { render :edit }

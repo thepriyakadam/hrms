@@ -16,7 +16,8 @@ class ShiftTimesController < ApplicationController
   def new
     @shift_time = ShiftTime.new
     @shift_times = ShiftTime.all
-     session[:active_tab] = "TimeManagementHod"
+    session[:active_tab] = "TimeManagement"
+    session[:active_tab1] = "TimeManagementHod"
   end
 
   # GET /shift_times/1/edit

@@ -23,7 +23,7 @@
 		        	<% if e.date == Date.today %>
 		        	<%= link_to "Attendance" ,system_base_attendance_manager_self_services_path(shift_employee_id: e.id), class: "btn btn-primary btn-xs" %>
 		        	<% end %>
-		        	<%#= link_to "" ,show_system_attendance_manager_self_services_path(shift_employee_id: e.id), class: "btn btn-default btn-xs fa fa-eye" %>
+		        	<%= link_to "" ,show_system_attendance_manager_self_services_path(shift_employee_id: e.id), class: "btn btn-default btn-xs fa fa-eye",remote: true %>
 		        </td>
 		      </tr>
 		    <% end %>

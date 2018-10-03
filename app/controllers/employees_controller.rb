@@ -550,6 +550,7 @@
 
   def ajax_employee_document_detail
     @employee_document = EmployeeDocument.new
+    #@employee = Employee.find(params[:id])
     #@employee_documents = EmployeeDocument.all
   end
 

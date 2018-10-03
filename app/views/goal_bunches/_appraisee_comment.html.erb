@@ -175,8 +175,9 @@
             <% else %>
               <table id="example6" class="table table-bordered table-hover table-condensed">
                 <thead>
-                 <tr><th colspan="7"><center>Goal Rating</center></th></tr>
+                 <tr><th colspan="8"><center>Goal Rating</center></th></tr>
                   <tr>
+                    <th>Sr. No</th>
                     <th>Goal Perspective</th>
                     <th>Measure</th>
                     <th>Activity</th>
@@ -189,8 +190,10 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <% i = 0 %>
                   <% @goal_ratings.each do |goal_rating| %>
                     <tr>
+                      <td><%= i = i + 1 %></td>
                       <td><%= goal_rating.goal_perspective.try(:name) %></td>
                       <td><%= goal_rating.goal_measure %></td>
                       <td><%= goal_rating.activity %></td>
@@ -214,8 +217,9 @@
             <% else %>
               <table id="example6" class="table table-bordered table-hover table-condensed">
                 <thead>
-                 <tr><th colspan="7"><center>Attribute Rating</center></th></tr>
+                 <tr><th colspan="8"><center>Attribute Rating</center></th></tr>
                   <tr>
+                    <th>Sr. No</th>
                     <th>Attribute</th>
                     <th>Measure</th>
                     <th>Activity</th>
@@ -228,8 +232,10 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <% i = 0 %>
                   <% @goal_attribute_ratings.each do |goal_rating| %>
                     <tr>
+                      <td><%= i = i + 1 %></td>
                       <td><%= goal_rating.attribute_master.try(:name) %></td>
                       <td><%= goal_rating.goal_measure %></td>
                       <td><%= goal_rating.activity %></td>
@@ -272,8 +278,9 @@
     <% else %>
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
-         <tr><th colspan="9"><center>Goal Details</center></th></tr>
+         <tr><th colspan="10"><center>Goal Details</center></th></tr>
           <tr>
+            <th>Sr. No</th>
             <th>Goal Perspective</th>
             <th>Measure</th>
             <th>Activity</th>
@@ -286,10 +293,12 @@
           </tr>
         </thead>
         <tbody>
+          <% i = 0 %>
           <% appraisee_goal_sum = 0 %>
           <% appraisee_goalrating_sum = 0 %>
           <% @self_goal_ratings.each do |goal_rating| %>
             <tr>
+              <td><%= i = i + 1 %></td>
               <td><%= goal_rating.goal_perspective.try(:name) %></td>
               <td><%= goal_rating.goal_measure %></td>
               <td><%= goal_rating.activity %></td>
@@ -333,6 +342,7 @@
         <thead>
          <tr><th colspan="9"><center>Attribute Details</center></th></tr>
           <tr>
+            <th>Sr. No</th>
             <th>Attribute</th>
             <th>Measure</th>
             <th>Activity</th>
@@ -345,10 +355,12 @@
           </tr>
         </thead>
         <tbody>
+          <% i = 0 %>
           <% appraisee_attribute_sum = 0 %>
           <% appraisee_attributerating_sum = 0 %>
           <% @self_attribute_ratings.each do |goal_rating| %>
             <tr>
+              <td><%= i = i + 1 %></td>
               <td><%= goal_rating.attribute_master.try(:name) %></td>
               <td><%= goal_rating.goal_measure %></td>
               <td><%= goal_rating.activity %></td>

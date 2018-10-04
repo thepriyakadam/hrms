@@ -105,6 +105,6 @@ class ListedCompaniesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listed_company_params
-      params.require(:listed_company).permit(:status,:name, :contact_no, :email, :location)
+      params.require(:listed_company).permit(:status,:name, :contact_no, :email, :location, :code, :optinal_contact_no)
     end
 end

@@ -313,7 +313,12 @@ class EmployeeTemplatesController < ApplicationController
       format.xls {render template: 'employee_templates/employee_wise_salary.xls.erb'}
     end
   end
-
-  
+    
+  def employee_salaryslip_details
+    @employees = Employee.where(status: 'Active')
+    respond_to do |format|
+      format.xls {render template: 'employee_templates/employee_salaryslip_details_template.xls.erb'}
+    end 
+  end
 
 end

@@ -2424,6 +2424,11 @@ end
       get :deactivate
     end
     collection do
+      get :salaryslip_date_wise_report
+      get :employee_salaryslip_details
+      post :employee_salaryslip_details
+      get :daterangewise_salaryslip_xls
+      
       post :activate
       get :template_list
       get :fresh_template

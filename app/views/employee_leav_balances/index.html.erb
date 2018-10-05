@@ -2,8 +2,10 @@
   <div class="box-header">
     <h3 class="box-title">Employee Leave Assignment</h3>
     <div class="pull-right">
-      <%= link_to "New Employee Leave Balance", new_employee_leav_balance_path, class: 'btn btn-primary btn-sm' %>
-     <%= link_to "Update Leave Balance", leave_employee_leav_balances_path, class: 'btn btn-info btn-sm',data: { confirm: 'Are you sure? you want to update Leave Balance !' } %>
+      <%= link_to "New Balance", new_employee_leav_balance_path, class: 'btn btn-primary btn-sm' %>
+      <%= link_to "Update Balance", leave_employee_leav_balances_path, class: 'btn btn-info btn-sm',data: { confirm: 'Are you sure? you want to update Leave Balance !' } %>
+     <%= link_to "Excel",show_balance_employee_leav_balances_path(format: "xls"), class: "btn btn-sm btn-success" %>
+      <%= link_to "PDF",show_balance_employee_leav_balances_path(format: "pdf"), class: "btn btn-sm btn-warning", :target => "_blank" %>
     </div>
     
   </div><!-- /.box-header -->

@@ -33,6 +33,41 @@ class EmployeeLeavBalancesController < ApplicationController
     session[:active_tab1] ="leaveadministration"
   end
 
+  def show_balance
+    if current_user.class == Group
+      @employee_leav_balances = EmployeeLeavBalance.all
+    else
+      if current_user.role.name == 'GroupAdmin'
+        @employee_leav_balances = EmployeeLeavBalance.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id)
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id)
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(status: 'Active',department_id: current_user.department_id)
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      elsif current_user.role.name == 'Costomize'
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      end
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_balances/show_balance.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_balance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_balances/show_balance.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
   # GET /employee_leav_balances/1
   # GET /employee_leav_balances/1.json
   def show

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String">Sr. No.</Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String">ID</Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
+        <Cell ss:Index="4"><Data ss:Type="String">Basic</Data></Cell>
+        <Cell ss:Index="5"><Data ss:Type="String">HRA</Data></Cell>  
+        <Cell ss:Index="6"><Data ss:Type="String">Performance Allowance</Data></Cell> 
+        <Cell ss:Index="7"><Data ss:Type="String">Stipend</Data></Cell> 
+      </Row>
+
+      <% i = 0 %>
+      <% @employees.each do |e|  %>
+      <% employee = Employee.find_by(id: e) %>
+      <% employee_template = EmployeeTemplate.where(employee_id: e,is_active: true).take %>
+      <Row>
+        <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
+        <Cell ss:Index="2"><Data ss:Type="String"><%= employee.try(:manual_employee_code) %></Data></Cell>
+        <Cell ss:Index="3"><Data ss:Type="String"><%= full_name(employee) %></Data></Cell>
+
+        <% @template_items = employee_template.try(:employee_salary_templates) %>
+
+            <% @template_items.try(:each) do |item| %>
+              <% case item.salary_component.try(:name) %>
+                <% when "Basic" %>
+                  <Cell ss:Index="4"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "HRA" %>
+                  <Cell ss:Index="5"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Performance Allowance" %>
+                  <Cell ss:Index="6"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
+                <% when "Stipend" %>
+                  <Cell ss:Index="7"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>             
+                <% end %> 
+            <% end %>
+          </Row><!-- Row -->
+        <% end %><!-- slip -->
+      </Table>
+    </Worksheet>
+  </Workbook>

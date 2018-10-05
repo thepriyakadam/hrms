@@ -10,7 +10,8 @@ class ListedCompany < ActiveRecord::Base
         email = spreadsheet.cell(i,'D')
         location = spreadsheet.cell(i,'E')
         status = spreadsheet.cell(i,'F')
-
+        code = spreadsheet.cell(i,'G')
+        optinal_contact_no = spreadsheet.cell(i,'H')
       if company_name.nil? || email.nil?
       else
         if status == "Yes" || status == "Active"
@@ -21,9 +22,9 @@ class ListedCompany < ActiveRecord::Base
 
         @listed_company = ListedCompany.find_by(name: company_name)
         if @listed_company.nil?
-        @listed_companies = ListedCompany.create(name: company_name,contact_no: contact_no,email: email,location: location,status: status)     
+        @listed_companies = ListedCompany.create(name: company_name,contact_no: contact_no,email: email,location: location,status: status, code: code, optinal_contact_no: optinal_contact_no)
         else
-          @listed_company.update(name: company_name,contact_no: contact_no,email: email,location: location,status: status)
+          @listed_company.update(name: company_name,contact_no: contact_no,email: email,location: location,status: status, code: code, optinal_contact_no: optinal_contact_no)
         end
       end#company_name.nil?
     end#do

@@ -33,6 +33,7 @@
     <th>Sr.No.</th>
       <th>Document</th>
       <th>Download Document</th>
+      <th>Download</th>
       <th>Download Image</th>
       <th>Action</th>
     </tr>
@@ -43,6 +44,7 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= employee_document.name %></td>
+        <td><%= employee_document.employee.manual_employee_code %></td>
         <td>
           <% if employee_document.document_file_name == nil %>
             <small class="label label-default">Document Not Available</small>

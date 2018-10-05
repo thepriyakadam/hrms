@@ -1854,6 +1854,8 @@ end
       get :travelling_datewise_report
       post :print_travelling_datewise_report
       get :print_travelling_datewise_report
+      post :advance_travel_report
+      get :advance_travel_report
       get :travel_request_id_report
       get :print_travel_request_id_report
       post :print_travel_request_id_report
@@ -3555,6 +3557,7 @@ end
     get 'user_auths/system_base_attendance' => 'user_auths#system_base_attendance', defaults:{format: 'json'}
     get 'user_auths/attendance_check' => 'user_auths#attendance_check', defaults:{format: 'json'}
     get 'user_auths/create_systembase_attendance' => 'user_auths#create_systembase_attendance', defaults:{format: 'json'}
+    get 'user_auths/show_system_attendance' => 'user_auths#show_system_attendance', defaults:{format: 'json'}
   end
 end
 

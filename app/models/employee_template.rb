@@ -70,7 +70,7 @@ class EmployeeTemplate < ActiveRecord::Base
     (2..spreadsheet.last_row).each do |i|
 
       first = spreadsheet.cell(i,1)
-      
+
       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
 
       if @employee == nil
@@ -82,7 +82,6 @@ class EmployeeTemplate < ActiveRecord::Base
         @cella = spreadsheet.cell(i,'F')
 
         @template = SalaryTemplate.find_by(code: salary_template)
-       
         if @template.nil? || effective_date == nil
         else
            @template_id = @template.id

@@ -1,0 +1,59 @@
+<div class="box">
+  <div class="box-body">
+    <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
+      <thead>
+        <tr>
+          <td colspan="10"><center> 
+            <% if current_user.employee.company_location.company.company_logo == nil %>
+            <%else %>
+              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+            <%end%> 
+            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+          </td>
+        </tr>
+        <tr><th colspan="10"><center> Employee Travel Advance Report </center></th></tr>
+        <tr>
+          <th>Sr.No.</th>
+          <th>Request ID</th>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Traveling Date</th>
+          <th>Meeting With</th>
+          <th>Option</th>
+          <th>Place</th>
+          <th>Day</th>
+          <th>Advance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 0 %>
+        <% @travel_requests.each do |travel_request| %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= travel_request.id %></td>
+            <td><%= travel_request.employee.try(:manual_employee_code) %></td>
+            <td><%= travel_request.employee.try(:first_name) %> <%= travel_request.employee.try(:middle_name) %> <%= travel_request.employee.try(:last_name) %></td>
+            <td><%= travel_request.try(:traveling_date) %></td>
+            <td><%= travel_request.try(:employee_plan).try(:meeting_with) %> - <%= travel_request.try(:employee_plan).try(:location) %></td>
+            <td><%= travel_request.try(:travel_option).try(:name) %></td>
+            <td><%= travel_request.try(:place) %></td>
+            <td><%= travel_request.try(:day) %></td>
+            <td><%= travel_request.try(:total_advance) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tr>
+        <th>Total Advance </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><%= @total_advance %></th>
+      </tr>
+    </table>
+  </div>
+</div>

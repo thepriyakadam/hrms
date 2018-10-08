@@ -6,7 +6,7 @@
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
       <th>ID</th>
@@ -25,7 +25,7 @@
 
       <tr>
       <% if employee.status == "Active" %>
-      <td><%= employee.manual_employee_code %></td>
+        <td><%= employee.manual_employee_code %></td>
         <td><%= full_name(employee) %></td>
         <td><%= employee.try(:company_location).try(:name)%> - <%= employee.try(:department).try(:name)%></td>
         <td><%= employee.try(:joining_detail).try(:employee_grade).try(:name) %></td>
@@ -41,6 +41,7 @@
         <td><font color='red'><%= employee.try(:company_location).try(:name)%> - <%= employee.try(:department).try(:name)%></font></td>
         <td><font color='red'><%= employee.try(:joining_detail).try(:employee_grade).try(:name) %></font></td>
          <td><font color='red'><%= employee.try(:joining_detail).try(:employee_designation).try(:name) %></font></td>
+           <td><font color='red'><%= employee.try(:status) %></font></td>
          <td>
           <font color='red'><%= link_to '', employee,class: 'btn btn-sm btn-danger fa fa-eye' %></font>
         </td>
@@ -54,7 +55,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#example1').DataTable( {
+    $('#example6').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
     } );
 } );

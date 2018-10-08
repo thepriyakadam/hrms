@@ -1,0 +1,37 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Quarter</th>
+      <th>Reciept no</th>
+      <th>Paid amount</th>
+      <th>Tax amount deducted</th>
+      <th>Tax amount deposited</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @quarter_income_taxes.each do |quarter_income_tax| %>
+      <tr>
+        <td><%= quarter_income_tax.date %></td>
+        <td><%= quarter_income_tax.quarter %></td>
+        <td><%= quarter_income_tax.reciept_no %></td>
+        <td><%= quarter_income_tax.paid_amount %></td>
+        <td><%= quarter_income_tax.tax_amount_deducted %></td>
+        <td><%= quarter_income_tax.tax_amount_deposited %></td>
+        <td>
+            <%= link_to '', edit_quarter_income_tax_path(quarter_income_tax),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  quarter_income_tax, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

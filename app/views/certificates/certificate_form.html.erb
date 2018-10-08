@@ -2,7 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Certificates</h3>
   </div>
-  <%= bootstrap_form_for :salary, url: { action: 'certificate_print',id: @employee},html: {id: 'salary'},remote:true do |f| %>
+  <%= bootstrap_form_for :salary, url: { action: 'certificate_print'},html: {id: 'salary'},remote:true do |f| %>
   <div class="box-body">
 
       <div class="row">
@@ -24,8 +24,9 @@
          </div>
         </div>
       </div>
-      <br><br>
-      <div id="employee_details"></div>
+      
+      <div id="offer_letter"></div>
+      <div id="joining_letter"></div>
     </div>
   <%end%>
 </div>

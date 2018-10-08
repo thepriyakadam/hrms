@@ -27,9 +27,9 @@
         </tbody>
       </table>
       <br>
-      <%= link_to " Excel Report ",datewise_report_latemark_masters_path(:latemark_master =>{:from_date => params[:latemark_master][:from_date],:to_date => params[:latemark_master][:to_date]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to " Excel Report ",show_datewise_report_latemark_masters_path(:latemark_master =>{:from_date => params[:latemark_master][:from_date],:to_date => params[:latemark_master][:to_date]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
       
-      <%= link_to " PDF Report ",datewise_report_latemark_masters_path(:latemark_master =>{:from_date => params[:latemark_master][:from_date],:to_date => params[:latemark_master][:to_date]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to " PDF Report ",show_datewise_report_latemark_masters_path(:latemark_master =>{:from_date => params[:latemark_master][:from_date],:to_date => params[:latemark_master][:to_date]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
   </div>
 </div>

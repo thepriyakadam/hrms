@@ -1,0 +1,42 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">
+
+    	<table id="example6" class="table table-bordered table-hover table-condensed">
+	      <thead>
+	      	<tr>
+	      		<th colspan="6"><center> <%= @shift_employee.shift_time.try(:shift) %> - <%= @shift_employee.shift_time.try(:name) %></center></th>
+	      	</tr>
+	      	<tr>
+	      		<th colspan="6"><center> <%= @shift_employee.date %></center></th>
+	      	</tr>
+	        <tr>
+	          <th>ID</th>
+	          <th>Employee</th>
+	          <th>Present</th>
+	          <th>In</th>
+	          <th>Out</th>
+	          <th>Hrs.</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <% @employee_attendances.each do |a| %>
+	          <tr>
+	            <td><%= a.try(:employee).try(:manual_employee_code) %></td>
+	            <td><%= full_name(a.employee) %></td>
+	            <td><%= a.try(:present) %></td>
+	            <td><%= a.try(:in_time) %></td>
+	            <td><%= a.try(:out_time) %></td>
+	            <td><%= a.try(:working_hrs) %></td>
+	          </tr>
+	        <% end %>
+	      </tbody>
+	    </table>
+	    
+		</div>
+		<div class="modal-footer"></div>
+	</div>
+</div>  

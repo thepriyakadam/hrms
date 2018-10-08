@@ -1,6 +1,10 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h3 class="box-title">Compensatory Off</h3>
+    <div class="pull-right">
+    	<%= link_to " Upload ", import_xl_leave_c_offs_path, class: 'fa fa-upload btn btn-xl btn-info' %>
+    	<%= link_to " XLS ", maintenance_report_leave_c_offs_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+    </div>
   </div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="form">

@@ -79,7 +79,7 @@ end
 
   def transfer_request
     @employee_transfers = EmployeeTransfer.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",current_user.employee_id,"Pending","FirstApproved","Approved & Send Next")
-    session[:active_tab] = "transfer"
+    session[:active_tab] ="ManagerSelfService"
   end
 
   def first_approve
@@ -123,6 +123,7 @@ end
   end
 
   def admin_employee_transfer
+    session[:active_tab] = "AdminSelfService"
   end
 
   def final_approve_by_admin
@@ -261,22 +262,22 @@ end
      @employee = Employee.find_by(id: @employee_id)
      @employee_transfers = EmployeeTransfer.where(employee_id: @employee_id)
       respond_to do |format|
-     format.js
-     format.xls {render template: 'employee_transfers/transfer_employee_name_report_xls.xls.erb'}
-     format.html
-     format.pdf do
-      render pdf: 'transfer_employee_name_report_pdf',
-            layout: 'pdf.html',
-            orientation: 'Landscape',
-            template: 'employee_transfers/transfer_employee_name_report_pdf.pdf.erb',
-            # show_as_html: params[:debug].present?,
-            :page_height      => 1000,
-            :dpi              => '300',
-            :margin           => {:top    => 10, # default 10 (mm)
-                          :bottom => 10,
-                          :left   => 20,
-                          :right  => 20},
-            :show_as_html => params[:debug].present?
+        format.js
+        format.xls {render template: 'employee_transfers/transfer_employee_name_report_xls.xls.erb'}
+        format.html
+        format.pdf do
+        render pdf: 'transfer_employee_name_report_pdf',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'employee_transfers/transfer_employee_name_report_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
         end
       end
   end
@@ -288,11 +289,11 @@ end
     end
 
     def transfer_history_params
-    params.require(:employee_transfer).permit(:employee_transfer_id,:employee_id,:reporting_master_id,:justification,:current_status,:designation,:category,:employee_company,:employee_company_location,:employee_department,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id)
-  end
+      params.require(:employee_transfer).permit(:to,:from,:employee_transfer_id,:employee_id,:reporting_master_id,:justification,:current_status,:designation,:category,:employee_company,:employee_company_location,:employee_department,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id)
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_transfer_params
-      params.require(:employee_transfer).permit(:employee_id, :reporting_master_id, :justification,:designation,:category,:employee_company,:employee_company_location,:employee_department,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id,:effective_from,:effective_to)
+      params.require(:employee_transfer).permit(:to,:from,:employee_id, :reporting_master_id, :justification,:designation,:category,:employee_company,:employee_company_location,:employee_department,:employee_designation_id,:employee_category_id,:company_id,:company_location_id,:department_id,:effective_from,:effective_to)
     end
-end
+  end

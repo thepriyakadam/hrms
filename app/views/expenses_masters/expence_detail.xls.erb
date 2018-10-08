@@ -1,0 +1,30 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+     <tr>
+      <th>Employee Grade</th>
+      <th>Expence Option</th>
+      <th>Mode</th>
+      <th>Option</th>
+      <th>Billing Option</th>
+      <th>Min Amount</th>
+      <th>Max Amount</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @expenses_masters.each do |expenses_master| %>
+      <tr>
+        <td><%= expenses_master.employee_grade.try(:name) %></td>
+        <td><%= expenses_master.expence_opestion.try(:name) %></td>
+        <td><%= expenses_master.mode %></td>
+        <td><%= expenses_master.billing_opestion %></td>
+        <td><%= expenses_master.billing_option.try(:name) %></td>
+        <td><%= expenses_master.min_amount %></td>
+        <td><%= expenses_master.max_amount %></td>
+        <td><%= expenses_master.status ? "Active" : "Inactive" %></td>
+        
+      </tr>
+     <% end %>
+	</tbody>
+</table>

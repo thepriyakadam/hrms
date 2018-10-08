@@ -2,7 +2,8 @@
 <div class="col-sm-3">
 <label>Replacement</label>
   <div class="field">
-  <%= select :common,:replacement_id, all_active_employee_with_code, {include_blank: "Select Employee"},{:class=>"select2 select2",:style=>"width: 100%;",:tabindex=>"-1"} %> 
+  <%= select :common,:replacement_id, all_active_employee_with_code, {include_blank: "Select Employee"},class: 'form-control' %> 
+<%#= select :common, :c_off_date ,leav_c_off_full_admin(@employee_id),{include_blank: " Select Date"},class: 'form-control' %>
 
 	    <%= hidden_field_tag :rep_flag, "Replacement" %>   
   </div>

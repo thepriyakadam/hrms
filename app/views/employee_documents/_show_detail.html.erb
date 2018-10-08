@@ -2,8 +2,8 @@
   <div class="box-header with-border">
   <div class="row">
     <div class="col-sm-1">
-  <% if @employee_documents.first.employee.passport_photo_file_name == nil %>
-  <% if @employee_documents.first.employee.gender == "Female" %>
+  <% if @employee_documents.first.try(:employee).try(:passport_photo_file_name) == nil %>
+  <% if @employee_documents.first.try(:employee).try(:gender) == "Female" %>
    <%= image_tag "avatar2.png",class: "img", alt: "User Image", size: "70x70" %>
   <%else%>
    <%= image_tag "avatar5.png",class: "img", alt: "User Image", size: "70x70" %>
@@ -15,7 +15,7 @@
     <div class="col-sm-6">
      <font color='#0077b3'>
        ID : <%= @employee_documents.first.try(:employee).try(:manual_employee_code) %><br>
-       Name : <%= full_name(@employee_documents.first.employee) %><br>
+       Name : <%= full_name(@employee_documents.try(:first).try(:employee)) %><br>
        Email : <%= @employee_documents.first.try(:employee).try(:email) %></font>
     </div>
   </div>
@@ -33,6 +33,7 @@
     <th>Sr.No.</th>
       <th>Document</th>
       <th>Download Document</th>
+      <th>Download</th>
       <th>Download Image</th>
       <th>Action</th>
     </tr>
@@ -43,6 +44,7 @@
       <tr>
         <td><%= i=i+1 %></td>
         <td><%= employee_document.name %></td>
+        <td><%= employee_document.employee.manual_employee_code %></td>
         <td>
           <% if employee_document.document_file_name == nil %>
             <small class="label label-default">Document Not Available</small>

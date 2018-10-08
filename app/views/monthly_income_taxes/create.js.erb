@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#monthly_income_tax_list").html("<%= j render 'monthly_income_tax_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

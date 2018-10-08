@@ -5,7 +5,7 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-    <%= bootstrap_form_for(:salary, url: { action: 'Period_rating_wise_employee'},html: {id: "salary"},remote: true) do |f| %>
+    <%= bootstrap_form_for(:salary, url: { action: 'period_rating_wise_employee'},html: {id: "salary"},remote: true) do |f| %>
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
@@ -14,7 +14,12 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= select :salary, :rating_id, all_rating_type,{label: 'Rating',include_blank: " Select Rating"},{class: "form-control"} %>
+            <%= select :salary, :rating1, all_rating_type,{label: 'Rating From',include_blank: " Select Rating From"},{class: "form-control"} %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group required">
+            <%= select :salary, :rating2, all_rating_type,{label: 'Rating To',include_blank: " Select Rating To"},{class: "form-control"} %>
           </div>
         </div>
         <div class="col-sm-3">
@@ -27,7 +32,7 @@
     <div class="ajax-progress"></div>
     <div class="row">
       <div class="col-sm-12">
-        <div id="employee_list"></div>    
+        <div id="period_rating_wise_employee"></div>    
       </div>
     </div>
   </div><!-- /.box-body -->

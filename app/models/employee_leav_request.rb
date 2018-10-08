@@ -163,7 +163,12 @@ class EmployeeLeavRequest < ActiveRecord::Base
         EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: e.try(:leav_category).try(:code),employee_leav_request_id: e.employee_leav_request_id,count: 1,comment: nil)
       else
         employee_leav_request.particular_leave_records.create(employee_id: e.employee_id, leave_date: e.day, is_full: false, leav_category_id: e.leav_category_id)
-        EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: "P/"+e.try(:leav_category).try(:code).to_s ,employee_leav_request_id: e.employee_leav_request_id,count: 0.5,comment: nil)
+
+        if employee_leav_request.present_status == false 
+          EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: "A/"+e.try(:leav_category).try(:code).to_s ,employee_leav_request_id: e.employee_leav_request_id,count: 0.5,comment: nil)
+        else
+          EmployeeAttendance.where(employee_id: e.employee_id,day: e.day).update_all(present: "P/"+e.try(:leav_category).try(:code).to_s ,employee_leav_request_id: e.employee_leav_request_id,count: 0.5,comment: nil)
+        end
       end
     end
   end
@@ -264,7 +269,6 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def create_attendance
-    
     if self.is_present?
     else
         if self.leave_type == "Full Day"
@@ -518,7 +522,7 @@ def is_there(i)
 
   def weekoff_present(i,employee)
     flag = 0
-    flag = EmployeeAttendance.exists?(day: i,employee_id: employee,present: "WO")
+    flag = EmployeeAttendance.exists?(day: i,employee_id: employee,present: "WO" )
     flag
   end
 

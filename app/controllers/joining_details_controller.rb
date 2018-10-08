@@ -5,7 +5,7 @@ class JoiningDetailsController < ApplicationController
   load_and_authorize_resource
   # GET /joining_details
   # GET /joining_details.json
-  # include QueryReport::Helper # need to include it
+  # include QueryReport::Helper # need to include itcontract_end_date
 
   def index
     @joining_details = JoiningDetail.all
@@ -30,14 +30,41 @@ class JoiningDetailsController < ApplicationController
   # POST /joining_details
   # POST /joining_details.json
   
+  def show_contract
+    employee_category = EmployeeCategory.find(params[:employee_category_id])
+    if employee_category.name == "Contract"
+      @flag = true
+    else
+      @flag = false
+    end
+  end
 
   def create
     @joining_detail = JoiningDetail.new(joining_detail_params)
     @employee = Employee.find(params[:joining_detail][:employee_id])
+    if params[:flag] == "Full/Half"
+      @joining_detail.contract_month = params[:contract_month]
+      @contract_month = true
+    else
+      @joining_detail.contract_month = nil
+      @contract_month = false
+    end
     respond_to do |format|
       if @joining_detail.save
         EmployeePromotion.create(employee_id: @joining_detail.employee_id,department_id: @joining_detail.employee.department.id,employee_designation_id: @joining_detail.employee_designation_id,employee_grade_id: @joining_detail.employee_grade_id,employee_category_id: @joining_detail.employee_category_id,effective_from: @joining_detail.joining_date)
-        ChangeDesignation.create(employee_id: @joining_detail.employee_id,employee_designation_id: @joining_detail.employee_designation_id,effective_from: @joining_detail.joining_date,status: true, change_by_id: current_user.employee_id)
+        #ChangeDesignation.create(employee_id: @joining_detail.employee_id,employee_designation_id: @joining_detail.employee_designation_id,effective_from: @joining_detail.joining_date,status: true, change_by_id: current_user.employee_id)
+        joining_date = @joining_detail.joining_date.to_date + 6.months
+        @joining_detail.update(contract_month: @joining_detail.contract_month,confirmation_date: joining_date.to_date)
+        #retirement_date
+        employee = Employee.find_by(id: @joining_detail.employee_id)
+        date_of_birth = employee.date_of_birth
+        retirement_date = date_of_birth.to_date + 58.years
+        #CONTRACTMONTH
+        joining_date = @joining_detail.joining_date
+        contract = @joining_detail.contract_month
+        contract_month = contract.to_i
+        @contract_end_date = joining_date.to_date + contract_month.months
+        @joining_detail.update(contract_end_date: @contract_end_date,retirement_date: retirement_date)
         # format.html { redirect_to @employee, notice: 'Joining detail was successfully created.' }
         # format.json { render :show, status: :created, location: @joining_detail }
         format.js { @flag = true }
@@ -56,6 +83,13 @@ class JoiningDetailsController < ApplicationController
   def update
     respond_to do |format|
       if @joining_detail.update(joining_detail_params)
+
+        contract_month = params[:contract_month]
+        joining_date = joining_detail_params[:joining_date]
+        @contract_month = contract_month.to_i
+        @joining_date = joining_date.to_date
+        contract_end_date = @joining_date + @contract_month.months
+        @joining_detail.update(contract_end_date: contract_end_date)
 
         @employee = Employee.find_by(id: @joining_detail.employee_id)
         @department = Department.find_by(id: @employee.department_id)
@@ -219,6 +253,6 @@ class JoiningDetailsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def joining_detail_params
-    params.require(:joining_detail).permit(:c_off,:company_rfid,:gate_rfid,:leaving_date,:employee_id, :ot_rate, :ot_option, :is_new,:replacement_id,:joining_date, :basis_of_time, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da,:is_employeer_pf,:is_employeer_esic,:is_insurance,:have_passport, :is_family_pension, :is_bonus, :gps_track, :restricted_area)
+    params.require(:joining_detail).permit(:is_regularization, :welfare,:contact_library,:c_off_applicable_day,:c_off_expire,:contract_month,:contract_end_date,:c_off,:company_rfid,:gate_rfid,:leaving_date,:employee_id, :ot_rate, :ot_option, :is_new,:replacement_id,:joining_date, :basis_of_time, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da,:is_employeer_pf,:is_employeer_esic,:is_insurance,:have_passport, :is_family_pension, :is_bonus, :gps_track, :restricted_area)
   end
 end

@@ -74,10 +74,10 @@ class TravelRequestsController < ApplicationController
     else
       respond_to do |format|
         if @travel_request.save
-          TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: @manager_id,current_status: "Pending")
-          ReportingMastersTravelRequest.create(reporting_master_id: @manager_id, travel_request_id: @travel_request.id,travel_status: "Pending")
-          TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @manager_id, travel_option_id: @travel_request.travel_option_id,current_status: @travel_request.current_status)
-          @c1 = (@travel_request.to - @travel_request.traveling_date).to_i
+          TravelRequest.where(id: @travel_request.id).update_all(reporting_master_id: emp.manager_id,current_status: "Pending")
+          ReportingMastersTravelRequest.create(reporting_master_id: emp.id, travel_request_id: @travel_request.id,travel_status: "Pending")
+          TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: emp.manager_id, travel_option_id: @travel_request.travel_option_id,current_status: @travel_request.current_status)
+          @c1 = (@travel_request.to - @travel_request.traveling_date).to_i + 1
           # ReportingMastersTravelRequest.create(reporting_master_id: @current_user.employee_id, travel_request_id: @travel_request.id)
           # TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id)
           TravelRequest.where(id: @travel_request.id).update_all(day: @c1)
@@ -91,6 +91,17 @@ class TravelRequestsController < ApplicationController
       end#do
     end#emp.try(:manager_id).nil?
   end
+
+  def show_request_modal
+    @travel_request = TravelRequest.find(params[:travel_request_id])
+    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
+  end
+
+  def show_travel_process
+    @travel_request = TravelRequest.find(params[:travel_request_id])
+    @reporting_masters_travel_requests = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id)
+  end
+  
   # PATCH/PUT /travel_requests/1
   # PATCH/PUT /travel_requests/1.json
   def update
@@ -118,6 +129,10 @@ class TravelRequestsController < ApplicationController
     end
   end
 
+  def all_travel_request
+    @travel_requests = TravelRequest.where("current_status = ? or current_status = ? or current_status = ?","Pending","FirstApproved","Approved & Send Next")
+  end
+
   def travel_request_confirmation
       @travel_request = TravelRequest.find(params[:format])
       @travel_requests = TravelRequest.where(id: @travel_request.id)
@@ -125,11 +140,15 @@ class TravelRequestsController < ApplicationController
 
   def cancel_travel_request
     @travel_request = TravelRequest.find(params[:format])
+    @reporting_masters_travel_request = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: "Cancelled").take
     @travel_request.update(current_status: "Cancelled",reporting_master_id: current_user.employee_id)
-    TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Cancelled")
-    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: current_user.employee_id, travel_status: "Cancelled")
+    if @reporting_masters_travel_request.nil?
+      TravelRequestHistory.create(employee_id: @travel_request.employee_id,travel_request_id: @travel_request.id,application_date: @travel_request.application_date,traveling_date: @travel_request.traveling_date, tour_purpose: @travel_request.tour_purpose, place: @travel_request.place,total_advance: @travel_request.total_advance,reporting_master_id: @travel_request.reporting_master_id, travel_option_id: @travel_request.travel_option_id,current_status: "Cancelled")
+      ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id, reporting_master_id: current_user.employee_id, travel_status: "Cancelled")
+    else
+    end
     flash[:notice] = 'Travel Request Cancelled'
-    redirect_to travel_requests_path
+    redirect_to travel_request_self_services_path
   end
 
   def first_approve
@@ -137,7 +156,12 @@ class TravelRequestsController < ApplicationController
     first_manager_id = @travel_request.employee.manager_id
     second_manager_id = @travel_request.employee.manager_2_id
     @travel_request.update(current_status: "FirstApproved",reporting_master_id: second_manager_id)
-    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id,travel_status: "FirstApproved")
+    @reporting_masters_travel_request = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: "FirstApproved").take
+    if @reporting_masters_travel_request.nil?
+      ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id,travel_status: "FirstApproved")
+      TravelRequestHistory.find_by(travel_request_id: @travel_request.id).update(current_status: "FirstApproved")
+    else
+    end
     flash[:notice] = 'Travel Request Approved Successfully'
     redirect_to travel_history_travel_requests_path
   end
@@ -155,17 +179,35 @@ class TravelRequestsController < ApplicationController
   def reject
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "Rejected",reporting_master_id: current_user.employee_id)
-    ReportingMastersTravelRequest.create(reporting_master_id: current_user.employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
+    @reporting_masters_travel_request = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: "Rejected").take
+    if @reporting_masters_travel_request.nil?
+      ReportingMastersTravelRequest.create(reporting_master_id: current_user.employee_id, travel_request_id: @travel_request.id,travel_status: "Rejected")
+      TravelRequestHistory.find_by(travel_request_id: @travel_request.id).update(current_status: "Rejected")
+    else
+    end
+      if @travel_request.employee.manager_id == current_user.employee_id
+        redirect_to travel_history_travel_requests_path
+      else
+        redirect_to all_travel_request_travel_requests_path
+      end
     flash[:alert] = 'Travel Request Rejected Successfully'
-    redirect_to travel_history_travel_requests_path
   end
 
   def approve
-     @travel_request = TravelRequest.find(params[:format])
-     @travel_request.update(current_status: "Approved",reporting_master_id: current_user.employee_id)
+    @travel_request = TravelRequest.find(params[:format])
+    @travel_request.update(current_status: "Approved",reporting_master_id: current_user.employee_id)
+    @reporting_masters_travel_request = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: "Approved").take
+    if @reporting_masters_travel_request.nil?
      ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id,travel_status: "Approved")
-     flash[:notice] = 'Travel Request Approved Successfully'
-     redirect_to travel_history_travel_requests_path
+     TravelRequestHistory.find_by(travel_request_id: @travel_request.id).update(current_status: "Approved")
+    else
+    end
+      if @travel_request.employee.manager_id == current_user.employee_id
+        redirect_to travel_history_travel_requests_path
+      else
+        redirect_to all_travel_request_travel_requests_path
+      end
+    flash[:notice] = 'Travel Request Approved Successfully'
   end
 
   def final_approval_travel_list
@@ -177,7 +219,12 @@ class TravelRequestsController < ApplicationController
   def final_approve
     @travel_request = TravelRequest.find(params[:format])
     @travel_request.update(current_status: "FinalApproved",reporting_master_id: current_user.employee_id)
-    ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id,travel_status: "FinalApproved")
+    @reporting_masters_travel_request = ReportingMastersTravelRequest.where(travel_request_id: @travel_request.id,travel_status: "FinalApproved").take
+    if @reporting_masters_travel_request.nil?
+      ReportingMastersTravelRequest.create(travel_request_id: @travel_request.id,reporting_master_id: current_user.employee_id,travel_status: "FinalApproved")
+      TravelRequestHistory.find_by(travel_request_id: @travel_request.id).update(current_status: "FinalApproved")
+    else
+    end
     flash[:notice] = 'Travel Request Approved Successfully'
     redirect_to travel_history_travel_requests_path
   end
@@ -189,10 +236,10 @@ class TravelRequestsController < ApplicationController
   end
 
   def travel_history
-    reporting_master_id = ReportingMaster.find_by(employee_id: current_user.employee_id)
-    @travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",reporting_master_id.id,"Pending","FirstApproved","Approved & Send Next")
-    session[:active_tab] = "TravelManagemnt"
-    session[:active_tab1] = "travelrequestprocess" 
+    employee = Employee.find_by(id: current_user.employee_id)
+    #manager = Employee.where("manager_id = ? OR manager_2_id = ?",employee.id,employee.id)
+    @travel_requests = TravelRequest.where("reporting_master_id = ? and (current_status = ? or current_status = ? or current_status = ?)",employee.id,"Pending","FirstApproved","Approved & Send Next")
+    session[:active_tab] ="ManagerSelfService" 
   end
 
   def travel_request_list
@@ -428,10 +475,127 @@ class TravelRequestsController < ApplicationController
         end
     end
 
+    def advance_travel_report
+      session[:active_tab] = "TravelManagemnt"
+      session[:active_tab1] = "travelrequestreports"
+      # byebug
+      @from = params[:salary] ? params[:salary][:from_date] : params[:from_date] 
+      @to = params[:salary] ? params[:salary][:to_date] : params[:to_date]
+      @company = params[:travel_request] ? params[:travel_request][:company_id] : params[:company_id] 
+      @company_location = params[:travel_request] ?  params[:travel_request][:company_location_id] :  params[:company_location_id] 
+      @department = params[:travel_request] ?  params[:travel_request][:department_id] : params[:department_id] 
+      # @employees = Employee.where(company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+      # @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees) 
+      # @traveling_date = TravelRequest.where(employee_id: @employee_id).take
+      if current_user.class == Group
+        if @company == ""
+          @employees = Employee.where(status: 'Active').pluck(:id)
+          @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+          @total_advance = @travel_requests.sum(:total_advance) 
+        elsif @company_location == ""
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
+          @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+          @total_advance = @travel_requests.sum(:total_advance) 
+        elsif  @department == ""
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
+          @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+          @total_advance = @travel_requests.sum(:total_advance) 
+        else
+          @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
+          @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+          @total_advance = @travel_requests.sum(:total_advance) 
+        end
+      elsif current_user.class == Member
+        if current_user.role.name == 'GroupAdmin'
+          if @company == ""
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date) 
+            @total_advance = @travel_requests.sum(:total_advance) 
+          elsif @company_location == ""
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          elsif  @department == ""
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          else 
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          end
+
+        elsif current_user.role.name == 'Admin'
+          if @company == ""
+            @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date).where(employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          elsif @company_location == ""
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          elsif @department == ""
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          else 
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          end
+
+        elsif current_user.role.name == 'Branch'
+          if @company == "" || @company_location == ""
+            @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          elsif @department == ""
+            @employees = Employee.where(status: 'Active',company_location_id: @company_location.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          else 
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          end
+        elsif current_user.role.name == 'HOD'
+          if @company == "" || @company_location == "" || @department == ""
+            @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          else 
+            @employees = Employee.where(status: 'Active',company_id: @company.to_i,company_location_id: @company_location.to_i,department_id: @department.to_i).pluck(:id)
+            @travel_requests = TravelRequest.where(traveling_date:  @from.to_date..@to.to_date,employee_id: @employees)
+            @total_advance = @travel_requests.sum(:total_advance) 
+          end
+        elsif current_user.role.name == 'Superviser'
+        elsif current_user.role.name == 'Employee'
+        end
+      end
+       respond_to do |format|
+       format.js
+       format.xls {render template: 'travel_requests/advance_travel_report_xls.xls.erb'}
+       format.html
+       format.pdf do
+        render pdf: 'advance_travel_report_pdf',
+              layout: 'pdf.html',
+              orientation: 'Landscape',
+              template: 'travel_requests/advance_travel_report_pdf.pdf.erb',
+              # show_as_html: params[:debug].present?,
+              :page_height      => 1000,
+              :dpi              => '300',
+              :margin           => {:top    => 10, # default 10 (mm)
+
+                            :bottom => 10,
+                            :left   => 20,
+                            :right  => 20},
+              :show_as_html => params[:debug].present?
+          end
+        end
+    end
+
     def print_travel_request_id_report
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
-      # byebug
       @travel_request =  params[:travel_request] ? params[:travel_request][:travel_request_id] : params[:travel_request_id]
       @travel_requests = TravelRequest.where(id: @travel_request)
       @daily_bill_details = DailyBillDetail.where(travel_request_id: @travel_request)
@@ -458,7 +622,6 @@ class TravelRequestsController < ApplicationController
     end
 
     def print_travel_request_employee_name_report
-
     session[:active_tab] = "TravelManagemnt"
     session[:active_tab1] = "travelrequestreports"
 
@@ -503,6 +666,6 @@ class TravelRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def travel_request_params
-      params.require(:travel_request).permit(:employee_id, :to, :day,:current_status, :expense,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
+      params.require(:travel_request).permit(:employee_plan_id, :from_time,:to_time,:approved_amount,:project_master_id,:employee_id, :to, :day,:current_status, :expense,:reporting_master_id, :application_date, :traveling_date, :tour_purpose, :place, :traveling_advance, :lodging_boarding_advance, :extra_advance, :travel_option_id, :travel_mode_id, :total_advance)
     end
 end

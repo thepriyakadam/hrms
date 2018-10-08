@@ -1,6 +1,12 @@
 class EmployeeDocumentsController < ApplicationController
   before_action :set_employee_document, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+<<<<<<< HEAD
+  skip_before_action :verify_authenticity_token
+
+=======
+  skip_before_action :verify_authenticity_token  
+>>>>>>> 9aa1c8ca50b3872d2c827931811bc586f609c742
 
   # GET /employee_documents
   # GET /employee_documents.json
@@ -26,7 +32,7 @@ class EmployeeDocumentsController < ApplicationController
 
   # GET /employee_documents/1/edit
   def edit
-    @info = 'employee_document'
+    # @info = 'employee_document'
     @employee = @employee_document.employee
   end
 
@@ -41,7 +47,7 @@ class EmployeeDocumentsController < ApplicationController
      respond_to do |format|
       if @employee_document.save
         @employee_documents = EmployeeDocument.where(employee_id: @employee.id)
-        EmployeeMailer.employee_document_create(@employee,@employee_document).deliver_now
+        #EmployeeMailer.employee_document_create(@employee,@employee_document).deliver_now
         format.html { redirect_to @employee_document, notice: 'Employee Document saved Successfully.' }
         format.json { render :show, status: :created, location: @employee_document }
         format.js { @flag = true }
@@ -63,7 +69,8 @@ class EmployeeDocumentsController < ApplicationController
         # format.html { redirect_to @employee_document, notice: 'Employee Document Updated Successfully.' }
         # format.json { render :show, status: :ok, location: @employee_document }
         @employee_documents = @employee.employee_documents
-        EmployeeMailer.employee_document_create(@employee,@employee_document).deliver_now
+        # EmployeeMailer.employee_document_create(@employee,@employee_document).deliver_now
+
         format.js { @flag = true }
       else
         # format.html { render :edit }
@@ -83,7 +90,7 @@ class EmployeeDocumentsController < ApplicationController
    def download_emp
     @employee_document = EmployeeDocument.find(params[:id])
     send_file @employee_document.document.path,
-              filename: @employee_document.document,
+              filename: @employee_document.document_file_name,
               type: @employee_document.document_content_type,
               disposition: 'attachment'
   end
@@ -112,7 +119,11 @@ class EmployeeDocumentsController < ApplicationController
       @employee_documents = EmployeeDocument.where(employee_id: @employee.id)
       @flag = false  
     end
-    
+<<<<<<< HEAD
+    redirect_to @employee_document, notice: 'Employee Document saved Successfully.'
+=======
+    redirect_to @employee_document, notice: 'Employee Documment saved Successfully.'
+>>>>>>> 9aa1c8ca50b3872d2c827931811bc586f609c742
   end
 
   private

@@ -62,7 +62,7 @@ data.lo: data.c /usr/include/stdc-predef.h ../../include/config.h \
  ../../include/replacements/readpassphrase.h /usr/include/libgen.h \
  /usr/include/getopt.h ../../include/freetds/proto.h \
  ../../include/freetds/bytes.h /usr/include/byteswap.h \
- ../../include/freetds/iconv.h /usr/include/iconv.h /usr/include/errno.h \
+ ../../include/freetds/iconv.h /usr/include/errno.h \
  /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
@@ -249,8 +249,6 @@ data.lo: data.c /usr/include/stdc-predef.h ../../include/config.h \
 /usr/include/byteswap.h:
 
 ../../include/freetds/iconv.h:
-
-/usr/include/iconv.h:
 
 /usr/include/errno.h:
 

@@ -1,0 +1,83 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Recruiter Report</h3>
+    <div class="pull-right">
+   	</div>
+ <div class="box-body">
+   	<%= bootstrap_form_for(:vacancy_masters, url: { action: 'show_datewise'},html: {id: "vacancy_master"},remote:true) do |f| %>
+			<div class="row">
+        <div class="col-sm-4">
+          <label>From </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :vacancy_master,:from,hide_label: true,class: 'request_date form-control'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <label>To </label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= text_field :vacancy_master,:to,hide_label: true,class: 'request_date form-control'%>
+            </div>
+          </div>
+        </div>
+
+			  <div class="col-sm-4" style="padding-top: 20px;">
+		      <div class="actions">
+		        <%= f.submit "Submit" ,class: "btn btn-sm btn-primary",id: "buttonCtc" %>
+		      </div>
+		    </div>
+			</div>
+		<% end %>
+			<div id="show_datewise"></div>
+	</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+  
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+$("#vacancy_master").validate({
+    rules: {
+      "vacancy_master[from]":{
+        required: true,
+      },
+      "vacancy_master[to]":{
+        required: true,
+      }
+       },
+    messages: {
+       "vacancy_master[from]":{
+        required: "Please Select From Date",
+      },
+       "vacancy_master[to]":{
+        required: "Please Select To Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

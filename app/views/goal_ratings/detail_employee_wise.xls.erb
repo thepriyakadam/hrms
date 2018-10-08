@@ -65,7 +65,7 @@
 </table>
 <br>
 
-    <table id="example6" class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
   <tr><th colspan="4"><center>Previous Experience</center></th></tr>
     <tr>
@@ -88,9 +88,9 @@
 </table>
 <br>
  
-    <table id="example6" class="table table-bordered table-hover table-condensed">
+  <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
-    <tr><th colspan="4"><center>Qualification</center></th></tr>
+      <tr><th colspan="4"><center>Qualification</center></th></tr>
       <tr>
         <th>Degree</th>
         <th>Year Of Passing</th>
@@ -112,9 +112,9 @@
   <br>
 
   
-    <table id="example6" class="table table-bordered table-hover table-condensed">
+  <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
-    <tr><th colspan="7"><center>Promotion Details</center></th></tr>
+      <tr><th colspan="7"><center>Promotion Details</center></th></tr>
       <tr>
         <th>Department</th>
         <th>Designation</th>
@@ -142,7 +142,6 @@
   <br>
   </div>
 
-
     <% @goal_bunch_ids.each do |e| %>
     <% goal_bunch = GoalBunch.find_by(id: e) %>
     <% employee = Employee.find(goal_bunch.employee_id) %>
@@ -154,8 +153,7 @@
     <% @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ?", goal_bunch.id ,'Attribute') %>
     <% @goal_bunches = GoalBunch.where(employee_id: goal_bunch.employee_id, id: goal_bunch.id).group(:employee_id) %>
 
-
-<% i=0%>
+    <% i=0%>
     <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
 

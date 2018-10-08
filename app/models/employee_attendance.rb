@@ -8,6 +8,7 @@ class EmployeeAttendance < ActiveRecord::Base
   belongs_to :machine_attendance
   belongs_to :company_time_master
   belongs_to :holiday
+  belongs_to :shift_time
   validates :day, uniqueness: { scope: [:employee_id] }
   # validates_format_of :in_time, :with => /(([0][0-9]|[1][0-2])|[0-9]):([0-5][0-9])( *)((AM|PM)|(A|P))/,
   #   :message => "Only Proper HH:MM time allowed"
@@ -52,7 +53,7 @@ class EmployeeAttendance < ActiveRecord::Base
     finals = (@joining_details - @attendances - @workingday) & @roles
     Employee.where(id: finals)
   end
-  
+
    def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
@@ -88,7 +89,7 @@ class EmployeeAttendance < ActiveRecord::Base
         day = spreadsheet.cell(i,'C')
 
         in_time1 = spreadsheet.cell(i,'D') #@employee.id
-        #byebug
+
         if in_time1 == nil
           in_time = nil
         else

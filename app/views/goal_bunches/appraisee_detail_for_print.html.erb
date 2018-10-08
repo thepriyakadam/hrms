@@ -135,11 +135,13 @@
 
           <table style="border-collapse: collapse;" border=1 width=900 class="table table-bordered table-hover">
             <thead>
-            <tr><th colspan="6"><center>Performance Record</center></th></tr>
-            <tr><th colspan="6">Goals</th></tr>
+            <tr><th colspan="9"><center>Performance Record</center></th></tr>
+            <tr><th colspan="9">Goals</th></tr>
               <tr>
+                <th>Sr. No</th>
                 <th>Goal Perspective</th>
                 <th>Goal Measure</th>
+                <th>Activity</th>
                 <th>Target/Unit</th>
                 <th>Goal Weightage</th>
                 <th>Aligned</th>
@@ -148,10 +150,13 @@
               </tr>
             </thead>
             <tbody>
+              <% i = 0 %>
               <% @goal_ratings.each do |goal_rating| %>
                 <tr>
+                  <td><%= i = i + 1 %></td>
                   <td><%= goal_rating.goal_perspective.try(:name) %></td>
                   <td><%= goal_rating.goal_measure %></td>
+                  <td><%= goal_rating.activity %></td>
                   <td><%= goal_rating.target %></td>
                   <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.aligned %></td>
@@ -162,10 +167,12 @@
             </tbody>
 
             <thead>
-            <tr><th colspan="6">Attributes</th></tr>
+            <tr><th colspan="9">Attributes</th></tr>
               <tr>
+                <th>Sr. No</th>
                 <th>Attribute</th>
                 <th>Goal Measure</th>
+                <th>Activity</th>
                 <th>Target/Unit</th>
                 <th>Goal Weightage</th>
                 <th>Aligned</th>
@@ -174,10 +181,13 @@
               </tr>
             </thead>
             <tbody>
+              <% i = 0 %>
               <% @goal_attribute_ratings.each do |goal_rating| %>
                 <tr>
+                  <td><%= i = i + 1 %></td>
                   <td><%= goal_rating.attribute_master.try(:name) %></td>
                   <td><%= goal_rating.goal_measure %></td>
+                  <td><%= goal_rating.activity %></td>
                   <td><%= goal_rating.target %></td>
                   <td><%= goal_rating.goal_weightage %></td>
                   <td><%= goal_rating.aligned %></td>

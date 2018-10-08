@@ -1,0 +1,31 @@
+
+<% if @flag == "first" %>
+	$("#first_form").html("<%= j render 'first_form' %>");
+	$("#second_form").hide();
+	$("#third_form").hide();
+	$("#forth_form").hide();
+	$("#first_form").show();
+<% elsif @flag == "second" %>
+	$("#second_form").html("<%= j render 'second_form' %>");
+	$("#first_form").hide();
+	$("#third_form").hide();
+	$("#forth_form").hide();
+	$("#second_form").show();
+<% elsif @flag == "third" %>
+	$("#third_form").html("<%= j render 'third_form' %>");
+	$("#second_form").hide();
+	$("#forth_form").hide();
+	$("#first_form").hide();
+	$("#third_form").show();
+<% elsif @flag == "forth" %>
+	$("#forth_form").html("<%= j render 'forth_form' %>");
+	$("#first_form").hide();
+	$("#third_form").hide();
+	$("#second_form").hide();
+	$("#forth_form").show();
+<% else %>
+	$("#first_form").hide();
+	$("#third_form").hide();
+	$("#second_form").hide();
+	$("#forth_form").hide();
+<% end %>

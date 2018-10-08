@@ -15,11 +15,12 @@ module EmployeeAttendancesHelper
     Hash[exist.sort]
   end
 
-  def calculate_attendance_datewise(from,to, exist, e)
+   def calculate_attendance_datewise(from,to, exist, e)
     start_date = from.to_date
     end_date = to.to_date
     joining_detail = JoiningDetail.find_by(employee_id: e.employee_id)
-    start_date.step(end_date).each do |d|
+    #start_date.step(end_date).each do |d|
+    for d in start_date..end_date
       attendance_record = EmployeeAttendance.where(day: d, employee_id: e.employee_id).take
       if attendance_record.nil?
         unless joining_detail.nil?
@@ -41,10 +42,10 @@ module EmployeeAttendancesHelper
       unless exist.key?(d)
         exist[d] = ""
       end
-    end
+    end#for
     Hash[exist.sort]
   end
-
+  
   # def total_attendance(date, exist, e)
   #   start_date = date.beginning_of_month
   #   end_date = date.end_of_month
@@ -75,6 +76,7 @@ module EmployeeAttendancesHelper
   end
 
   def present_count(exist)
+
      exist.select {|k,v| v == "P" }.count + (exist.select {|k,v| v == "HD" }.count)/2.to_f  +
      (exist.select {|k,v| v == "P/OD" }.count)/2.to_f +  (exist.select {|k,v| v == "OD/P" }.count)/2.to_f
   end
@@ -92,7 +94,7 @@ module EmployeeAttendancesHelper
   def holiday_count(exist)
      exist.select {|k,v| v == "H" }.count + exist.select {|k,v| v == "H/P" }.count + exist.select {|k,v| v == "HP" }.count  + 
      exist.select {|k,v| v == "H/OD" }.count + exist.select {|k,v| v == "OD/H" }.count + exist.select {|k,v| v == "H/HD" }.count + 
-     exist.select {|k,v| v == "H/HDOD" }.count
+     exist.select {|k,v| v == "H/HDOD" }.count + exist.select {|k,v| v == "HOD" }.count
   end
 
   def weekoff_count(exist)
@@ -168,13 +170,13 @@ module EmployeeAttendancesHelper
     attendances.each do |a|
       if a.employee_leav_request_id != nil
         if a.count == 1.0
-          if a.employee_leav_request.leav_category.is_payble
+          if a.employee_leav_request.leav_category.is_payble == true
             pay_leave = pay_leave + 1
           else
             non_pay_leave = non_pay_leave + 1
           end
         else
-          if a.employee_leav_request.leav_category.is_payble
+          if a.employee_leav_request.leav_category.is_payble == true
             if a.employee_leav_request.present_status == false
               pay_leave = pay_leave + 0.5
               absent_day = absent_day + 0.5
@@ -188,7 +190,7 @@ module EmployeeAttendancesHelper
               absent_day = absent_day + 0.5
             else
                non_pay_leave = non_pay_leave + 0.5
-              present_day = present_day + 0.5
+               present_day = present_day + 0.5
             end
           end
         end 
@@ -210,40 +212,41 @@ module EmployeeAttendancesHelper
     pay_leave = 0
     non_pay_leave = 0
     present_day = 0
-    gate_pass = 0
-    gate_pas = 0
-    gatepass = 0
-    gatepas = 0
     absent_day = 0
+    #gate_pass = 0
+    #gate_pas = 0
+    #gatepass = 0
+    #gatepas = 0
     attendances.each do |a|
       if a.employee_leav_request_id != nil
+
         if a.count == 1.0
-          if a.employee_leav_request.leav_category.is_payble
+          if a.employee_leav_request.leav_category.is_payble == true
             pay_leave = pay_leave + 1
           else
             non_pay_leave = non_pay_leave + 1
           end
-        else
-          if a.employee_leav_request.leav_category.is_payble
+        else#a.count == 1.0
+          if a.employee_leav_request.leav_category.is_payble == true
             if a.employee_leav_request.present_status == false
               pay_leave = pay_leave + 0.5
-              absent_day = absent_day + 0.5
+              absent_day = absent_day + 1.0
             else
               pay_leave = pay_leave + 0.5
               present_day = present_day + 0.5
             end
-          else
+          else#is_payble == true
             if a.employee_leav_request.present_status == false
               non_pay_leave = non_pay_leave + 0.5
               absent_day = absent_day + 0.5
             else
                non_pay_leave = non_pay_leave + 0.5
-              present_day = present_day + 0.5
+               present_day = present_day + 0.5
             end
-          end
-        end 
+          end#is_payble == true
+        end#a.count == 1.0 
       else #nil
-      end#
+      end#a.employee_leav_request_id != nil
     end#DO
     arr << pay_leave
     arr << non_pay_leave

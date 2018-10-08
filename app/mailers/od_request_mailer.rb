@@ -4,7 +4,10 @@ class OdRequestMailer < ApplicationMailer
     @manager = Employee.find(@od_request.employee.try(:manager_id))
     @emp = Employee.find_by(id: request.employee_id)
     if @emp == @manager
-    mail(to: 'time@sganalytics.com',cc: @emp.company_location.email, subject: 'On duty request pending for approval')
+
+    email = @manager.email
+
+    mail(to: email,cc: @emp.company_location.email, subject: 'On duty request pending for approval')
     else
     email = @manager.email
 
@@ -63,7 +66,8 @@ class OdRequestMailer < ApplicationMailer
     @manager = Employee.find(@od_request.first_reporter_id)
     @emp = Employee.find_by(id: request.employee_id)
     if @emp == @manager
-    mail(to: 'time@sganalytics.com',cc: @emp.company_location.email, subject: 'On Duty request cancellation by your direct reportee')
+       email = @manager.try(:email)
+    mail(to: email,cc: @emp.company_location.email, subject: 'On Duty request cancellation by your direct reportee')
     else
     email = @manager.try(:email)
     mail(to: email ,cc: @emp.company_location.email, subject: 'On Duty request cancellation by your direct reportee')

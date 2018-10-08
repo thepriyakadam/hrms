@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  travel_option_id: 
+  code: MyString
+  name: MyString
+  description: MyText
+  amount: 9.99
+  is_optional: false
+  status: false
+
+two:
+  travel_option_id: 
+  code: MyString
+  name: MyString
+  description: MyText
+  amount: 9.99
+  is_optional: false
+  status: false

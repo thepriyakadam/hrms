@@ -1,0 +1,35 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Tax deposited</th>
+      <th>Bsr code</th>
+      <th>Challan no</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @monthly_income_taxes.each do |monthly_income_tax| %>
+      <tr>
+        <td><%= monthly_income_tax.date %></td>
+        <td><%= monthly_income_tax.tax_deposited %></td>
+        <td><%= monthly_income_tax.bsr_code %></td>
+        <td><%= monthly_income_tax.challan_no %></td>
+        <td><%= monthly_income_tax.status %></td>
+        <td>
+            <%= link_to '', edit_monthly_income_tax_path(monthly_income_tax),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  monthly_income_tax, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

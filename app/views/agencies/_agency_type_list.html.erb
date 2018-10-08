@@ -1,0 +1,26 @@
+<br>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @agencies.each do |agency| %>
+      <tr>
+        <td><%= agency.code %></td>
+        <td><%= agency.name %></td>
+        <td><%= agency.description %></td>
+        <td><%= agency.is_active ? "Active" : "Inactive" %></td>
+        <td>
+            <%= link_to '', edit_agency_path(agency),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '', agency, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

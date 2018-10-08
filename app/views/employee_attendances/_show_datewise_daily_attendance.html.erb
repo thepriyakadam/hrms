@@ -13,10 +13,11 @@ function displayResult()
     <div class="box-body">
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
-          <tr><center><strong> Date <%= @employee_attendances.first.day %></strong></center> </tr>
+          <tr><center><strong> Date <%= @employee_attendances.try(:first).try(:day) %></strong></center> </tr>
           <tr>
             <th>ID</th>
             <th>Employee Name</th>
+            <th>Location</th>
             <th>Present</th>
             <th>In Time</th>
             <th>Out Time</th>
@@ -30,20 +31,25 @@ function displayResult()
             <tr>
               <td><%= a.employee.try(:manual_employee_code) %></td>
               <td><%= full_name(a.employee) %></td>
-              <td><%=a. present%></td>
+              <td><%=a.employee.try(:company_location).try(:name)%></td>
+              <td><%=a.present%></td>
 
-              <td><%= a.in_time %></td>
-              <td><%= a.out_time %></td>
+              <td><%= a.try(:in_time ) %></td>
+              <td><%= a.try(:out_time ) %></td>
               <td><%= a.working_hrs %></td>
               
               <td><%= a.comment %></td>
               <td>
-                <% if a.employee_leav_request_id == nil %>
-                  
-                  <%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
-                  <% else %>
+                <% if a.employee_leav_request_id != nil %>
                   <small class="label label-primary">Leave</small>
-                
+                <% elsif a.on_duty_request_id != nil %>
+                  <small class="label label-info">On Duty</small>
+                <%elsif a.employee_week_off_id != nil %>
+                  <small class="label label-warning">Week Off</small>
+                  <%elsif a.holiday_id != nil %>
+                  <small class="label label-success">Holiday</small>
+                <% else %>
+                  <%= link_to ' ',modal_edit_daily_attendance_employee_attendances_path(a),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
                 <% end %>
               </td>
             </tr>

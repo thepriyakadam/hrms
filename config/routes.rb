@@ -1,11 +1,126 @@
 Rails.application.routes.draw do
+  resources :shift_schedules do
+    collection do
+      get :employee_shift
+      post :set_employee_shift
+      get :view_employee_shift
+      get :shift_employee
+      get :datewise_shift_employee
+      post :show_datewise_attendance
+      get :show_datewise_attendance
+      get :edit_employee_shift
+      post :update_shift
+      get :update_shift_for_employee
+      post :update_shift_multiple
+      get :show_employee
+    end
+  end
+  resources :shift_times do
+    collection do
+      get :modal_shift_time
+    end
+  end
+  resources :expenses_masters do
+    collection do
+      get :expence_detail
+      get :collect_expence_opestion
+      get :collect_mode
+      get :collect_opestion
+      get :import_xl
+      post :import
+    end
+  end
+  resources :email_reminders do
+    collection do
+      get :modal_show
+    end
+  end
+  resources :tasks
+  resources :billing_options
+  resources :modes do
+    collection do
+      get :mode_detail
+      get :import_xl
+      post :import
+    end
+  end
+  resources :expence_opestions do
+    collection do
+      get :expence_opestion_master
+      get :import_xl
+      post :import
+    end
+  end
+  resources :topics  do
+    collection do
+      get :view_topic_details
+      get :topic_discussion
+      post :add_comment
+      post :like_topic
+      post :like_comment
+      get :all_comment
+      get :all_topic_list
+      get :inactive_topic
+      get :inactive_comment
+      get :all_topic_details
+      get :topic_comm_update
+      post :update_comment
+    end
+  end
 
+  resources :employee_insentives do
+    collection do
+      get :show_employee_insentive
+      get :employee_insentive_month
+      get :import_employee_insentive
+      post :import
+    end
+  end
+  resources :attendance_regularizations do 
+    collection do
+      get :admin_level_approval
+      get :show_attendance_regularization
+      get :attendance_regularization_approve
+      get :approve_attendance
+      get :rejected_attendance
+      get :emp_attendance_details
+      get :date_wise_regularization
+      get :att_regularization_report
+      post :att_regularization_report
+      get :employee_wise_regularization
+      get :employee_wise_regularization_report
+      post :employee_wise_regularization_report
+    end
+  end
+  resources :regularization_reasons
+
+  resources :food_options
+  resources :compliance_records do
+    collection do
+      get :periodwise_report
+      post :show_compliance_record
+    end
+  end
+  resources :agencies
+  resources :transaction_records do
+    collection do
+      get :modal_show
+    end
+  end
+  resources :compliance_types
+  resources :galleries 
+  resources :pictures
+  resources :monthly_income_taxes
+  resources :quarter_income_taxes
+  resources :income_tax_masters
   resources :gps_informations do
     collection do
       get :all_emp_list
+      get :view_gps_info
       post :update_gps_info
     end
   end
+  resources :event_details
   resources :latemark_deductions
   resources :latemark_masters do
     collection do
@@ -16,6 +131,7 @@ Rails.application.routes.draw do
       get :latemark_total
       get :latemark_report
       post :show_datewise_report
+      get :show_datewise_report
       get :datewise_report
       get :import_xl
       post :import
@@ -24,6 +140,8 @@ Rails.application.routes.draw do
       get :deduction_report
       post :show_deduction_report
       get :show_deduction_report
+      post :show_list_for_latemark
+      get :revert_latemark_value
     end
   end
   resources :meeting_follow_ups do
@@ -42,6 +160,9 @@ Rails.application.routes.draw do
   resources :listed_companies do
     collection do
       get :view_company
+      get :listed_company
+      get :import_xl
+      post :import
     end
   end
   resources :transport_allowances
@@ -51,6 +172,7 @@ Rails.application.routes.draw do
 
   resources :daily_attendances do 
     collection do
+      get :third_attendance_uttam
       get :attendance
       get :calculate
       get :daily_attendance
@@ -339,6 +461,7 @@ Rails.application.routes.draw do
   resources :employee_jc_lists
   resources :joining_checklist_masters do
     collection do
+      get :set_checklist
       get :joining_checklist_master
       post :joining_checklist_master
       get :import_xl
@@ -363,6 +486,7 @@ Rails.application.routes.draw do
       post :print_visitor_report
       get :print_visitor_report
       get :visitor_list
+      get :show_detail
 
     end
   end
@@ -416,6 +540,23 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :show_system_attendance
+      get :detail_attendance_modal
+      get :shift_wise_system_base
+      get :atten_report
+      get :edit_current_attendance
+      post :update_attendance
+      get :create_update_show_attendance
+      get :view_attendance
+      get :system_base_attendance
+      get :create_systembase_attendance
+      post :update_out_time
+      get :add_attendance
+      post :managerwise_attendance_list
+      get :managerwise_attendance_list
+      post :create_managerwise_attendance
+      get :reporties_list
+      get :reporties_profile_modal
       get :subordinate_list
       get :appraiser_subordinate
       get :reviewer_subordinate
@@ -487,6 +628,8 @@ Rails.application.routes.draw do
       post :selected_employee_list
       get :selected_employee_pdf
       get :selected_employee_xls
+      get :offer_letter
+      get :joining_letter
     end
   end
   resources :certificate_masters do
@@ -527,6 +670,7 @@ Rails.application.routes.draw do
       get :revert_week_off_master
       post :show_weekoff_master_data
       get :revert_master_data
+      get :show_employee_attendance
     end
   end
   resources :machine_attendances do
@@ -642,7 +786,7 @@ Rails.application.routes.draw do
       get :unlock_by_admin
       get :solved_confirm
       get :resend_request
-      get :datewise_report_list
+      post :datewise_report_list
       get :datewise_report
       get :datewise_report_xls
       get :datewise_report_pdf
@@ -659,7 +803,8 @@ Rails.application.routes.draw do
       get :memberwise_report_list_xls
       get :memberwise_report_list_pdf
       get :select_description
-
+      get :request_detail_modal
+      get :solved_issue_list
     end
    end
   resources :issue_masters do
@@ -972,6 +1117,8 @@ end
   end
   resources :employee_attendances do
     collection do
+      post :third_attendance
+      get :third_attendance
       post :fetch_attendance
       post :calculate
       get :fetch_attendance
@@ -1038,6 +1185,7 @@ end
       post :create_attendance_datewise
 
       get :manager_attendance_form
+      post :display_attendance_for_manager
       get :display_attendance_for_manager
 
       post :import
@@ -1100,6 +1248,8 @@ end
       post :payroll_show
       get :payroll_show
       get :employee_attendance
+      get :import_xl
+      post :attendance_upload_report
     end
   end
   resources :salary_comp_mappings
@@ -1161,6 +1311,8 @@ end
 
   resources :goal_ratings do
     collection do
+      get :period_for_status
+      post :managerwise_status
       get :periodwise_goal_set
       post :periodwise_goal_list
       post :set_goal_periodwise
@@ -1213,8 +1365,8 @@ end
       get :print_employee_wise
       get :detail_employee_wise_xls
       get :period_rating_wise
-      post :Period_rating_wise_employee
-      get :Period_rating_wise_employee
+      post :period_rating_wise_employee
+      get :period_rating_wise_employee
       get :period_rating_wise_pdf
       get :period_rating_wise_xls
       get :increment_index_report
@@ -1237,6 +1389,7 @@ end
   #post 'goal_ratings/update_goal_set_modal'
   resources :goal_bunches do
     collection do
+      get :appraisee_detail_list
       get :ajax_upload_document
       post :show_periodwise_employee
       get :goal_approval
@@ -1651,6 +1804,10 @@ end
   resources :daily_bill_details do
     collection do
     # post :is_confirm
+    get :all_expence_request
+    get :modal_expense_edit
+    post :update_expence
+    get :select_form
     get :is_confirm
     get :print_daily_bill
     get :daily_bill_history
@@ -1676,6 +1833,9 @@ end
   end
   resources :travel_requests do
     collection do
+      get :all_travel_request
+      get :show_travel_process
+      get :show_request_modal
       get :daily_bill
       get :travel_history
       get :travel_request_confirmation
@@ -1696,6 +1856,8 @@ end
       get :travelling_datewise_report
       post :print_travelling_datewise_report
       get :print_travelling_datewise_report
+      post :advance_travel_report
+      get :advance_travel_report
       get :travel_request_id_report
       get :print_travel_request_id_report
       post :print_travel_request_id_report
@@ -1832,6 +1994,17 @@ end
   end
   resources :vacancy_masters do
     collection do
+      get :show_vacancy_master_modal
+      get :shortlist_for_interview_single
+      get :reject_single
+      get :refferal_vacancy
+      get :candidate_info
+      get :datewise_report
+      post :show_datewise
+      get :show_datewise
+      get :recruiter_wise_report
+      post :show_recruiter_wise
+      get :show_recruiter_wise
       get :search_by_vacancy_post_date
       get :vacancy_request_confirmation
       get :vacancy_history
@@ -1908,6 +2081,9 @@ end
       get :modal
       get :detail_modal
       get :modal_c_off
+      get :maintenance_report
+      get :import_xl
+      post :import
     end
   end
 
@@ -2181,6 +2357,8 @@ end
       get :modal
       get :import_monthly_expence
       post :import
+      get :delete_monthly_expence
+      get :edit_monthly_expence
     end
   end
   resources :expencess_types do
@@ -2248,6 +2426,11 @@ end
       get :deactivate
     end
     collection do
+      get :salaryslip_date_wise_report
+      get :employee_salaryslip_details
+      post :employee_salaryslip_details
+      get :daterangewise_salaryslip_xls
+      
       post :activate
       get :template_list
       get :fresh_template
@@ -2266,6 +2449,8 @@ end
       get :employee_wise_pdf
       get :employee_wise_xls
       get :employee_record
+      get :import_xl
+      post :import
     end
   end
   resources :retention_moneys do
@@ -2306,6 +2491,7 @@ end
       post :employee_category_master
       get :import_xl
       post :import
+      get :employee_detail
     end
   end
   resources :other_salary_components do
@@ -2554,6 +2740,7 @@ end
       post :assign_to_employee
       post :employee_list
       get :modal
+      get :show_employee_list
     end
   end
 
@@ -2617,6 +2804,9 @@ end
       post :create_employee_template
       get :is_confirm
       get :modal
+      get :salary_component_list
+      get :import_xl
+      post :import
     end
   end
   resources :universities do
@@ -2649,14 +2839,24 @@ end
   resources :districts do
     collection do
       get :district_master
+      get :import_xl
+      post :import
     end
   end
   resources :states do
     collection do
       get :state_master
+      get :import_xl
+      post :import
     end
   end
-  resources :countries
+  resources :countries do
+    collection do
+      get :print_all_country
+      get :import_xl
+      post :import
+    end
+  end
   resources :employee_designations do
     collection do
       get :is_confirm
@@ -2755,6 +2955,8 @@ end
 
   resources :employee_leav_balances do
     collection do
+      get :show_balance
+      get :all_balance
       get :collect_employee_for_leave
       get :employee_leave_balance
       get :leave_balance_modal
@@ -2764,6 +2966,7 @@ end
       get :modal_balance_detail
       get :leave_balance
       # post :leave_balance
+      get :leave
       post :leave
       get :import_xl
       post :import
@@ -2773,7 +2976,8 @@ end
       get :date_categorywise_balance
       post :show_date_categorywise
       get :show_date_categorywise
-
+      get :import_employee_leav_balance
+      post :employee_leav_balance_report
     end
   end
 
@@ -2828,6 +3032,7 @@ end
   end
   resources :joining_details do
     collection do
+      get :show_contract
       get :search_by_joining_date
       get :import_xl
       post :import
@@ -2912,6 +3117,8 @@ end
   end
   resources :employees do
     collection do
+      get :personal_detail
+      get :org_chart
       get :print_employee_data_formate
       get :employee_list_report
       post :selected_employee_list_report
@@ -3194,7 +3401,8 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
- namespace :api do
+    
+  namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
     get 'user_auths/employee_list' => 'user_auths#employee_list', defaults:{format: 'json'}
@@ -3318,7 +3526,45 @@ end
     get 'user_auths/admin_expense_claim_approval_list' => 'user_auths#admin_expense_claim_approval_list', defaults:{format: 'json'}
     get 'user_auths/all_travel_history' => 'user_auths#all_travel_history', defaults:{format: 'json'}
     get 'user_auths/cancel_travel_history' => 'user_auths#cancel_travel_history', defaults:{format: 'json'}
-    
+    get 'user_auths/get_time_sheet' => 'user_auths#get_time_sheet', defaults:{format: 'json'}
+    get 'user_auths/get_help_disk_list' => 'user_auths#get_help_disk_list', defaults:{format: 'json'}
+    get 'user_auths/all_issue_tracker_group' => 'user_auths#all_issue_tracker_group', defaults:{format: 'json'}
+    get 'user_auths/cancel_help_desk_request' => 'user_auths#cancel_help_desk_request', defaults:{format: 'json'}
+    get 'user_auths/group_type' => 'user_auths#group_type', defaults:{format: 'json'}
+    get 'user_auths/collect_issues' => 'user_auths#collect_issues', defaults:{format: 'json'}
+    get 'user_auths/daily_bill_request_confirmation' => 'user_auths#daily_bill_request_confirmation', defaults:{format: 'json'}
+    get 'user_auths/lock_request_list' => 'user_auths#lock_request_list', defaults:{format: 'json'}
+    get 'user_auths/solved_issue_list' => 'user_auths#solved_issue_list', defaults:{format: 'json'}
+    get 'user_auths/manager_daily_attendance' => 'user_auths#manager_daily_attendance', defaults:{format: 'json'}
+    get 'user_auths/collect_issues_description' => 'user_auths#collect_issues_description', defaults:{format: 'json'}
+    post 'user_auths/create_support_request' => 'user_auths#create_support_request', defaults:{format: 'json'}
+    get 'user_auths/unlock_request' => 'user_auths#unlock_request', defaults:{format: 'json'}
+    post 'user_auths/lock_request' => 'user_auths#lock_request', defaults:{format: 'json'}
+    post 'user_auths/solved_request' => 'user_auths#solved_request', defaults:{format: 'json'}
+    get 'user_auths/issue_tracker_member_list' => 'user_auths#issue_tracker_member_list', defaults:{format: 'json'}
+    get 'user_auths/support_root_cause_list' => 'user_auths#support_root_cause_list', defaults:{format: 'json'}
+    get 'user_auths/solved_confirm' => 'user_auths#solved_confirm', defaults:{format: 'json'}
+    get 'user_auths/resend_request' => 'user_auths#resend_request', defaults:{format: 'json'}
+    get 'user_auths/active_leaving_reason' => 'user_auths#active_leaving_reason', defaults:{format: 'json'}
+    get 'user_auths/display_notice_period' => 'user_auths#display_notice_period', defaults:{format: 'json'}
+    post 'user_auths/create_self_resignation' => 'user_auths#create_self_resignation', defaults:{format: 'json'}
+    get 'user_auths/pending_resignation_requests' => 'user_auths#pending_resignation_requests', defaults:{format: 'json'}
+    get 'user_auths/first_approved_resignation_requests' => 'user_auths#first_approved_resignation_requests', defaults:{format: 'json'}
+    post 'user_auths/employee_resignation_first_approve' => 'user_auths#employee_resignation_first_approve', defaults:{format: 'json'}
+    get 'user_auths/employee_resignation_first_reject' => 'user_auths#employee_resignation_first_reject', defaults:{format: 'json'}
+    get 'user_auths/all_resignation_requests' => 'user_auths#all_resignation_requests', defaults:{format: 'json'}
+    post 'user_auths/employee_resignation_final_approve' => 'user_auths#employee_resignation_final_approve', defaults:{format: 'json'}
+    get 'user_auths/employee_resignation_final_reject' => 'user_auths#employee_resignation_final_reject', defaults:{format: 'json'}
+    get 'user_auths/final_approval_emp_resignation_list' => 'user_auths#final_approval_emp_resignation_list', defaults:{format: 'json'}
+    get 'user_auths/resignation_status_records' => 'user_auths#resignation_status_records', defaults:{format: 'json'}
+    get 'user_auths/collect_expence_opestion' => 'user_auths#collect_expence_opestion', defaults:{format: 'json'}
+    get 'user_auths/collect_mode' => 'user_auths#collect_mode', defaults:{format: 'json'}
+    get 'user_auths/collect_opestion' => 'user_auths#collect_opestion', defaults:{format: 'json'}
+    get 'user_auths/shift_wise_system_base' => 'user_auths#shift_wise_system_base', defaults:{format: 'json'}
+    get 'user_auths/system_base_attendance' => 'user_auths#system_base_attendance', defaults:{format: 'json'}
+    get 'user_auths/attendance_check' => 'user_auths#attendance_check', defaults:{format: 'json'}
+    get 'user_auths/create_systembase_attendance' => 'user_auths#create_systembase_attendance', defaults:{format: 'json'}
+    get 'user_auths/show_system_attendance' => 'user_auths#show_system_attendance', defaults:{format: 'json'}
   end
-
 end
+

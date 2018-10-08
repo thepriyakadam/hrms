@@ -18,6 +18,7 @@
     		  <th>Payment Mode</th>
     		  <th>PF No.</th>
     		  <th>ESIC No.</th>
+          
     		  <th>Actual Gross Salary</th>
     		  <th>Calculated Gross Salary</th>
     		  <th>Total Deduction</th>
@@ -154,7 +155,7 @@
               <% workingday.holiday_in_month %>
               <% workingday.absent_day %>
             <td><%= workingday.payable_day %></td>
-            <td><%= employee.company_location.name %></td>
+            <td><%= employee.try(:company_location).try(:name) %></td>
           </tr><!-- Row -->
         <%end%>
       </tbody>

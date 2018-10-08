@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @attendance_regularization.employee %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @attendance_regularization.date %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @attendance_regularization.status %>
+</p>
+
+<p>
+  <strong>Regularization reason:</strong>
+  <%= @attendance_regularization.regularization_reason %>
+</p>
+
+<p>
+  <strong>Justification:</strong>
+  <%= @attendance_regularization.justification %>
+</p>
+
+<p>
+  <strong>Manager:</strong>
+  <%= @attendance_regularization.manager_id %>
+</p>
+
+<%= link_to 'Edit', edit_attendance_regularization_path(@attendance_regularization) %> |
+<%= link_to 'Back', attendance_regularizations_path %>

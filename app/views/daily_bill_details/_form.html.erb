@@ -1,101 +1,164 @@
 <%= bootstrap_form_for(@daily_bill_detail,id:@travel_request.id,html: {id: "daily_bill_detail"},travel_request_id: @travel_request.id,daily_bill_detail_id: @daily_bill_detail.id) do |f| %>
-<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <%= f.hidden_field :travel_request_id, value:@travel_request.id  %>
-  
   <% if @travel_request.is_confirm == true %>
-  <div>
-     <%= render 'show_travel_request' %>
-   </div>
-   <div>
-     <%= render 'show_reporting_masters_travel_request' %>
-   </div>
+    <div>
+      <%= render 'show_travel_request' %>
+    </div>
+    <div>
+       <%#= render 'show_reporting_masters_travel_request' %>
+    </div>
   <% else %>
     <div>
-     <%= render 'show_travel_request' %>
-   </div>
-   <div>
-     <%= render 'show_reporting_masters_travel_request' %>
-   </div>
+      <%= render 'show_travel_request' %>
+    </div>
+    <div>
+      <%#= render 'show_reporting_masters_travel_request' %>
+    </div>
+
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr><td colspan="8"><font color='label-primary'><center> You Have To Only Apply This Expences</center></font></td></tr>
+        <tr>
+          <th>Sr.No.</th>
+          <th>Employee Grade</th>
+          <th>Expense Option </th>
+          <th>Expence Mode</th>
+          <th>Mode Option</th>
+          <th>Billing Option</th>
+          <th>Min Amount</th>
+          <th>Max Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 0 %>
+        <% @expence_master.each do |ex| %>
+          <tr>
+            <td><%= i=i+1 %></td>
+            <td><%= ex.try(:employee_grade).try(:name) %></td>
+            <td><%= ex.try(:expence_opestion).try(:name)%></td>
+            <td><%= ex.try(:mode).try(:name)%></td>
+            <td><%= ex.try(:billing_option).try(:name)%></td>
+            <td><%= ex.try(:billing_opestion)%></td>
+            <td><%= ex.try(:min_amount)%></td>
+            <td><%= ex.try(:max_amount)%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
     <div class="row">
-
-       <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-               <%= f.text_field :expence_date, label: 'Date',class: 'input_expence_date'%>
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
             </div>
+            <%= f.text_field :expence_date, label: 'Date',class: 'input_expence_date'%>
           </div>
-        </div>      
+        </div>
+      </div>
 
       <div class="col-sm-3">
         <div class="form-group required">
           <%= f.text_field :e_place, label: 'Place',class: 'input_e_place'  %>
         </div>
       </div>
-      <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <%= link_to "", new_travel_expence_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-              </div>
-               <%= f.select :travel_expence_type_id, all_travel_expence_type, {label: 'Expense Type',include_blank: " Select Expense Type"} %>
+
+     <!--  <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <%#= link_to "", new_travel_expence_type_path,class: "fa fa-plus fa-success",:target => "_blank" %>
             </div>
+            <%#= f.select :travel_expence_type_id, all_travel_expence_type, {label: 'Expense Type',include_blank: " Select Expense Type"} %>
           </div>
         </div>
+      </div> -->
+      <div class="col-sm-3">
+        <label> Select Expense Option </label>
+        <div class="form-group required">
+          <%= f.select :expence_opestion_id, grade_wise_expence_opestions, { hide_label:true, include_blank: " Select Expence Opestion" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div id="collect_mode">
+              <%= render 'expenses_masters/collect_mode' %> 
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div id="collect_opestion">
+              <%= render 'expenses_masters/collect_opestion' %> 
+            </div> 
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :billing_opestion, ["With Bill","without Bill"] ,{label: 'Billing Opestion',include_blank: " Select Opestion"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+      <label>Currency</label>
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <%= link_to "", currency_masters_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+            </div>
+            <%= f.select :currency_master_id, all_currency, {hide_label: true,include_blank: " Select Currency Type"} %>
+          </div>
+        </div>
+      </div>
+        
       <div class="col-sm-3">
         <div class="form-group required">
           <%= f.text_field :travel_expence,label:'Expense Amount'  %>
         </div>
       </div>
-    </div>
-    <div class="row">
-    <div class="col-sm-3">
-          <label>Currency</label>
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <%= link_to "", currency_masters_path,class: "fa fa-plus fa-success",:target => "_blank" %>
-              </div>
-               <%= f.select :currency_master_id, all_currency, {hide_label: true,include_blank: " Select Currency Type"} %>
-            </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :avatar_file,label: 'Document(only docx,pdf)' %>
           </div>
         </div>
-    <div class="col-sm-3">
-    <div class="field">
-      <%= f.file_field :avatar_file,label: 'Document(only docx,pdf)' %>
-    </div>
-   </div>
 
-   <div class="col-sm-3">
-    <div class="field">
-      <%= f.file_field :passport_photo,label: 'Image(only jpeg,jpg,png)' %>
-    </div>
-   </div>
+        <div class="col-sm-3">
+          <div class="field">
+            <%= f.file_field :passport_photo,label: 'Image(only jpeg,jpg,png)' %>
+          </div>
+        </div>
 
-   <!-- unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %> -->
-    <!-- <div class="row">
-      <div class="col-sm-2">
-        <input type="button" id="btnAdd" value="+ Add Bill Details" class="btn btn-sm btn-success"> 
-      </div>
+      <!-- unless params['controller'] == 'daily_bill_details' and params['action'] == 'edit' %> -->
+        <!-- <div class="row">
+          <div class="col-sm-2">
+            <input type="button" id="btnAdd" value="+ Add Bill Details" class="btn btn-sm btn-success"> 
+          </div>
 
-      <div class="col-sm-3">
-        <input type="button" id="btnDel" value="Remove Bill Details" class="btn btn-sm btn-danger">
-      </div>
-    </div><br> -->
-  <!-- end%> -->
-
-    <div class="col-sm-3" style="padding: 20px">
-      <div class="actions">
-        <%= f.submit "Add Expense Claim",:class => class_name, data: { disable_with: data_info }  %>
+          <div class="col-sm-3">
+            <input type="button" id="btnDel" value="Remove Bill Details" class="btn btn-sm btn-danger">
+          </div>
+        </div><br> -->
+      <!-- end%> -->
+      <div class="col-sm-3" style="padding: 20px">
+        <div class="actions">
+          <%= f.submit "Add Expense Claim",:class => class_name, data: { disable_with: data_info }  %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
-<% end %><br>
-
+<br>
 
 <script type="text/javascript">
  $(function(){
@@ -116,6 +179,15 @@
         "daily_bill_detail[travel_expence_type_id]":{
           required: true
         },
+        "daily_bill_detail[expence_opestion_id]":{
+          required: true
+        },
+        "daily_bill_detail[mode_id]":{
+          required: true
+        },
+        "daily_bill_detail[billing_option_id]":{
+          required: true
+        },
         "daily_bill_detail[travel_expence]":{
           required: true
         }
@@ -129,6 +201,12 @@
         },
         "daily_bill_detail[travel_expence_type_id]":{
           required: "Please specify expense type"
+        },
+        "daily_bill_detail[expence_opestion_id]":{
+          required: "Please Select the Expence Opestion"
+        },
+        "daily_bill_detail[mode_id]":{
+          required: "Please Select the Mode Opestion"
         },
         "daily_bill_detail[travel_expence]":{
           required: "Please specify travelling amount"

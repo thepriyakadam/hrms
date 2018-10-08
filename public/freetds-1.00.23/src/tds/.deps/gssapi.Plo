@@ -46,7 +46,8 @@ gssapi.lo: gssapi.c /usr/include/stdc-predef.h ../../include/config.h \
  /usr/include/x86_64-linux-gnu/bits/socket2.h \
  /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/rpc/netdb.h \
  /usr/include/x86_64-linux-gnu/bits/siginfo.h \
- /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/include/arpa/inet.h
+ /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/include/arpa/inet.h \
+ /usr/include/com_err.h /usr/lib/gcc/x86_64-linux-gnu/5/include/stdarg.h
 
 /usr/include/stdc-predef.h:
 
@@ -173,3 +174,7 @@ gssapi.lo: gssapi.c /usr/include/stdc-predef.h ../../include/config.h \
 /usr/include/x86_64-linux-gnu/bits/netdb.h:
 
 /usr/include/arpa/inet.h:
+
+/usr/include/com_err.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/5/include/stdarg.h:

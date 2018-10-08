@@ -56,7 +56,7 @@
 #define HAVE_CLOCK_GETTIME 1
 
 /* Define to 1 if you have the <com_err.h> header file. */
-/* #undef HAVE_COM_ERR_H */
+#define HAVE_COM_ERR_H 1
 
 /* Define to 1 if you have the `daemon' function. */
 #define HAVE_DAEMON 1
@@ -199,7 +199,7 @@
 /* #undef HAVE_GNUTLS */
 
 /* Define to 1 if you have the <gnutls/abstract.h> header file. */
-/* #undef HAVE_GNUTLS_ABSTRACT_H */
+#define HAVE_GNUTLS_ABSTRACT_H 1
 
 /* Define to 1 if you have the `gnutls_certificate_set_verify_function'
    function. */
@@ -210,9 +210,6 @@
 
 /* Define to 1 if you have the `gnutls_rnd' function. */
 /* #undef HAVE_GNUTLS_RND */
-
-/* Define if you have the iconv() function and it works. */
-#define HAVE_ICONV 1
 
 /* Define to 1 if you have the `inet_ntoa_r' function. */
 /* #undef HAVE_INET_NTOA_R */
@@ -515,7 +512,7 @@
 /* #undef HAVE___RECVFROM */
 
 /* Define as const if the declaration of iconv() needs const. */
-#define ICONV_CONST 
+/* #undef ICONV_CONST */
 
 /* Define to value of INADDR_NONE if not provided by your system header files.
    */

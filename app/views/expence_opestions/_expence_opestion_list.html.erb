@@ -1,0 +1,40 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr.No</th>
+      <th>Employee Grade</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% i = 0 %>
+    <% @expence_opestions.each do |expence_opestion| %>
+      <tr>
+        <td><%= i = i + 1 %></td>
+        <td><%= expence_opestion.employee_grade.try(:name) %></td>
+        <td><%= expence_opestion.code %></td>
+        <td><%= expence_opestion.name %></td>
+        <td><%= expence_opestion.description %></td>
+        <td><%= expence_opestion.status ? "Active" : "Inactive" %></td>
+        <td>
+          <%= link_to '', edit_expence_opestion_path(expence_opestion),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+          <%= link_to '',  expence_opestion, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <%#= link_to 'Back', root_url ,class: 'btn btn-default btn-sm fa fa-arrow-left' %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

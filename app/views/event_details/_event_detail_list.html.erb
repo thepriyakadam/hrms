@@ -1,0 +1,25 @@
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+      <th>Date</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+     <% @event_details.each do |event_detail| %>
+      <tr>
+        <td><%= event_detail.date %></td>
+        <td><%= event_detail.name %></td>
+        <td><%= event_detail.description %></td>
+        <td><%= event_detail.status ? 'Active' : 'Inactive' %></td>
+        <td>
+            <%= link_to '', edit_event_detail_path(event_detail),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+            <%= link_to '',  event_detail, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

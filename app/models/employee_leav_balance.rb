@@ -58,8 +58,21 @@ class EmployeeLeavBalance < ActiveRecord::Base
     end
   end
   
-  def is_present(e)
+  def self.is_present(e)
     LeaveMaster.exists?(leav_category_id: e.leav_category_id)
+  end
+
+  def emp_available(e)
+    from_date = e.from_date
+    to_date = e.to_date
+
+    from_month = from_date.strftime('%B')
+    to_month = to_date.strftime('%B')
+    flag = 0
+    for i in from_month..to_month
+      flag = Workingday.exists?(employee_id: e.employee_id,month_name: i)
+    end
+    flag
   end
 
 
@@ -93,8 +106,9 @@ class EmployeeLeavBalance < ActiveRecord::Base
          carry_forward = spreadsheet.cell(i,'K')
         working_day = spreadsheet.cell(i,'L')
 
-        @employee_prsent = EmployeeLeavBalance.find_by(employee_id: employee_id,leav_category_id: leav_category_id)
+        @employee_prsent = EmployeeLeavBalance.find_by(employee_id: employee_id,leav_category_id: leav_category_id,from_date: from_date,to_date: to_date)
       if @employee_prsent.nil?
+        @employee_leav_balance = EmployeeLeavBalance.where(employee_id: employee_id,leav_category_id: leav_category_id).update_all(is_active: false)
         @employee_leav_balance = EmployeeLeavBalance.create(employee_id: employee_id,leav_category_id: leav_category_id,no_of_leave: no_of_leave,total_leave: total_leave,
           from_date: from_date,to_date: to_date,is_active: is_active,leave_count: leave_count,carry_forward: carry_forward,collapse_value: collapse_value,working_day: working_day)
       else
@@ -118,18 +132,5 @@ class EmployeeLeavBalance < ActiveRecord::Base
   #   LeaveMaster.exists?(leav_category_id: e.leav_category_id)
   # end
 
-
-  def emp_available(e)
-    from_date = e.from_date
-    to_date = e.to_date
-
-    from_month = from_date.strftime('%B')
-    to_month = to_date.strftime('%B')
-    flag = 0
-    for i in from_month..to_month
-      flag = Workingday.exists?(employee_id: e.employee_id,month_name: i)
-    end
-    flag
-  end
 
 end

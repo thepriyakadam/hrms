@@ -46,6 +46,7 @@ class OdStatusRecordsController < ApplicationController
   	OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Rejected')
   	OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Rejected',change_date: Date.today)
   	 OdRequestMailer.first_reject(@on_duty_request).deliver_now
+    EmployeeAttendance.where(on_duty_request_id: @on_duty_request.id).update_all(comment: "OD Rejected Successfully")
 
   	flash[:notice] = "Rejected Successfully"
   	if @on_duty_request.first_reporter_id == current_user.employee_id
@@ -61,6 +62,7 @@ class OdStatusRecordsController < ApplicationController
     OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Rejected')
     OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Rejected',change_date: Date.today)
      OdRequestMailer.second_reject(@on_duty_request).deliver_now
+    EmployeeAttendance.where(on_duty_request_id: @on_duty_request.id).update_all(comment: "OD Rejected Successfully")
     flash[:notice] = "Rejected Successfully"
     if @on_duty_request.first_reporter_id == current_user.employee_id
      redirect_to request_approval_list_manager_self_services_path
@@ -73,7 +75,27 @@ class OdStatusRecordsController < ApplicationController
     @on_duty_request = OnDutyRequest.find(params[:id])
     @on_duty_request.update(is_cancelled: true,current_status: 'Cancelled')
     OdRecord.where(on_duty_request_id: @on_duty_request.id).update_all(status: 'Cancelled')
-    EmployeeAttendance.where(on_duty_request_id: @on_duty_request.id).update_all(on_duty_request_id: nil,present: "A",comment: "OD request cancelled")
+
+    #update_in_attendance
+      @employee_attendance = EmployeeAttendance.where(on_duty_request_id: @on_duty_request.id)
+      @latemark_master = LatemarkMaster.last
+      @employee_attendance.each do |e|
+        if e.employee_week_off_id.present?  
+          e.update(on_duty_request_id: nil,present: "WO",comment: "OD Request Cancelled/WeekOff")
+        elsif e.holiday_id.present?  
+          e.update(on_duty_request_id: nil,present: "HP",comment: "OD Request Cancelled/Holiday")
+        elsif e.in_time.present? && e.out_time.present?
+          if e.working_hrs < @latemark_master.halfday_working_hrs
+            e.update(on_duty_request_id: nil,present: "HD",comment: "OD Request Cancelled/HalfDay")
+          else  
+            e.update(on_duty_request_id: nil,present: "P",comment: "OD Request Cancelled/Present")
+          end #workking_hrs
+        else  
+        e.update(on_duty_request_id: nil,present: "A",comment: "OD Request Cancelled/Absent")
+        end 
+      end #do
+    #EmployeeAttendance.where(on_duty_request_id: @on_duty_request.id).update_all(on_duty_request_id: nil,present: "A",comment: "OD request cancelled")
+    
     OdStatusRecord.create(on_duty_request_id: @on_duty_request.id,employee_id: current_user.employee_id,status: 'Cancelled',change_date: Date.today)
     if @on_duty_request.first_reporter.email.nil? || @on_duty_request.first_reporter.email == ''
       flash[:notice] = 'Leave Cancelled Successfully without email.'
@@ -97,7 +119,28 @@ class OdStatusRecordsController < ApplicationController
     OdRecord.where("on_duty_request_id =? AND day =?", @particular_od_record.on_duty_request_id, @date).update_all(status: "Cancelled")
     @particular_od_record.update(is_cancel_after_approve: true)
     #EmployeeAttendance.where("employee_id = ? AND day = ?", @particular_od_record.employee_id,@particular_od_record.leave_date.to_date).destroy_all    
-    EmployeeAttendance.where(on_duty_request_id: @particular_od_record.on_duty_request_id,day: @date).update_all(on_duty_request_id: nil,present: "A",comment: "OD cancelled after approve")
+    
+    #update_in_attendance
+      on_duty_request = OnDutyRequest.find_by(id: @particular_od_record.on_duty_request_id)
+      @employee_attendance = EmployeeAttendance.where(on_duty_request_id: on_duty_request.id,day: @date)
+      @latemark_master = LatemarkMaster.last
+      @employee_attendance.each do |e|
+        if e.employee_week_off_id.present?  
+          e.update(on_duty_request_id: nil,present: "WO",comment: "OD Cancelled After Approve/WeekOff")
+        elsif e.holiday_id.present?  
+          e.update(on_duty_request_id: nil,present: "HP",comment: "OD Cancelled After Approve/Holiday")
+        elsif e.in_time.present? && e.out_time.present?
+          if e.working_hrs < @latemark_master.halfday_working_hrs
+            e.update(on_duty_request_id: nil,present: "HD",comment: "OD Cancelled After Approve/HalfDay")
+          else  
+            e.update(on_duty_request_id: nil,present: "P",comment: "OD Cancelled After Approve/Present")
+          end #workking_hrs
+        else  
+        e.update(on_duty_request_id: nil,present: "A",comment: "OD Cancelled After Approve/Absent")
+        end 
+      end #do
+    #EmployeeAttendance.where(on_duty_request_id: @particular_od_record.on_duty_request_id,day: @date).update_all(on_duty_request_id: nil,present: "A",comment: "OD cancelled after approve")
+      
       if @on_duty_request.employee.email.nil? || @on_duty_request.employee.email == ''
         flash[:notice] = 'OD Cancelled Successfully without email.'
       else

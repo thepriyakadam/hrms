@@ -14,35 +14,51 @@ end
 #   rake 'task_namespace:pending_request_mail' , :environment => 'development',   :output => 'log/pending_request_mail.log'
 #   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 # end
-every :day, :at => '09:00am' do
-  runner "DailyAttendance.fetch_data(2)"
+
+
+every :day, :at => '01:00am' do
+  rake 'atte_task:reminder_msg', :environment => 'development',   :output => 'log/cron.log'
 end
 
-every :day, :at => '09:10am' do
-  runner "DailyAttendance.calculate_attendance(2)"
+##################  Transaction Record ####################
+
+every :day, :at => '01:00am' do
+  rake 'atte_task:transaction_att', :environment => 'development',   :output => 'log/cron.log'
 end
 
-every :day, :at => '11:00am' do
-  runner "DailyAttendance.fetch_data(2)"
+##################  Fetch Attendance  ####################
+
+every :day, :at => '10:00am' do
+  runner "DailyAttendance.fetch_att"
 end
 
-every :day, :at => '11:10am' do
-  runner "DailyAttendance.calculate_attendance(2)"
+every :day, :at => '10:30am' do
+  rake 'atte_task:fetch_att'
 end
 
-every :day, :at => '07:00pm' do
-  runner "DailyAttendance.fetch_data(2)"
+every 2.hours do 
+  rake 'atte_task:fetch_att'
 end
 
-every :day, :at => '07:10pm' do
-  runner "DailyAttendance.calculate_attendance(2)"
+################ Calculate Attendance ####################
+
+every :day, :at => '10:10am' do
+  runner "DailyAttendance.calculate_attendance"
 end
 
-#every 1.hours do
- # runner "DailyAttendance.fetch_data"
-#end
-
-
-every 1.minutes do 
-   rake 'atte_task:fetch_data'
+every 7.hours do
+  rake 'atte_task:calculate'
 end
+
+################ Third Att. Uttam  #######################
+
+# every 1.hours + 10.minutes do
+#   rake 'atte_task:third_fetch_att'
+# end
+
+################# Clear LOG #######################
+
+every 1.hours do 
+  rake 'log:clear'
+end
+

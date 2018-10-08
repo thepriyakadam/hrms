@@ -1,0 +1,16 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Shift Schedule</h3>
+  </div><!-- /.box-header -->
+	<div class="box-body">
+		<% if current_user.role.name == "GroupAdmin" || current_user.role.name == "HOD" %>
+		<div id="form">
+			<%= render 'form' %>	
+		</div>
+		<% end %>
+		<div id="shift_schedule_list">
+			<%= render 'shift_schedule_list' %>
+		</div>
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+

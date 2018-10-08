@@ -16,34 +16,38 @@
         <Cell ss:Index="7"><Data ss:Type="String">Employee Grade</Data></Cell>
         <Cell ss:Index="8"><Data ss:Type="String">Employee Designation</Data></Cell>
         <Cell ss:Index="9"><Data ss:Type="String">Employee Category</Data></Cell>
-        <Cell ss:Index="10"><Data ss:Type="String">Probation Period</Data></Cell>
-        <Cell ss:Index="11"><Data ss:Type="String">Notice Period</Data></Cell>
-        <Cell ss:Index="12"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String">Have Passport</Data></Cell>
-        <Cell ss:Index="14"><Data ss:Type="String">Passport No.</Data></Cell>
-        <Cell ss:Index="15"><Data ss:Type="String">Passport Issue Date</Data></Cell>
-        <Cell ss:Index="16"><Data ss:Type="String">Passport Expiry Date</Data></Cell>
-        <Cell ss:Index="17"><Data ss:Type="String">Leaving Date</Data></Cell>
-        <Cell ss:Index="18"><Data ss:Type="String">Retirement Date</Data></Cell>
-        <Cell ss:Index="19"><Data ss:Type="String">Compensatory Off</Data></Cell>
-        <Cell ss:Index="20"><Data ss:Type="String">Payment Mode</Data></Cell>
-        <Cell ss:Index="21"><Data ss:Type="String">Basis Of Time</Data></Cell>
-        <Cell ss:Index="22"><Data ss:Type="String">Is Employer PF</Data></Cell>
-        <Cell ss:Index="23"><Data ss:Type="String">Employee PF Option</Data></Cell>
-        <Cell ss:Index="24"><Data ss:Type="String">PF Max. Amount</Data></Cell> 
-        <Cell ss:Index="25"><Data ss:Type="String">PF No.</Data></Cell>
-        <Cell ss:Index="26"><Data ss:Type="String">Is Employer ESIC</Data></Cell>
-        <Cell ss:Index="27"><Data ss:Type="String">ESIC Option</Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="String">ESIC No.</Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String">Retention</Data></Cell>
-        <Cell ss:Index="30"><Data ss:Type="String">Insurance</Data></Cell>
-        <Cell ss:Index="31"><Data ss:Type="String">Family Insurance</Data></Cell>
-        <Cell ss:Index="32"><Data ss:Type="String">Bonus</Data></Cell>
-        <Cell ss:Index="33"><Data ss:Type="String">OT Option</Data></Cell>
-        <Cell ss:Index="34"><Data ss:Type="String">OT Rate</Data></Cell>
-        <Cell ss:Index="35"><Data ss:Type="String">Cost Center</Data></Cell>
-        <Cell ss:Index="36"><Data ss:Type="String">Welfare</Data></Cell>
-        <Cell ss:Index="37"><Data ss:Type="String">Contact Library</Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String">Contract Month</Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String">Contract End Date</Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String">Probation Period</Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String">Notice Period</Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String">Notice Period After Probation</Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="String">Have Passport</Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="String">Passport No.</Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="String">Passport Issue Date</Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="String">Passport Expiry Date</Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String">Leaving Date</Data></Cell>
+        <Cell ss:Index="20"><Data ss:Type="String">Retirement Date</Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="String">Compensatory Off</Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String">Payment Mode</Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String">Basis Of Time</Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="String">Is Employer PF</Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="String">Employee PF Option</Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String">PF Max. Amount</Data></Cell> 
+        <Cell ss:Index="27"><Data ss:Type="String">PF No.</Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String">Is Employer ESIC</Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String">ESIC Option</Data></Cell>
+        <Cell ss:Index="30"><Data ss:Type="String">ESIC No.</Data></Cell>
+        <Cell ss:Index="31"><Data ss:Type="String">Retention</Data></Cell>
+        <Cell ss:Index="32"><Data ss:Type="String">Insurance</Data></Cell>
+        <Cell ss:Index="33"><Data ss:Type="String">Family Insurance</Data></Cell>
+        <Cell ss:Index="34"><Data ss:Type="String">Bonus</Data></Cell>
+        <Cell ss:Index="35"><Data ss:Type="String">OT Option</Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="String">OT Rate</Data></Cell>
+        <Cell ss:Index="37"><Data ss:Type="String">Cost Center</Data></Cell>
+        <Cell ss:Index="38"><Data ss:Type="String">Welfare</Data></Cell>
+        <Cell ss:Index="39"><Data ss:Type="String">Contact Library</Data></Cell>
+        <Cell ss:Index="40"><Data ss:Type="String">GPS Track</Data></Cell>
+        <Cell ss:Index="41"><Data ss:Type="String">Restricted Area</Data></Cell>
 
       </Row>
 
@@ -59,34 +63,38 @@
         <Cell ss:Index="7"><Data ss:Type="String"><%= joining_detail.try(:employee_grade).try(:name) %></Data></Cell>
         <Cell ss:Index="8"><Data ss:Type="String"><%= joining_detail.try(:employee_designation).try(:name)%></Data></Cell>
         <Cell ss:Index="9"><Data ss:Type="String"><%= joining_detail.try(:employee_category).try(:name) %></Data></Cell>
-        <Cell ss:Index="10"><Data ss:Type="String"><%= joining_detail.try(:probation_period) %></Data></Cell>
-        <Cell ss:Index="11"><Data ss:Type="String"><%= joining_detail.try(:notice_period) %></Data></Cell>
-        <Cell ss:Index="12"><Data ss:Type="String"><%= joining_detail.try(:notice_period_after_probation) %></Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String"><%= joining_detail.try(:have_passport) %></Data></Cell>
-        <Cell ss:Index="14"><Data ss:Type="String"><%= joining_detail.try(:passport_no) %></Data></Cell>
-        <Cell ss:Index="15"><Data ss:Type="String"><%= joining_detail.try(:passport_issue_date) %></Data></Cell>
-        <Cell ss:Index="16"><Data ss:Type="String"><%= joining_detail.try(:passport_expiry_date) %></Data></Cell>
-        <Cell ss:Index="17"><Data ss:Type="String"><%= joining_detail.try(:leaving_date) %></Data></Cell>
-        <Cell ss:Index="18"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
-        <Cell ss:Index="19"><Data ss:Type="String"><%= joining_detail.try(:c_off) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="20"><Data ss:Type="String"><%= joining_detail.payment_mode.try(:name) %></Data></Cell>
-        <Cell ss:Index="21"><Data ss:Type="String"><%= joining_detail.try(:basis_of_time) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.try(:is_employeer_pf) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:select_pf) %></Data></Cell>
-        <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:pf_max_amount)%></Data></Cell>
-        <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
-        <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:is_employeer_esic) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.try(:have_esic) ? 'Yes' : 'No'%></Data></Cell>
-        <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.try(:employee_efic_no) %></Data></Cell>
-        <Cell ss:Index="29"><Data ss:Type="String"><%= joining_detail.try(:have_retention) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="30"><Data ss:Type="String"><%= joining_detail.try(:is_insurance) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="31"><Data ss:Type="String"><%= joining_detail.try(:is_family_pension) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="32"><Data ss:Type="String"><%= joining_detail.try(:is_bonus) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="33"><Data ss:Type="String"><%= joining_detail.try(:ot_option) ? 'Yes' : 'No' %></Data></Cell>
-        <Cell ss:Index="34"><Data ss:Type="String"><%= joining_detail.try(:ot_rate)%></Data></Cell>
-        <Cell ss:Index="35"><Data ss:Type="String"><%= joining_detail.try(:cost_center).try(:name) %></Data></Cell>
-        <Cell ss:Index="36"><Data ss:Type="String"><%= joining_detail.try(:welfare) %></Data></Cell>
-        <Cell ss:Index="37"><Data ss:Type="String"><%= joining_detail.try(:contact_library) %></Data></Cell>
+        <Cell ss:Index="10"><Data ss:Type="String"><%= joining_detail.try(:contract_month) %></Data></Cell>
+        <Cell ss:Index="11"><Data ss:Type="String"><%= joining_detail.try(:contract_end_date)%></Data></Cell>
+        <Cell ss:Index="12"><Data ss:Type="String"><%= joining_detail.try(:probation_period) %></Data></Cell>
+        <Cell ss:Index="13"><Data ss:Type="String"><%= joining_detail.try(:notice_period) %></Data></Cell>
+        <Cell ss:Index="14"><Data ss:Type="String"><%= joining_detail.try(:notice_period_after_probation) %></Data></Cell>
+        <Cell ss:Index="15"><Data ss:Type="String"><%= joining_detail.try(:have_passport) %></Data></Cell>
+        <Cell ss:Index="16"><Data ss:Type="String"><%= joining_detail.try(:passport_no) %></Data></Cell>
+        <Cell ss:Index="17"><Data ss:Type="String"><%= joining_detail.try(:passport_issue_date) %></Data></Cell>
+        <Cell ss:Index="18"><Data ss:Type="String"><%= joining_detail.try(:passport_expiry_date) %></Data></Cell>
+        <Cell ss:Index="19"><Data ss:Type="String"><%= joining_detail.try(:leaving_date) %></Data></Cell>
+        <Cell ss:Index="20"><Data ss:Type="String"><%= joining_detail.try(:retirement_date) %></Data></Cell>
+        <Cell ss:Index="21"><Data ss:Type="String"><%= joining_detail.try(:c_off) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="22"><Data ss:Type="String"><%= joining_detail.payment_mode.try(:name) %></Data></Cell>
+        <Cell ss:Index="23"><Data ss:Type="String"><%= joining_detail.try(:basis_of_time) ? 'Yes' : 'No'%></Data></Cell>
+        <Cell ss:Index="24"><Data ss:Type="String"><%= joining_detail.try(:is_employeer_pf) ? 'Yes' : 'No'%></Data></Cell>
+        <Cell ss:Index="25"><Data ss:Type="String"><%= joining_detail.try(:select_pf) %></Data></Cell>
+        <Cell ss:Index="26"><Data ss:Type="String"><%= joining_detail.try(:pf_max_amount)%></Data></Cell>
+        <Cell ss:Index="27"><Data ss:Type="String"><%= joining_detail.try(:employee_pf_no) %></Data></Cell>
+        <Cell ss:Index="28"><Data ss:Type="String"><%= joining_detail.try(:is_employeer_esic) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="29"><Data ss:Type="String"><%= joining_detail.try(:have_esic) ? 'Yes' : 'No'%></Data></Cell>
+        <Cell ss:Index="30"><Data ss:Type="String"><%= joining_detail.try(:employee_efic_no) %></Data></Cell>
+        <Cell ss:Index="31"><Data ss:Type="String"><%= joining_detail.try(:have_retention) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="32"><Data ss:Type="String"><%= joining_detail.try(:is_insurance) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="33"><Data ss:Type="String"><%= joining_detail.try(:is_family_pension) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="34"><Data ss:Type="String"><%= joining_detail.try(:is_bonus) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="35"><Data ss:Type="String"><%= joining_detail.try(:ot_option) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="36"><Data ss:Type="String"><%= joining_detail.try(:ot_rate)%></Data></Cell>
+        <Cell ss:Index="37"><Data ss:Type="String"><%= joining_detail.try(:cost_center).try(:name) %></Data></Cell>
+        <Cell ss:Index="38"><Data ss:Type="String"><%= joining_detail.try(:welfare) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="39"><Data ss:Type="String"><%= joining_detail.try(:contact_library) ? 'Yes' : 'No' %></Data></Cell>
+        <Cell ss:Index="40"><Data ss:Type="String"><%= joining_detail.try(:gps_track) %></Data></Cell>
+        <Cell ss:Index="41"><Data ss:Type="String"><%= joining_detail.try(:restricted_area) %></Data></Cell>
 
 
       </Row><!-- Row -->

@@ -1,0 +1,80 @@
+<%= bootstrap_form_for(@compliance_record,htlm: {id: 'compliance_record'},remote: true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :compliance_type_id,all_compliance_type,{hide_label: true,include_blank: "Select Payment Type"} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :agency_id,all_agency_type,{hide_label: true,include_blank: "Select Agency Type"} %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :compliance_date, hide_label: true,placeholder: "Compliance Date", class: 'submission'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :amount, hide_label: true,placeholder: "Amount"%>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :comment, hide_label: true,placeholder: "Comment"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.check_box :status, label: "Acknowledged" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create",class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$("#compliance_record").validate({
+    rules: {
+      "compliance_record[compliance_type_id]":{
+        required: true,
+      },
+       "compliance_record[agency_id]":{
+        required: true,
+      }
+       },
+    messages: {
+      "compliance_record[compliance_type_id]":{
+        required: "Please specify Payment type",
+      },
+      "compliance_record[agency_id]":{
+        required: "Please specify external agency",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+<script type="text/javascript">
+  $(function(){
+    $('.submission').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+8',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

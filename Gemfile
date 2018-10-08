@@ -40,6 +40,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
+gem 'will_paginate'
+
 
 
 gem 'fullcalendar-rails', '~> 3.4.0.0'
@@ -133,7 +135,6 @@ gem 'apartment'
 gem 'local-subdomain'
 # Bootstrap form
 gem 'bootstrap_form'
-
 # Jquery validation
 gem 'jquery-validation-rails'
 
@@ -149,7 +150,7 @@ gem 'protokoll'
 gem 'city-state'
 
 
-gem 'rmagick', '~> 2.15.4'
+ # gem 'rmagick', '~> 2.15.4'
 
 # infinite-cove-6619
 # DateTimePicker

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  compliance_type_id: 
+  agency_id: 
+  compliance_date: 2018-06-15
+  amount: MyString
+  comment: MyText
+  status: false
+
+two:
+  compliance_type_id: 
+  agency_id: 
+  compliance_date: 2018-06-15
+  amount: MyString
+  comment: MyText
+  status: false

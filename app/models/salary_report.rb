@@ -8,11 +8,12 @@ class SalaryReport
                 :earned_medical,:earned_driver,  :earned_child_edu,:earned_mra ,:earned_medical_rem, 
                 :actual_lta,:actual_progressive_alw,:actual_transport_alw,:actual_newspaper_alw,
                 :earned_lta,:earned_progressive_alw,:earned_transport_alw,:earned_newspaper_alw,
+                :actual_performance_alw, :earned_performance_alw,
                 
 
                 :pf, :esic, :income_tax, :pt, :advance, :society, :food_deduction, :mobile, :retention, 
-                :pantry_deduction,:latemark_deduction,
-                :welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, :gmk_deduction,
+                :pantry_deduction,:latemark_deduction,:bank_loan,
+                :welfair, :deduction_total, :net_payable, :other_deduction,  :pf_ctc, :esic_ctc,:bonus_ctc, :gmk_deduction,:latemark_deduction,
 
                 :total_leave, :pay_leave, :nonpay_leave, :gatepass, :day_in_month, :payable_day, 
                 :present_day, :absent_day, :holiday, :weekoff, :month, :year, 
@@ -103,6 +104,11 @@ class SalaryReport
          sr.actual_newspaper_alw = a.actual_amount
          sr.earned_newspaper_alw = a.calculated_amount
         
+
+        when "Performance Allowance"
+         sr.actual_performance_alw = a.actual_amount
+         sr.earned_performance_alw = a.calculated_amount
+        
       end
     end
 
@@ -140,6 +146,9 @@ class SalaryReport
 
         when "Latemark Deduction"
         sr.latemark_deduction = d.calculated_amount
+
+        when "Bank Loan"
+        sr.bank_loan = d.calculated_amount
 
       end
     end
@@ -285,13 +294,14 @@ class SalaryReport
     array_actual_transport_alw = reports.collect {|r| r.try(:actual_transport_alw)}.compact
     @sum.actual_transport_alw = array_actual_transport_alw.inject(0){|sum,x| sum + x}
 
-     array_actual_newspaper_alw = reports.collect {|r| r.try(:actual_newspaper_alw)}.compact
+    array_actual_newspaper_alw = reports.collect {|r| r.try(:actual_newspaper_alw)}.compact
     @sum.actual_newspaper_alw = array_actual_newspaper_alw.inject(0){|sum,x| sum + x}
 
+    array_actual_performance_alw = reports.collect {|r| r.try(:actual_performance_alw)}.compact
+    @sum.actual_performance_alw = array_actual_performance_alw.inject(0){|sum,x| sum + x}
 
     array_actual_total = reports.collect {|r| r.try(:actual_total)}.compact
     @sum.actual_total = array_actual_total.inject(0){|sum,x| sum + x }
-
 
     array_earned_basic = reports.collect {|r| r.try(:earned_basic)}.compact
     @sum.earned_basic = array_earned_basic.inject(0){|sum,x| sum + x }
@@ -320,6 +330,9 @@ class SalaryReport
     array_earned_medical = reports.collect {|r| r.try(:earned_medical)}.compact
     @sum.earned_medical = array_earned_medical.inject(0){|sum,x| sum + x}
 
+    array_earned_performance_alw = reports.collect {|r| r.try(:earned_performance_alw)}.compact
+    @sum.earned_performance_alw = array_earned_performance_alw.inject(0){|sum,x| sum + x}
+
     array_earned_child_edu = reports.collect {|r| r.try(:earned_child_edu)}.compact
     @sum.earned_child_edu = array_earned_child_edu.inject(0){|sum,x| sum + x}
 
@@ -328,7 +341,6 @@ class SalaryReport
 
     array_earned_monthly_arrear = reports.collect {|r| r.try(:earned_monthly_arrear)}.compact
     @sum.earned_monthly_arrear = array_earned_monthly_arrear.inject(0){|sum,x| sum + x}
-
 
     array_earned_total = reports.collect {|r| r.try(:earned_total)}.compact
     @sum.earned_total = array_earned_total.inject(0){|sum,x| sum + x }
@@ -360,7 +372,7 @@ class SalaryReport
     array_other_deduction = reports.collect {|r| r.try(:other_deduction)}.compact
     @sum.other_deduction = array_other_deduction.inject(0){|sum,x| sum + x }
 
-     array_gmk_deduction = reports.collect {|r| r.try(:gmk_deduction)}.compact
+    array_gmk_deduction = reports.collect {|r| r.try(:gmk_deduction)}.compact
     @sum.gmk_deduction = array_gmk_deduction.inject(0){|sum,x| sum + x }
 
     array_retention = reports.collect {|r| r.try(:retention)}.compact
@@ -372,8 +384,11 @@ class SalaryReport
     array_pantry_deduction = reports.collect {|r| r.try(:pantry_deduction)}.compact
     @sum.pantry_deduction = array_pantry_deduction.inject(0){|sum,x| sum + x }
 
-     array_latemark_deduction = reports.collect {|r| r.try(:latemark_deduction)}.compact
+    array_latemark_deduction = reports.collect {|r| r.try(:latemark_deduction)}.compact
     @sum.latemark_deduction = array_latemark_deduction.inject(0){|sum,x| sum + x }
+
+    array_bank_loan = reports.collect {|r| r.try(:bank_loan)}.compact
+    @sum.bank_loan = array_bank_loan.inject(0){|sum,x| sum + x }
 
     array_deduction_total = reports.collect {|r| r.try(:deduction_total)}.compact
     @sum.deduction_total = array_deduction_total.inject(0){|sum,x| sum + x }
@@ -492,6 +507,9 @@ class SalaryReport
 
         when "Newspaper Allowance"
         sr.actual_newspaper_alw = a.actual_amount
+
+    when "Performance Allowance"
+        sr.actual_performance_alw = a.actual_amount
         
       end
     end
@@ -588,10 +606,14 @@ class SalaryReport
         sr.actual_transport_alw = a.actual_amount
         sr.earned_transport_alw = a.calculated_amount
 
-          when "Newspaper Allowance"
+        when "Newspaper Allowance"
         sr.actual_newspaper_alw = a.actual_amount
         sr.earned_newspaper_alw = a.calculated_amount
         
+        when "Newspaper Allowance"
+        sr.actual_performance_alw = a.actual_amount
+        sr.earned_performance_alw = a.calculated_amount
+
       end
     end
 
@@ -624,8 +646,12 @@ class SalaryReport
         sr.retention = d.calculated_amount
         when "WelFare"
         sr.welfair = d.calculated_amount
-         when "Pantry Deduction"
+        when "Pantry Deduction"
         sr.pantry_deduction = d.calculated_amount
+         when "Latemark Deduction"
+        sr.latemark_deduction = d.calculated_amount
+        when "Bank Loan"
+        sr.bank_loan = d.calculated_amount
       end
     end
       

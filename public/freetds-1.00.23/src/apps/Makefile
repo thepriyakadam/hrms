@@ -128,37 +128,36 @@ am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 bsqldb_SOURCES = bsqldb.c
 bsqldb_OBJECTS = bsqldb.$(OBJEXT)
-am__DEPENDENCIES_1 =
 bsqldb_DEPENDENCIES = ../dblib/libsybdb.la \
-	../replacements/libreplacements.la $(am__DEPENDENCIES_1)
+	../replacements/libreplacements.la
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
 am__v_lt_1 = 
 bsqlodbc_SOURCES = bsqlodbc.c
 bsqlodbc_OBJECTS = bsqlodbc-bsqlodbc.$(OBJEXT)
+am__DEPENDENCIES_1 =
 bsqlodbc_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) \
 	../replacements/libreplacements.la \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1)
 am_datacopy_OBJECTS = datacopy.$(OBJEXT)
 datacopy_OBJECTS = $(am_datacopy_OBJECTS)
 datacopy_DEPENDENCIES = ../dblib/libsybdb.la \
-	../replacements/libreplacements.la $(am__DEPENDENCIES_1)
+	../replacements/libreplacements.la
 defncopy_SOURCES = defncopy.c
 defncopy_OBJECTS = defncopy.$(OBJEXT)
 defncopy_DEPENDENCIES = ../dblib/libsybdb.la \
-	../replacements/libreplacements.la $(am__DEPENDENCIES_1)
+	../replacements/libreplacements.la
 am_freebcp_OBJECTS = freebcp.$(OBJEXT)
 freebcp_OBJECTS = $(am_freebcp_OBJECTS)
 freebcp_DEPENDENCIES = ../dblib/libsybdb.la \
-	../replacements/libreplacements.la $(am__DEPENDENCIES_1)
+	../replacements/libreplacements.la
 tsql_SOURCES = tsql.c
 tsql_OBJECTS = tsql.$(OBJEXT)
 tsql_DEPENDENCIES = ../tds/libtds.la \
 	../replacements/libreplacements.la $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -293,21 +292,25 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
-ACLOCAL = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing aclocal-1.15
+ACLOCAL = ${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing aclocal-1.15
 ALLOCA = 
 AMTAR = $${TAR-tar}
 AM_CFLAGS =  -pthread
 AM_DEFAULT_VERBOSITY = 0
 AR = ar
 AS = as
-AUTOCONF = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoconf
-AUTOHEADER = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoheader
-AUTOMAKE = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing automake-1.15
+AUTOCONF = ${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing autoconf
+AUTOHEADER = ${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing autoheader
+AUTOMAKE = ${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing automake-1.15
 AWK = gawk
-BUILD_NUMBER = 6683
+<<<<<<< HEAD
+BUILD_NUMBER = 6702
+=======
+BUILD_NUMBER = 6746
+>>>>>>> dbda16c7f4efa6c63f220e172959c373e96b0b78
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2  -Wdeclaration-after-statement
+CFLAGS = -g -O2   -Wdeclaration-after-statement
 CPP = gcc -E
 CPPFLAGS =  -DUNIXODBC -D_REENTRANT -D_THREAD_SAFE -DDEBUG=1 -Wall -Wstrict-prototypes -Wmissing-prototypes -Wno-long-long -Wpointer-arith
 CYGPATH_W = echo
@@ -325,7 +328,7 @@ EXEEXT =
 FGREP = /bin/grep -F
 FREETDS_LIBGCC = 
 FREETDS_ODBC_MODULE = 
-FREETDS_SYMBOLIC = 
+FREETDS_SYMBOLIC = -Wl,-Bsymbolic
 GCRYPT_CFLAGS = 
 GCRYPT_LIBS = 
 GNUTLS_CFLAGS = 
@@ -344,25 +347,23 @@ LIBADD_DL = -ldl
 LIBADD_DLD_LINK = 
 LIBADD_DLOPEN = -ldl
 LIBADD_SHL_LOAD = 
-LIBICONV = 
 LIBOBJS =  ${LIBOBJDIR}readpassphrase$U.o ${LIBOBJDIR}strlcpy$U.o ${LIBOBJDIR}strlcat$U.o
 LIBS = -lpthread  
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
-LTLIBICONV = 
 LTLIBOBJS =  ${LIBOBJDIR}readpassphrase$U.lo ${LIBOBJDIR}strlcpy$U.lo ${LIBOBJDIR}strlcat$U.lo
 LT_DLLOADERS =  dlopen.la
 LT_DLPREOPEN = -dlpreopen dlopen.la 
 LT_SYS_LIBRARY_PATH = 
 MAJOR = 1
-MAKEINFO = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing makeinfo
+MAKEINFO = ${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/missing makeinfo
 MANIFEST_TOOL = :
 MINOR = 00
 MKDIR_P = /bin/mkdir -p
 NETTLE_CFLAGS = 
 NETTLE_LIBS = 
-NETWORK_LIBS =  -lssl -lcrypto
+NETWORK_LIBS =  -lssl -lcrypto  
 NM = /usr/bin/nm -B
 NMEDIT = 
 OBJDUMP = objdump
@@ -374,8 +375,8 @@ ODBCNODMLIB =
 ODBCNODMLIBAPP = 
 ODBC_CONFIG = 
 ODBC_INC = 
-OPENSSL_CFLAGS = 
-OPENSSL_LIBS = -lssl -lcrypto
+OPENSSL_CFLAGS =  
+OPENSSL_LIBS = -lssl -lcrypto  
 OTOOL = 
 OTOOL64 = 
 PACKAGE = freetds
@@ -401,10 +402,10 @@ SHELL = /bin/bash
 STRIP = strip
 SUBVERSION = 23
 VERSION = 1.00.23
-abs_builddir = /home/ubuntu/hrms/public/freetds-1.00.23/src/apps
-abs_srcdir = /home/ubuntu/hrms/public/freetds-1.00.23/src/apps
-abs_top_builddir = /home/ubuntu/hrms/public/freetds-1.00.23
-abs_top_srcdir = /home/ubuntu/hrms/public/freetds-1.00.23
+abs_builddir = /home/cpu/workspace/hrms/public/freetds-1.00.23/src/apps
+abs_srcdir = /home/cpu/workspace/hrms/public/freetds-1.00.23/src/apps
+abs_top_builddir = /home/cpu/workspace/hrms/public/freetds-1.00.23
+abs_top_srcdir = /home/cpu/workspace/hrms/public/freetds-1.00.23
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -435,7 +436,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/install-sh
+install_sh = ${SHELL} /home/cpu/workspace/hrms/public/freetds-1.00.23/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -447,6 +448,7 @@ pdfdir = ${docdir}
 prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
+runstatedir = ${localstatedir}/run
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .

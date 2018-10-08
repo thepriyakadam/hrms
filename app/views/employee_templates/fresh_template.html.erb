@@ -2,7 +2,10 @@
   <div class="box-header">
     <h3 class="box-title">Salary Break Up</h3>
     <div class="pull-right">
-      
+      <%= link_to " Excel Report ", employee_salaryslip_details_employee_templates_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%#= link_to " Excel Report ", employee_salaryslip_details_employee_templates_path(employee_ids: @employee_ids, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      <%= link_to 'Upload', import_xl_employee_templates_path,class: 'fa fa-upload btn btn-sm btn-info' %>
+      <%= link_to " Template", "/Templates/65.Employee Template.xls", :class=>"fa fa-download btn-sm btn btn-warning" %>
     </div>
   </div><!-- /.box-header -->
   <div class="box-body">

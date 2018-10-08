@@ -1,0 +1,60 @@
+<!-- Main content -->
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h6 class="modal-title"><center> Attendance Details </center></h6>
+    </div>
+    <div class="modal-body">
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+        <tbody>
+          <% @emp_att.each do |a| %>
+            <tr><th>ID</th> <td><%= a.employee.manual_employee_code %></td></tr>
+            <tr> <th>Employee Name</th> <td><%= full_name(a.employee) %></td></tr>
+            <tr><th>Day</th><td><%= a.try(:day) %></td></tr>
+            <tr><th>Present</th><td><%= a.try(:present) %></td></tr>
+            <tr><th>In Time</th><td><%= a.try(:in_time) %></td></tr>
+            <tr><th>Out Time</th><td><%= a.try(:out_time) %></td></tr>
+            <tr><th>Working Hours</th><td><%= a.try(:working_hrs) %></td></tr>
+            <tr><th>Comment</th><td><%= a.try(:comment) %></td></tr>
+          <% end %> <!-- do -->
+        </tbody>
+      </table>
+      <table id="example2" class="table table-bordered table-hover table-condensed">
+        <tbody>
+          <tr><th colspan="2"><center> Request Details </center></th></tr>
+          <tr>
+            <th>Reason</th>
+              <td><%= @att_rejected.regularization_reason.try(:name) %></td>
+            </tr>
+          <tr>
+            <th>Date</th>
+            <td><%= @att_rejected.date %></td>
+          </tr>
+          <tr>
+            <th>Justification</th>
+            <td><%= @att_rejected.justification %></td>
+          </tr>
+          <tr>
+            <th>Status</th>
+            <td>
+              <% if @att_rejected.status == "Pending" %>
+                <small class="label label-default">Pending</small>
+              <% elsif @att_rejected.status == "Approved" %>
+                <small class="label label-success">Approved</small>
+              <% elsif @att_rejected.status == "Rejected" %>
+                <small class="label label-danger">Rejected</small>
+              <% else %>
+                <small class="label label-info">Else</small>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <center>  
+        <%= link_to 'Approved', approve_attendance_attendance_regularizations_path(@att_rejected), class: "btn btn-sm btn-success" %>&nbsp
+        <%= link_to 'Rejected', rejected_attendance_attendance_regularizations_path(@att_rejected),data: { confirm: 'Are you sure to rejecte this request?' }, class: "btn btn-sm btn-danger" %>
+      </center>
+  </div> 
+</div>
+

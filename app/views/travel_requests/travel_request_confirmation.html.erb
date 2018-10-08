@@ -20,13 +20,13 @@
         <th><font color='green'>*<%= travel_request.employee.try(:manual_employee_code) %></font></th>
         <th><font color='green'><%= full_name(travel_request.employee) %></font></th>
      
-        <th><font color='green'><%= travel_request.traveling_date %></font></th>
+        <th><font color='green'><%= travel_request.traveling_date %> - <%= travel_request.to %></font></th>
         <th><font color='green'><%= travel_request.place %></font></th>
         <%else%>
         <td><%= travel_request.employee.try(:manual_employee_code) %></td>
         <td><%= full_name(travel_request.employee) %></td>
 
-        <td><%= travel_request.traveling_date %></td>
+        <td><%= travel_request.traveling_date %> - <%= travel_request.to %></td>
         <td><%= travel_request.place %></td>
         <%end%>
       </tr>

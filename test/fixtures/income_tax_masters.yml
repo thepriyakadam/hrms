@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  relation: MyString
+  second_name: MyText
+  designation: MyString
+  status: false
+
+two:
+  name: MyText
+  relation: MyString
+  second_name: MyText
+  designation: MyString
+  status: false

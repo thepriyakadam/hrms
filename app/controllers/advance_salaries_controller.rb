@@ -8,7 +8,7 @@ class AdvanceSalariesController < ApplicationController
   # GET /advance_salaries.json
   # include QueryReport::Helper # need to include it
   def index
-    @advance_salaries = AdvanceSalary.group("DATE_FORMAT(advance_date,'%Y')")
+    @advance_salaries = AdvanceSalary.group("DATE_FORMAT(advance_date,'%Y')","DATE_FORMAT(advance_date,'%b')")
     # @advance_salaries = AdvanceSalary.group("strftime('%Y',advance_date)")
     session[:active_tab] ="PayrollManagement"
     session[:active_tab1] ="AdvanceSalary"
@@ -52,9 +52,16 @@ class AdvanceSalariesController < ApplicationController
 
   # PATCH/PUT /advance_salaries/1
   # PATCH/PUT /advance_salaries/1.json
-  def update
+   def update
     respond_to do |format|
       if @advance_salary.update(advance_salary_params)
+        Instalment.where(advance_salary_id: @advance_salary.id).destroy_all
+        start_date = @advance_salary.advance_date
+        for i in 1..@advance_salary.no_of_instalment.to_i
+          #@advance_salary.instalments.build(instalment_amount: @advance_salary.instalment_amount, instalment_date: start_date)
+          Instalment.create(instalment_amount: @advance_salary.instalment_amount,advance_salary_id: @advance_salary.id,instalment_date: start_date)
+          start_date = start_date.next_month
+        end
         format.html { redirect_to @advance_salary, notice: 'Advance salary was successfully updated.' }
         format.json { render :show, status: :ok, location: @advance_salary }
       else
@@ -64,9 +71,24 @@ class AdvanceSalariesController < ApplicationController
     end
   end
 
+
+  # def update
+  #   respond_to do |format|
+  #     if @advance_salary.update(advance_salary_params)
+  #       format.html { redirect_to @advance_salary, notice: 'Advance salary was successfully updated.' }
+  #       format.json { render :show, status: :ok, location: @advance_salary }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @advance_salary.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
   # DELETE /advance_salaries/1
   # DELETE /advance_salaries/1.json
   def destroy
+    advance_salary = @advance_salary.id
+    Instalment.where(advance_salary_id: advance_salary).destroy_all
     @advance_salary.destroy
     respond_to do |format|
       format.html { redirect_to advance_salaries_url, notice: 'Advance salary was successfully destroyed.' }
@@ -116,6 +138,20 @@ class AdvanceSalariesController < ApplicationController
         @advance_salaries = AdvanceSalary.where("DATE_FORMAT(advance_date,'%m/%Y') = ?", date.strftime('%m/%Y')).where(employee_id: current_user.employee_id)
       end
      end
+
+      respond_to do |f|
+        f.js
+        f.xls {render template: 'advance_salaries/advance_salary_xls.xls.erb'}
+        f.html
+        f.pdf do
+          render pdf: 'advance_salary',
+          layout: 'pdf.html',
+          orientation: 'Landscape',
+          template: 'advance_salaries/advance_salary.pdf.erb',
+          show_as_html: params[:debug].present?
+          #margin:  { top:1,bottom:1,left:1,right:1 }
+        end
+      end
   end
 
   def advance_salary_report

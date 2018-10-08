@@ -3,17 +3,16 @@
 <table style="border-collapse: collapse; font-size:30pt;" border=1 width=1000 cellpadding="19">
   <thead>
     <tr>
-
-     <td colspan="49">
-         <% if current_user.company_location.company.company_logo == nil %>
-      <% else %>
-        <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+      <td colspan="49">
+        <% if current_user.company_location.company.company_logo == nil %>
+        <% else %>
+          <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%>
-        <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
-        <center><small><%= Bank.find(@bank).name unless @bank.nil?  or @bank.blank? %>
-        <%= CostCenter.find(@cost_center).name unless @cost_center.blank? or @cost_center.nil? or @cost_center.empty? %>
-        <%= EmployeeCategory.find(@category).name %></small></center>
-        <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
+          <center><strong><%= current_user.employee.company_location.company.description %></strong></center>
+          <center><small><%= Bank.find(@bank).name unless @bank.nil?  or @bank.blank? %>
+          <%= CostCenter.find(@cost_center).name unless @cost_center.blank? or @cost_center.nil? or @cost_center.empty? %>
+          <%= EmployeeCategory.find(@category).name %></small></center>
+          <center><small>Employee Monthly Salary For The Month <%= @month %> - <%= @year %></small></center>   
       </th>
     </tr>
     <tr>

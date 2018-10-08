@@ -1,0 +1,77 @@
+<%= bootstrap_form_for(@income_tax_master,html: {id: 'income_tax_master'},remote:true) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :name,hide_label:true, placeholder: 'Name'  %>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <%= f.text_field :second_name,hide_label:true, placeholder: 'Name'  %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :relation,hide_label:true, placeholder: 'Relation'  %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :designation,hide_label:true, placeholder: 'Designation'  %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :status,hide_label:true %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Incometax Master", :class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br>
+
+<script>
+$("#income_tax_master").validate({
+    rules: {
+      "income_tax_master[relation]":{
+        required: true,
+      },
+      "income_tax_master[name]":{
+        required: true,
+      },
+      "income_tax_master[second_name]":{
+        required: true,
+      },
+      "income_tax_master[designation]":{
+        required: true,
+      }
+    },
+    messages: {
+      "income_tax_master[relation]":{
+        required: "Please specify Relation",
+      },
+      "income_tax_master[name]":{
+        required: "Please specify Name",
+      },
+      "income_tax_master[second_name]":{
+        required: "Please specify Name",
+      },
+      "income_tax_master[designation]":{
+        required: "Please specify Designation",
+      }     
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

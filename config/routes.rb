@@ -1311,6 +1311,8 @@ end
 
   resources :goal_ratings do
     collection do
+      get :period_for_status
+      post :managerwise_status
       get :periodwise_goal_set
       post :periodwise_goal_list
       post :set_goal_periodwise

@@ -14,6 +14,7 @@
       <th>Department</th>
       <th>Grade</th>
       <th>Designation</th>
+      <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -28,7 +29,8 @@
         <td><%= full_name(employee) %></td>
         <td><%= employee.try(:company_location).try(:name)%> - <%= employee.try(:department).try(:name)%></td>
         <td><%= employee.try(:joining_detail).try(:employee_grade).try(:name) %></td>
-         <td><%= employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+        <td><%= employee.try(:joining_detail).try(:employee_designation).try(:name) %></td>
+        <td><%= employee.status %></td>
         <td>
           <%= link_to '', employee,class: 'btn btn-sm btn-default fa fa-eye' %>
         </td>

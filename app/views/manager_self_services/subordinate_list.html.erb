@@ -19,7 +19,9 @@
           <tr>
             <td><%= g.period.try(:name) %></td>
             <td> From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
-            <td><%= link_to 'Show Employee List', goal_period_list_goal_bunches_path(period_id: g.period_id) ,class: 'btn btn-xs btn-info' %></td>
+            <td><%= link_to 'Show Employee List', goal_period_list_goal_bunches_path(period_id: g.period_id) ,class: 'btn btn-xs btn-info' %>
+              <%= link_to 'Status', managerwise_status_goal_ratings_path(g.period_id),class: 'btn btn-xs btn-primary',remote:true %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -27,6 +29,7 @@
   </div>
 </div>
 
+<div id="managerwise_status" class="modal fade">
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example6').DataTable( {

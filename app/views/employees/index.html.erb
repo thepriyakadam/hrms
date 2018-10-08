@@ -36,7 +36,7 @@
         </td>
       <%else%>
         
-         <td><font color='red'><%= employee.manual_employee_code %></font></td>
+        <td><font color='red'><%= employee.manual_employee_code %></font></td>
         <td><font color='red'><%= full_name(employee) %></font></td>
         <td><font color='red'><%= employee.try(:company_location).try(:name)%> - <%= employee.try(:department).try(:name)%></font></td>
         <td><font color='red'><%= employee.try(:joining_detail).try(:employee_grade).try(:name) %></font></td>

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :shift_schedules do
     collection do
+      get :all_shift_schedule
+      get :import_xl
+      post :import
       get :employee_shift
       post :set_employee_shift
       get :view_employee_shift
@@ -2870,6 +2873,9 @@ end
   resources :cost_centers do
     collection do
       get :is_confirm
+      get :all_cost_center
+      get :import_xl
+      post :import
     end
   end
   resources :degrees do

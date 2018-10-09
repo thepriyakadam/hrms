@@ -16,11 +16,30 @@ class ShiftSchedulesController < ApplicationController
   def new
     @shift_schedule = ShiftSchedule.new
 
-    joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
-    shift_time = ShiftTime.where(cost_center_id: joining_detail.cost_center_id).pluck(:id)
-    @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
-    session[:active_tab] = "TimeManagement"
-    session[:active_tab1] = "TimeManagementHod"
+    # joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
+    # shift_time = ShiftTime.where(cost_center_id: joining_detail.cost_center_id).pluck(:id)
+    # @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+
+    if current_user.role.name == 'GroupAdmin'
+      shift_time = ShiftTime.where(status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    elsif current_user.role.name == 'Admin'
+      shift_time = ShiftTime.where(status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    elsif current_user.role.name == 'HOD'
+      employees = Employee.where(manager_id: current_user.employee_id).pluck("id")
+      joining_detail = JoiningDetail.where(employee_id: employees).pluck("cost_center_id")
+      shift_time = ShiftTime.where(cost_center_id: joining_detail,status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    elsif current_user.role.name == 'Supervisor'
+      joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
+      shift_time =ShiftTime.where(cost_center_id: joining_detail.cost_center_id,status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    else current_user.role.name == 'Employee'
+      shift_time = ShiftTime.where(cost_center_id: joining_detail.cost_center_id,status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    end
+    session[:active_tab] = "TimeManagementHod"
   end
 
   # GET /shift_schedules/1/edit
@@ -68,6 +87,9 @@ class ShiftSchedulesController < ApplicationController
   end
 
   def employee_shift
+    cost_center = ShiftSchedule.find(params[:format]).shift_time.cost_center
+    @employee = JoiningDetail.where(cost_center_id: cost_center.id).pluck(:employee_id)
+
     @shift_schedule = ShiftSchedule.find(params[:format])
     current_login = Employee.find(current_user.employee_id)
     emps_sub = current_login.subordinates
@@ -75,14 +97,15 @@ class ShiftSchedulesController < ApplicationController
 
     @emp_sub = emps_sub.where(status: "Active")
     @emp_ind = emps_ind.where(status: "Active")
-    @employee = @emp_sub + @emp_ind
+    #@employee = @emp_sub + @emp_ind
     #joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
 
     shift_employee = ShiftEmployee.where(date: @shift_schedule.from.to_date..@shift_schedule.to.to_date).pluck(:employee_id)
-    @employees = Employee.where(id: @employee).where.not(id: shift_employee) 
+    @employees = Employee.where(id: @employee).where.not(id: shift_employee)
     shift_employees = ShiftEmployee.where(shift_schedule_id: @shift_schedule.id,employee_id: @employee).pluck(:employee_id)
-    
+
     @shift_employees = Employee.where(id: shift_employees)
+    
   end
 
   def shift_employee

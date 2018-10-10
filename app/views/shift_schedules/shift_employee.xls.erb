@@ -6,6 +6,7 @@
           <th>ID</th>
           <th>Employee Name</th>
           <th>Designation</th>
+          <th>Reporting Manager</th>
         </tr>
       </thead>
 
@@ -18,6 +19,8 @@
             <td><%= employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee) %></td>
             <td><%= employee.department.try(:name) %></td>
+            <td><%= employee.department.try(:name) %></td>
+            <% manager = Employee.find(employee.manager_id)%>
           </tr>
         <% end %>
       </tbody>

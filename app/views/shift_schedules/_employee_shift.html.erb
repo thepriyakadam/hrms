@@ -12,6 +12,7 @@
             <th>ID</th>
             <th>Employee Name</th>
             <th>Designation</th>
+            <th>Reporting Manager</th>
           </tr>
         </thead>
 
@@ -22,6 +23,8 @@
 	          	<td><%= employee.try(:manual_employee_code) %></td>
 	          	<td><%= full_name(employee) %></td>
 	          	<td><%= employee.department.try(:name) %></td>
+              <% manager = Employee.find(employee.manager_id)%>
+              <td><%= short_name(manager) %></td>
 	        	</tr>
 	      	<% end %>
 	    	</tbody>
@@ -50,6 +53,7 @@
           <th>Sr. No</th>
           <th>ID</th>
           <th>Employee Name</th>
+          <th>Reporting Manager</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -61,6 +65,8 @@
             <td><%= i = i + 1 %></td>
             <td><%= employee.try(:manual_employee_code) %></td>
             <td><%= full_name(employee) %></td>
+            <% manager = Employee.find(employee.manager_id)%>
+            <td><%= short_name(manager) %></td>
             <td>
               <%= link_to '',  view_employee_shift_shift_schedules_path(emp_id: employee.id,shift_schedule_id: @shift_schedule.id),class: "btn btn-xs btn-default fa fa-eye",remote:true %>
             </td>

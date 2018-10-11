@@ -277,10 +277,11 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_list_appraiser
-     @period = Period.find(params[:period_id])
+    @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
     emps = current_login.subordinates.pluck(:id)
-    @all = emps.where(status: "Active")
+    employee = Employee.where(id: emps)
+    @all = employee.where(status: "Active")
     @emps = @all.pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,goal_approval: true,period_id: @period.id)
   end

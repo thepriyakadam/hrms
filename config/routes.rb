@@ -3565,8 +3565,10 @@ end
     get 'user_auths/shift_schedule_list' => 'user_auths#shift_schedule_list', defaults:{format: 'json'}
     get 'user_auths/employee_shift_schedule_list' => 'user_auths#employee_shift_schedule_list', defaults:{format: 'json'}
     get 'user_auths/created_employee_shift_schedule_list' => 'user_auths#created_employee_shift_schedule_list', defaults:{format: 'json'}
-    post 'user_auths/set_employee_shift' => 'user_auths#set_employee_shift', defaults:{format: 'json'}
+    post 'user_auths/employee_shift_schedule_data' => 'user_auths#employee_shift_schedule_data', defaults:{format: 'json'}
+    get 'user_auths/view_employee_shift' => 'user_auths#view_employee_shift', defaults:{format: 'json'}
+    get 'user_auths/all_shift_name_list' => 'user_auths#all_shift_name_list', defaults:{format: 'json'}
+    get 'user_auths/managerwise_attendance_list' => 'user_auths#managerwise_attendance_list', defaults:{format: 'json'}
 
   end
 end
-

@@ -2399,6 +2399,9 @@ end
       get :update_reporting_manager
       post :update_manager
       get :show_employee
+      get :reporting_master
+      get :import_xl
+      post :import
     end
   end
   resources :leave_status_records do

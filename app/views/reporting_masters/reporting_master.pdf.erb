@@ -14,35 +14,32 @@
 <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1000 cellpadding="10">
   <thead>
     <tr>
-      <td colspan="6"><center> 
+      <td colspan="4"><center> 
         <% if current_user.employee.company_location.company.company_logo == nil %>
         <%else %>
           <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
         <%end%> 
-          <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%><br>
-        </center>
+          <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
       </td>
     </tr>
-    <tr> 
-    	<th>Sr. No</th>
-      <th>Shift</th>
-      <th>Name</th>
-      <th>From</th>
-      <th>To</th>
+    <tr>
+    	<th colspan="4"><center>Reporting Manager</center></th>
+    </tr>
+    <tr>
+      <th>Sr. No</th>
+      <th>ID</th>
+      <th>Reporting Manager</th>
       <th>Status</th>
     </tr>
   </thead>
- 
   <tbody>
-  	<% i = 0 %>
-    <% @shift_schedules.each do |shift_schedule| %>
+    <% i = 0 %>
+    <% @reporting_masters.each do |reporting_master| %>
       <tr>
-      	<td><%= i = i + 1 %></td>
-        <td><%= shift_schedule.shift_time.try(:shift) %></td>
-        <td><%= shift_schedule.shift_time.try(:name) %></td>
-        <td><%= shift_schedule.from.strftime("%d-%b-%y") %></td>
-        <td><%= shift_schedule.to.strftime("%d-%b-%y") %></td>
-        <td><%= shift_schedule.status ? "Active" : "Inactive" %></td>
+        <td><%= i = i + 1 %></td>
+        <td><%= reporting_master.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(reporting_master.employee) %></td>
+        <td><%= reporting_master.is_active ? "Active" : "Inactive" %></td>
       </tr>
     <% end %>
   </tbody>

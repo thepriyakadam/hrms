@@ -1,1 +1,27 @@
-all_shift_schedule.xls.erb
+
+<table id="example4" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+    	<th>Sr. No</th>
+      <th>Shift</th>
+      <th>Name</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+  	<% i = 0 %>
+    <% @shift_schedules.each do |shift_schedule| %>
+      <tr>
+      	<td><%= i = i + 1 %></td>
+        <td><%= shift_schedule.shift_time.try(:shift) %></td>
+        <td><%= shift_schedule.shift_time.try(:name) %></td>
+        <td><%= shift_schedule.from.strftime("%d-%b-%y") %></td>
+        <td><%= shift_schedule.to.strftime("%d-%b-%y") %></td>
+        <td><%= shift_schedule.status ? "Active" : "Inactive" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

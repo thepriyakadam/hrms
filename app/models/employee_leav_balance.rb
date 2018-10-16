@@ -77,7 +77,7 @@ class EmployeeLeavBalance < ActiveRecord::Base
 
 
   def self.import(file)
-     spreadsheet = open_spreadsheet(file)
+    spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
       manual_employee_code = spreadsheet.cell(i,'B').to_i
       if manual_employee_code == 0

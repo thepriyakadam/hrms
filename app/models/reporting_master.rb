@@ -32,7 +32,16 @@ class ReportingMaster < ActiveRecord::Base
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
       
-      manager = spreadsheet.cell(i,'B').to_i
+      #manager = spreadsheet.cell(i,'B').to_i
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+        if manual_employee_code == 0
+           manual_employee_code = spreadsheet.cell(i,'B')
+           employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+        else
+           manual_employee_code = spreadsheet.cell(i,'B').to_i
+           employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        end
+
       is_active = spreadsheet.cell(i,'C')
 
       if is_active == "Active" || is_active == "active" || is_active == "Yes" || is_active == "yes"
@@ -41,7 +50,7 @@ class ReportingMaster < ActiveRecord::Base
         is_active = false
       end
 
-      employee = Employee.find_by(manual_employee_code: manager)
+      #employee = Employee.find_by(manual_employee_code: manager)
       @reporting_master = ReportingMaster.find_by(employee_id: employee.id )
       if @reporting_master.nil?
         @reporting_master = ReportingMaster.create(employee_id: employee.id,is_active: is_active)     

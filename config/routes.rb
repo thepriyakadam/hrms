@@ -168,7 +168,11 @@ Rails.application.routes.draw do
       post :import
     end
   end
-  resources :transport_allowances
+  resources :transport_allowances do
+    collection do
+      get :show_allowance
+    end
+  end
   resources :events
   resources :resource_pool_masters
   resources :service_masters

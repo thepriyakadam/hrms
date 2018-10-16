@@ -2780,7 +2780,7 @@ class Api::UserAuthsController < ApplicationController
     shift_schedule = ShiftSchedule.find(shift_schedule_id)
     employees = params[:employee_id]
     @employee_ids = employees.split(',')
-    if @employee_ids.nil?
+    if @employee_ids.nil? or @employee_ids.empty?
       render :status=>200, :json=>{:status=>"Please Select Employees"}
     else
       @employee_ids.each do |eid|
@@ -2873,7 +2873,7 @@ class Api::UserAuthsController < ApplicationController
     end
     total_hrs = out_time.to_time - in_time.to_time
     working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
-    if @employee_ids.nil?
+    if @employee_ids.nil? or @employee_ids.empty?
       render :status=>200, :json=>{:status=>"Please Select the Checkbox"}
     else
       @employee_ids.each do |eid|

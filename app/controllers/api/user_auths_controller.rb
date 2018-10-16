@@ -2789,7 +2789,7 @@ class Api::UserAuthsController < ApplicationController
           ShiftEmployee.create(shift_schedule_id: shift_schedule.id,employee_id: @employee.id,date: i,created_by_id: current_user_id,shift_time_id: shift_schedule.shift_time_id,status: true)
         end
       end#do
-      render :status=>200, :json=>{:status=>"Set Successfully!!"}
+      render :status=>200, :json=>{:status=>"Shift Set Successfully!!"}
     end#if
   end
 

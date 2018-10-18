@@ -18,7 +18,8 @@ class TopicsController < ApplicationController
   # GET /topics/new
   def new
     @topic = Topic.new
-    session[:active_tab] = "EmployeeSelfService"
+    session[:active_tab] = "Forum"
+    # session[:active_tab] = "EmployeeSelfService"
   end
 
   # GET /topics/1/edit
@@ -130,6 +131,7 @@ class TopicsController < ApplicationController
 
   def all_topic_list
     @topics = Topic.where(status: true)
+    session[:active_tab] = "Forum"
   end
 
   def all_topic_details

@@ -15,11 +15,9 @@ class ShiftSchedulesController < ApplicationController
   # GET /shift_schedules/new
   def new
     @shift_schedule = ShiftSchedule.new
-
     # joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)
     # shift_time = ShiftTime.where(cost_center_id: joining_detail.cost_center_id).pluck(:id)
     # @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
-
     if current_user.role.name == 'GroupAdmin'
       shift_time = ShiftTime.where(status: true).pluck(:id)
       @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
@@ -27,9 +25,17 @@ class ShiftSchedulesController < ApplicationController
       shift_time = ShiftTime.where(status: true).pluck(:id)
       @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
     elsif current_user.role.name == 'HOD'
-      employees = Employee.where(manager_id: current_user.employee_id).pluck("id")
-      joining_detail = JoiningDetail.where(employee_id: employees).pluck("cost_center_id")
+      current_login = Employee.find(current_user.employee_id)
+      emps_sub = current_login.subordinates
+      emps_ind = current_login.indirect_subordinates
+      @emp_sub = emps_sub.where(status: "Active")
+      @emp_ind = emps_ind.where(status: "Active")
+      @employee = @emp_sub + @emp_ind
+      joining_detail = JoiningDetail.where(employee_id: @employee).pluck("cost_center_id")
       shift_time = ShiftTime.where(cost_center_id: joining_detail,status: true).pluck(:id)
+      #employees = Employee.where(manager_id: current_user.employee_id).pluck("id")
+      #joining_detail = JoiningDetail.where(employee_id: employees).pluck("cost_center_id")
+      #shift_time = ShiftTime.where(cost_center_id: joining_detail,status: true).pluck(:id)
       @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
     elsif current_user.role.name == 'Supervisor'
       joining_detail = JoiningDetail.find_by(employee_id: current_user.employee_id)

@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'roo'
 puts "Starting ..."
 ex = Roo::Excel.new("#{Rails.root}/public/CompanyLocation.xls")
 ex.default_sheet = ex.sheets[0] 

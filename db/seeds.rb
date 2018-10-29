@@ -2,10 +2,10 @@ require 'rubygems'
 require 'roo'
 puts "Starting ..."
 #ex = Roo::Excel.new("#{Rails.root}/public/CompanyLocation.xls")
-ex = Roo::Excel.new("#{Rails.root}/public/CL.xlsx")
+ex = Roo::Excel.new("#{Rails.root}/public/CompanyL.xls")
 ex.default_sheet = ex.sheets[0] 
 i = 1
-2.upto(692) do |line|
+58.upto(229) do |line|
 	company_location = CompanyLocation.find_by_name(ex.cell(line,'B'))
 	if company_location.present?
 		@company_location_id = company_location.id

@@ -14,11 +14,11 @@
     <% @shift_schedules.each do |shift_schedule| %>
       <tr>
       	<td><%= i = i + 1 %></td>
-        <% if shift_schedule.status == true %>
-         <td><%= shift_schedule.shift_time.try(:shift) %> - <%= shift_schedule.shift_time.try(:name) %></td>
-        <%else%>
-         <td><font color='red'><%= shift_schedule.shift_time.try(:shift) %> - <%= shift_schedule.shift_time.try(:name) %></font></td>
-        <%end%>
+          <% if shift_schedule.status == true %>
+           <td><%= shift_schedule.shift_time.try(:shift) %> - <%= shift_schedule.shift_time.try(:name) %></td>
+          <%else%>
+           <td><font color='red'><%= shift_schedule.shift_time.try(:shift) %> - <%= shift_schedule.shift_time.try(:name) %></font></td>
+          <%end%>
 
         <td><%= shift_schedule.from.strftime("%d-%b") %> to <%= shift_schedule.to.strftime("%d-%b") %></td>
         <td>

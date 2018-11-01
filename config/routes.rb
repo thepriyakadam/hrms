@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :shift_schedules do
     collection do
+      get :all_shift_schedule
+      get :import_xl
+      post :import
       get :employee_shift
       post :set_employee_shift
       get :view_employee_shift
@@ -165,7 +168,11 @@ Rails.application.routes.draw do
       post :import
     end
   end
-  resources :transport_allowances
+  resources :transport_allowances do
+    collection do
+      get :show_allowance
+    end
+  end
   resources :events
   resources :resource_pool_masters
   resources :service_masters
@@ -1312,7 +1319,7 @@ end
   resources :goal_ratings do
     collection do
       get :period_for_status
-      post :managerwise_status
+      get :managerwise_status
       get :periodwise_goal_set
       post :periodwise_goal_list
       post :set_goal_periodwise
@@ -2396,6 +2403,9 @@ end
       get :update_reporting_manager
       post :update_manager
       get :show_employee
+      get :reporting_master
+      get :import_xl
+      post :import
     end
   end
   resources :leave_status_records do
@@ -2870,6 +2880,9 @@ end
   resources :cost_centers do
     collection do
       get :is_confirm
+      get :all_cost_center
+      get :import_xl
+      post :import
     end
   end
   resources :degrees do

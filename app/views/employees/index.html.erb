@@ -25,7 +25,7 @@
 
       <tr>
       <% if employee.status == "Active" %>
-      <td><%= employee.manual_employee_code %></td>
+        <td><%= employee.manual_employee_code %></td>
         <td><%= full_name(employee) %></td>
         <td><%= employee.try(:company_location).try(:name)%> - <%= employee.try(:department).try(:name)%></td>
         <td><%= employee.try(:joining_detail).try(:employee_grade).try(:name) %></td>
@@ -36,11 +36,12 @@
         </td>
       <%else%>
         
-         <td><font color='red'><%= employee.manual_employee_code %></font></td>
+        <td><font color='red'><%= employee.manual_employee_code %></font></td>
         <td><font color='red'><%= full_name(employee) %></font></td>
         <td><font color='red'><%= employee.try(:company_location).try(:name)%> - <%= employee.try(:department).try(:name)%></font></td>
         <td><font color='red'><%= employee.try(:joining_detail).try(:employee_grade).try(:name) %></font></td>
          <td><font color='red'><%= employee.try(:joining_detail).try(:employee_designation).try(:name) %></font></td>
+           <td><font color='red'><%= employee.try(:status) %></font></td>
          <td>
           <font color='red'><%= link_to '', employee,class: 'btn btn-sm btn-danger fa fa-eye' %></font>
         </td>

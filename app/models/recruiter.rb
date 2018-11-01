@@ -8,7 +8,16 @@ class Recruiter < ActiveRecord::Base
  def self.import(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+        if manual_employee_code == 0
+           manual_employee_code = spreadsheet.cell(i,'B')
+           @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+        else
+           manual_employee_code = spreadsheet.cell(i,'B').to_i
+           @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        end
+
+        #@employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee == nil
         else
         employee_id = @employee

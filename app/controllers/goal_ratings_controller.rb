@@ -35,13 +35,17 @@ class GoalRatingsController < ApplicationController
   end
 
   def managerwise_status
-    period = params[:salary][:period_id]
+    @period = Period.find(params[:format])
     @emp = Employee.find(current_user.employee_id)
-    @employees = @emp.subordinates
-    @employees_ind = @emp.indirect_subordinates
+    employees = @emp.subordinates
+    employees_ind = @emp.indirect_subordinates
+
+    @employees = employees.where(status: "Active").pluck(:id)
+    @employees_ind = employees_ind.where(status: "Active").pluck(:id)
+
     @employee = @employees + @employees_ind
 
-    @goal_bunches = GoalBunch.where(period_id: period,employee_id: @employees)
+    @goal_bunches = GoalBunch.where(period_id: @period,employee_id: @employees)
   end
 
   def download_self_document

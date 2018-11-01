@@ -39,14 +39,57 @@
               <td><%= employee.manual_employee_code %></td>
               <td><%= full_name(employee) %></td>
                 <% if Employee.exists?(id: employee.id) %>
-                  <td><font color="green"><%= "Yes" %></font></td>
-                <% else %>
-                  <td><font color="red"><%= "No" %></font></td>
+                  <% emp_fields = Employee.columns.map(&:name) %>
+                  <% j = 0 %>
+                  <% k = 0 %>
+                  <%# nil_count = [] %>
+                  <%# not_nil_count = []  %>
+                  <% emp_fields.each do |e| %>
+                     <% emp = Employee.where(id: employee.id,"#{e}": nil) %>
+                     <% if emp.present? %>
+                       <% j = j + 1 %>
+                     <% else %>
+                       <% k = k + 1 %>
+                     <% end %>
+                  <% end %>
+                  <%# nil_count << j %>
+                  <%# not_nil_count << k %>
+
+                  <% total = Employee.column_names.count %>
+                  <% total_not_percent = (j.to_f/total.to_f) * 100  %>
+                  <% total_percent = (k.to_f/total.to_f) * 100 %>
+
+                 <!--  #@employee = Employee. -->
+                  <td><font color="green"><%= total_percent.round %></font> /
+                  <font color="red"><%= total_not_percent.round %></font></td>
                 <% end %>
                 <% if JoiningDetail.exists?(employee_id: employee.id) %>
-                  <td><font color="green"><%= "Yes" %></font></td>
+
+                  <% joining_fields = JoiningDetail.columns.map(&:name) %>
+                  <% j = 0 %>
+                  <% k = 0 %>
+                  <%# nil_count = [] %>
+                  <%# not_nil_count = []  %>
+                  <% joining_fields.each do |e| %>
+                     <% emp = JoiningDetail.where(employee_id: employee.id,"#{e}": nil) %>
+                     <% if emp.present? %>
+                       <% j = j + 1 %>
+                     <% else %>
+                       <% k = k + 1 %>
+                     <% end %>
+                  <% end %>
+                  <%# nil_count << j %>
+                  <%# not_nil_count << k %>
+
+                  <% total = JoiningDetail.column_names.count %>
+                  <% total_not_percent = (j.to_f/total.to_f) * 100  %>
+                  <% total_percent = (k.to_f/total.to_f) * 100 %>
+
+                 <!--  #@employee = Employee. -->
+                  <td><font color="green"><%= total_percent.round %></font> /
+                  <font color="red"><%= total_not_percent.round %></font></td>
                 <% else %>
-                  <td><font color="red"><%= "No" %></font></td>
+                  <td><font color="blue"><%= "No" %></font></td>
                 <% end %>
                 <% if EmployeeBankDetail.exists?(employee_id: employee.id) %>
                   <td><font color="green"><%= "Yes" %></font></td>

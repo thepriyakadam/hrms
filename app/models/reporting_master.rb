@@ -28,6 +28,48 @@ class ReportingMaster < ActiveRecord::Base
   
   before_destroy :check_for_employee
 
+  def self.import(file)
+    spreadsheet = open_spreadsheet(file)
+    (2..spreadsheet.last_row).each do |i|
+      
+      #manager = spreadsheet.cell(i,'B').to_i
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+        if manual_employee_code == 0
+           manual_employee_code = spreadsheet.cell(i,'B')
+           employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+        else
+           manual_employee_code = spreadsheet.cell(i,'B').to_i
+           employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        end
+
+      is_active = spreadsheet.cell(i,'C')
+
+      if is_active == "Active" || is_active == "active" || is_active == "Yes" || is_active == "yes"
+        is_active = true
+      else
+        is_active = false
+      end
+
+      #employee = Employee.find_by(manual_employee_code: manager)
+      @reporting_master = ReportingMaster.find_by(employee_id: employee.id )
+      if @reporting_master.nil?
+        @reporting_master = ReportingMaster.create(employee_id: employee.id,is_active: is_active)     
+      else
+        @reporting_master.update(employee_id: employee.id,is_active: is_active)
+      end
+    end#do
+  end
+
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+      when ".csv" then Roo::CSV.new(file.path, file_warning: :ignore)
+      when ".xls" then Roo::Excel.new(file.path, file_warning: :ignore)
+      when ".xlsx" then Roo::Excelx.new(file.path, file_warning: :ignore)
+      else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
   private
 
   def check_for_orders

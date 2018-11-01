@@ -20,7 +20,16 @@ class Award < ActiveRecord::Base
   def self.import(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+      if manual_employee_code == 0
+         manual_employee_code = spreadsheet.cell(i,'B')
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+      else
+         manual_employee_code = spreadsheet.cell(i,'B').to_i
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      end
+
+        #@employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee == nil
         else
 
@@ -37,7 +46,13 @@ class Award < ActiveRecord::Base
         award_from = spreadsheet.cell(i,'E')
         description = spreadsheet.cell(i,'F')
 
-        @award = Award.create(employee_id: employee_id,award_name: award_name,year_id: year_id,award_from: award_from,description: description)
+        #@award = Award.create(employee_id: employee_id,award_name: award_name,year_id: year_id,award_from: award_from,description: description)
+        @award = Award.where(employee_id: employee_id,award_name: award_name).take
+          if @award.nil?
+            @award = Award.create(employee_id: employee_id,award_name: award_name,year_id: year_id,award_from: award_from,description: description)
+          else
+            @award.update(employee_id: employee_id,award_name: award_name,year_id: year_id,award_from: award_from,description: description)
+          end
     end
 
   end

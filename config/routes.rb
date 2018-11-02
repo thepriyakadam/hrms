@@ -1526,6 +1526,7 @@ end
 
   resources :exit_interviews  do
     collection do
+      get :print_exit_interview
       post :print_exit_interview
     end
   end

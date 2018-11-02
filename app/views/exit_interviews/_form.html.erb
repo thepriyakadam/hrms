@@ -1,5 +1,6 @@
-<%= bootstrap_form_for(@exit_interview,html: {id: 'exit_interview'},remote:true) do |f| %>
+<%= bootstrap_form_for(@exit_interview,html: {id: 'exit_interview'}) do |f| %>
 <%= f.hidden_field :employee_id, value: @employee_resignation.try(:employee_id) %>
+<%= f.hidden_field :employee_resignation_id, value: @employee_resignation.id %>
   
   <div class="row">
     <div class="col-sm-5">

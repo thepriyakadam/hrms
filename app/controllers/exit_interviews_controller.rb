@@ -4,6 +4,7 @@ class ExitInterviewsController < ApplicationController
   # GET /exit_interviews
   # GET /exit_interviews.json
   def index
+    @exit_interview = ExitInterview.new
     @exit_interviews = ExitInterview.all
   end
 
@@ -16,6 +17,7 @@ class ExitInterviewsController < ApplicationController
   def new
    # byebug
     @exit_interview = ExitInterview.new
+    #@exit_interviews = ExitInterview.all
     @employee = params[:exit_interview] ? params[:exit_interview][:employee_id] : params[:employee_id]
     @employee_resignation = EmployeeResignation.find(params[:format])
     @exit_interviews = ExitInterview.where(employee_id: @employee_resignation.employee_id)
@@ -26,21 +28,26 @@ class ExitInterviewsController < ApplicationController
 
   # GET /exit_interviews/1/edit
   def edit
+    @exit_interview = ExitInterview.find(params[:id])
+    @employee_resignation = EmployeeResignation.find_by(employee_id: @exit_interview.employee_id)
   end
 
   # POST /exit_interviews
   # POST /exit_interviews.json
   def create
-  # byebug
-   @exit_interview = ExitInterview.new(exit_interview_params)
+    @exit_interview = ExitInterview.new(exit_interview_params)
     @exit_interviews = ExitInterview.all
-    respond_to do |format|
-      if @exit_interview.save
-         @exit_interview = ExitInterview.new
-        format.js { @flag = true }
-      else
-        flash.now[:alert] = 'Interview Already Exist.'
-        format.js { @flag = false }
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        if @exit_interview.save
+          format.html { redirect_to @exit_interview, notice: 'Interview was successfully created.' }
+          format.json { render :show, status: :created, location: @exit_interview }
+          format.js { @flag = true }
+        else
+          format.html { render :new }
+          format.json { render json: @award.errors, status: :unprocessable_entity }
+          format.js { @flag = false }
+        end
       end
     end
   end
@@ -48,10 +55,15 @@ class ExitInterviewsController < ApplicationController
   # PATCH/PUT /exit_interviews/1
   # PATCH/PUT /exit_interviews/1.json
   def update
-   @exit_interview.update(exit_interview_params)
-   @exit_interviews = ExitInterview.all
-   @exit_interview = ExitInterview.new
-   
+    respond_to do |format|
+      if @exit_interview.update(exit_interview_params)
+        @exit_interviews = ExitInterview.all
+        @exit_interview = ExitInterview.new
+        format.js { @flag = true }
+      else
+        format.js { @flag = false }
+      end
+    end
   end
 
   # DELETE /exit_interviews/1

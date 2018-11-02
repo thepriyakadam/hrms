@@ -1,15 +1,15 @@
 <%= bootstrap_form_for(@exit_interview,html: {id: 'exit_interview'},remote:true) do |f| %>
-<%= f.hidden_field :employee_id, :value => @employee_resignation.try(:employee_id) %>
+<%= f.hidden_field :employee_id, value: @employee_resignation.try(:employee_id) %>
   
   <div class="row">
     <div class="col-sm-5">
       <div class="form-group required">
-      <%= f.select :question_master_id, all_question_master, {label: "Select Question",include_blank: " Select Question"} %>
+        <%= f.select :question_master_id, all_question_master, {label: "Select Question",include_blank: " Select Question"} %>
       </div>
     </div>
 
     <div class="col-sm-7">
-      <div class="field">
+      <div class="form-group required">
         <%= f.text_field :answer,label: "Answer" , placeholder: 'Answer' %>
       </div>
     </div>
@@ -23,3 +23,29 @@
     </div>
   </div>
 <% end %>
+<br>
+
+<script>
+$("#exit_interview").validate({
+    rules: {
+      "exit_interview[question_master_id]":{
+        required: true,
+      },
+      "exit_interview[answer]":{
+        required: true,
+      }
+    },
+    messages: {
+      "exit_interview[question_master_id]":{
+        required: "Please select Question",
+      },
+      "exit_interview[answer]":{
+        required: "Please specify Answer",
+      }        
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

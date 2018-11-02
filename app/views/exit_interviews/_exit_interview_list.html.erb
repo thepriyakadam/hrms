@@ -11,12 +11,11 @@
     </tr>
   </thead>
   <tbody>
-  <% i = 0%>
+    <% i = 0%>
     <% @exit_interviews.each do |exit_interview| %>
       <tr>
-      <td><%= i = i+1 %></td>
-         <td><strong><%= exit_interview.question_master.name %><br>
-
+        <td><%= i = i+1 %></td>
+        <td><strong><%= exit_interview.question_master.name %><br>
         Answer : </strong><%= exit_interview.answer %></td>
         <td>
           <%= link_to '', edit_exit_interview_path(exit_interview),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
@@ -25,9 +24,7 @@
       </tr>
     <% end %>
   </tbody>
-
 </table>
 <%= f.submit "Print",class: "btn btn-xl btn-success fa fa-print" %> |
-
  <%= link_to 'Back', employee_resignation_list_employee_resignations_path,class: 'btn btn-default btn-sm fa fa-arrow-left'  %><br>
 <% end %>

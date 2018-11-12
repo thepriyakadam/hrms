@@ -3,7 +3,7 @@
     <h3 class="box-title">Resume List</h3>
 <div class="box-body">
 <!-- <= bootstrap_form_for @selected_resume,url:{action:'is_confirm_resume'} do |f| %>   
- --><table id="example" class="table table-bordered table-hover table-condensed example3">
+ --><table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
 <!--       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -128,10 +128,19 @@
   });
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $(document).ready(function() {
     $('#example').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script> -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
     } );
 } );
 </script>

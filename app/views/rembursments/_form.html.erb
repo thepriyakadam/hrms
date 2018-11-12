@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title"> Employee Rembursment </h3>
+    <h3 class="box-title"> Employee Reimbursement </h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <%= bootstrap_form_for(@rembursment,html: {id: 'rembursment'}) do |f| %>
@@ -21,7 +21,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= f.text_field :rembursment_date,class: 'rembursment',label:'Rembursment Date'%>
+              <%= f.text_field :rembursment_date,class: 'rembursment',label:'Reimbursement Date'%>
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
 
         <div class="col-sm-3">
           <div class="field">
-           <%= f.select :rembursmentmaster_id, all_rembursment,{label: 'Rembursment',include_blank: " Select Rembursment"} %>
+           <%= f.select :rembursmentmaster_id, all_rembursment,{label: 'Reimbursement',include_blank: " Select Reimbursement"} %>
           </div>
         </div>
 
@@ -42,7 +42,7 @@
      <div class="col-sm-6">
      <label></label>
       <div class="actions">
-        <%= f.submit 'Create Rembursment',class: "btn btn-primary btn-sm"  %>
+        <%= f.submit 'Create Reimbursement',class: "btn btn-primary btn-sm"  %>
         <%= link_to 'Back', rembursments_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
       </div>
      </div>

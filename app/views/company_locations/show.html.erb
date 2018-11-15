@@ -58,7 +58,10 @@
 
      <tr>
       <th><strong>Email</strong></th>
-      <td colspan="3"><%= @company_location.email %></td>
+      <td><%= @company_location.email %></td>
+
+      <th><strong>Is Active</strong></th>
+      <td><%= @company_location.is_active ? "Active" : "Inactive" %></td>
     </tr>
      </table> <br>
 

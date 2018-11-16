@@ -229,7 +229,7 @@ class SelfServicesController < ApplicationController
           @expiry_date = @c_off_date.to_date + c_off_expire_day.to_f
           @expiry_status = true
         else
-          c_off_expire_day = nil
+          c_off_expire_day = 0
           @expiry_date = nil
           @expiry_status = @joining_detail.c_off_expire
         end
@@ -252,13 +252,15 @@ class SelfServicesController < ApplicationController
                       expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
                     StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                     flash[:notice] = "Your COff Created Successfully!"
-                    COffMailer.pending(@leave_c_off).deliver_now
+                    #COffMailer.pending(@leave_c_off).deliver_now
+
                   else#@on_duty_request.leave_type == "Full Day"
                     @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: @c_off_expire_day,
                       expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
                     StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                     flash[:notice] = "Your COff Created Successfully!"
-                    COffMailer.pending(@leave_c_off).deliver_now
+                    #COffMailer.pending(@leave_c_off).deliver_now
+
                   end#@on_duty_request.leave_type == "Half Day"
                 else#emp_attendance.on_duty_request_id != nil
                   if @emp_attendance.working_hrs.to_s < "07:00"
@@ -269,14 +271,17 @@ class SelfServicesController < ApplicationController
                         c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
                       StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                       flash[:notice] = "Your COff Created Successfully!"
-                      COffMailer.pending(@leave_c_off).deliver_now
+                      #COffMailer.pending(@leave_c_off).deliver_now
+
                     end#working_hrs.to_s < "4:00"
                   else#@emp_attendance.working_hrs.to_s < "7:00"
+
                     @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: @c_off_expire_day,
                       expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
                     StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                     flash[:notice] = "Your COff Created Successfully!"
-                    COffMailer.pending(@leave_c_off).deliver_now
+                    #COffMailer.pending(@leave_c_off).deliver_now
+
                   end#@emp_attendance.working_hrs.to_s < "7:00"
                 end#@emp_attendance.on_duty_request_id != nil
               else#@emp_attendance.holiday_id != nil

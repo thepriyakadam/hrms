@@ -15,8 +15,8 @@ class HomeController < ApplicationController
     @company_events = CompanyEvent.all
     @galleries = Gallery.all
     @companies = Company.all
-    @company_locations = CompanyLocation.all
-    @departments = Department.all
+    @company_locations = CompanyLocation.where(is_active: true)
+    @departments = Department.where(is_confirm: true)
     @employees = Employee.all
     #vacancy
     @vacancy_masters = VacancyMaster.where(vacancy_of: 'Refferal',is_confirmed: nil)

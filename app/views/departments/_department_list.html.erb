@@ -1,11 +1,11 @@
 <table id="example6" class="table table-bordered table-hover table-condensed'">
     <thead>
       <tr>
-      
-      <th>Code</th>
-      <th>Name</th>
-      <th>Company Location</th>
-      <th>Action</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Company Location</th>
+        <th>Active</th>
+        <th>Action</th>
     </tr>
   </thead>
 
@@ -16,7 +16,7 @@
         <td><%= department.manual_department_code %></td>
         <td><%= department.name %></td>
         <td><%= department.company_location.try(:name) %></td>
-
+        <td><%= department.is_confirm ? "Active" : "Inactive" %></td>
         <td>
              <%= link_to '', edit_department_path(department), class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
              <%= link_to '', modal_departments_path(department), class: 'btn btn-xs btn-default fa fa-eye',remote:true %>

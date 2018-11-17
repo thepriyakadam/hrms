@@ -57,6 +57,7 @@ class CostCentersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def cost_center_params
-    params.require(:cost_center).permit(:is_confirm,:name)
+    params.require(:cost_center).permit(:is_confirm,:name,:code)
   end
+  
 end

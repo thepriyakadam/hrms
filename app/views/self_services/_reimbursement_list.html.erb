@@ -2,9 +2,10 @@
 <table id="example6" class="table table-bordered table-hover table-condensed'">
  	<thead>
   <tr>
- 
+  <% if @reimbursement_requests.present? %>
     <td colspan="4"><center><%= @reimbursement_requests.first.employee.try(:manual_employee_code) %>
         <%= full_name(@reimbursement_requests.first.employee) %></center></td>
+  <% end %>
   </tr>
     <tr>
       <th>Reimbursement</th>

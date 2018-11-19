@@ -8,7 +8,7 @@ class Members::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
- # def create
+  # def create
   #   super
   #   member_id = current_user.id
   #   count = Member.find(member_id).login_count

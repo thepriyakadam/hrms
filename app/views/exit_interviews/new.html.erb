@@ -1,11 +1,8 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Exit Interview of
-      ID : <%= @employee_resignation.employee.try(:manual_employee_code) %> 
-      Name :  <%= full_name(@employee_resignation.employee)%> 
-
-
-    </h3>
+    <h5 class="box-title" style="color: blue" >Exit Interview of : 
+     <%= @employee_resignation.employee.try(:manual_employee_code) %> - <%= full_name(@employee_resignation.employee)%>
+    </h5>
 
   </div><!-- /.box-header -->
 	<div class="box-body">

@@ -8,15 +8,15 @@ class Members::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  def create
-      # require 'net/http'
-      # url = URI.parse('http://192.168.15.193:3000')
-      # req = Net::HTTP::Get.new(url.to_s)
-      # res = Net::HTTP.start(url.host, url.port) {|http|
-      #   http.request(req)
-      # }
-      # puts res.body
-    super
+  # def create
+    # require 'net/http'
+    # url = URI.parse('http://192.168.15.193:3000')
+    # req = Net::HTTP::Get.new(url.to_s)
+    # res = Net::HTTP.start(url.host, url.port) {|http|
+    #   http.request(req)
+    # }
+    # puts res.body
+    # super
     # member_id = current_user.id
     # count = Member.find(member_id).login_count
     # count = count + 1
@@ -24,7 +24,7 @@ class Members::SessionsController < Devise::SessionsController
     #   member = Member.find(member_id)
     #   member.update(:is_active => "true", :login_count => count)
     # end
-  end
+  # end
 
   # DELETE /resource/sign_out
   # def destroy

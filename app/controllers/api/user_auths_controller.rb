@@ -1311,8 +1311,13 @@ class Api::UserAuthsController < ApplicationController
     emp = Employee.find(employee_id)
     emp_code = emp.manual_employee_code
     date = params[:date]
-    count = DailyAttendance.where(employee_code: emp_code, date: date).count
-    render :status=>200, :json=>{:count=> count }
+    count_t = DailyAttendance.where(employee_code: emp_code, date: date)
+    if count_t.present?
+      count = count_t.count
+      render :status=>200, :json=>{:count=> count }
+    else
+      render :status=>200, :json=>{:count=> "0" }
+    end
   end
 
   def date_wise_location_history
@@ -1674,9 +1679,9 @@ class Api::UserAuthsController < ApplicationController
         if emp_att.in_time.present? and emp_att.out_time.present?
           { :id => emp_att.id, :manual_employee_code => emp_att.try(:employee).try(:manual_employee_code), :employee_id => emp_att.employee_id, :prefix => emp_att.try(:employee).try(:prefix), :employee_first_name => emp_att.try(:employee).try(:first_name), :employee_middle_name => emp_att.try(:employee).try(:middle_name), :employee_last_name => emp_att.try(:employee).try(:last_name), :day => emp_att.day, :present => emp_att.present, :in_time => emp_att.in_time, :out_time => emp_att.out_time, :employee_leav_request_id => emp_att.employee_leav_request_id, :on_duty_request_id => emp_att.on_duty_request_id, :working_hrs => emp_att.working_hrs, :comment => emp_att.comment }
         elsif emp_att.in_time.present? and !emp_att.out_time.present?
-      	  { :id => emp_att.id, :manual_employee_code => emp_att.try(:employee).try(:manual_employee_code), :employee_id => emp_att.employee_id, :prefix => emp_att.try(:employee).try(:prefix), :employee_first_name => emp_att.try(:employee).try(:first_name), :employee_middle_name => emp_att.try(:employee).try(:middle_name), :employee_last_name => emp_att.try(:employee).try(:last_name), :day => emp_att.day, :present => emp_att.present, :in_time => emp_att.in_time, :out_time => emp_att.out_time, :employee_leav_request_id => emp_att.employee_leav_request_id, :on_duty_request_id => emp_att.on_duty_request_id, :working_hrs => emp_att.working_hrs, :comment => emp_att.comment }
+          { :id => emp_att.id, :manual_employee_code => emp_att.try(:employee).try(:manual_employee_code), :employee_id => emp_att.employee_id, :prefix => emp_att.try(:employee).try(:prefix), :employee_first_name => emp_att.try(:employee).try(:first_name), :employee_middle_name => emp_att.try(:employee).try(:middle_name), :employee_last_name => emp_att.try(:employee).try(:last_name), :day => emp_att.day, :present => emp_att.present, :in_time => emp_att.in_time, :out_time => emp_att.out_time, :employee_leav_request_id => emp_att.employee_leav_request_id, :on_duty_request_id => emp_att.on_duty_request_id, :working_hrs => emp_att.working_hrs, :comment => emp_att.comment }
         else
-	         { :id => emp_att.id, :manual_employee_code => emp_att.try(:employee).try(:manual_employee_code), :employee_id => emp_att.employee_id, :prefix => emp_att.try(:employee).try(:prefix), :employee_first_name => emp_att.try(:employee).try(:first_name), :employee_middle_name => emp_att.try(:employee).try(:middle_name), :employee_last_name => emp_att.try(:employee).try(:last_name), :day => emp_att.day, :present => emp_att.present, :in_time => emp_att.in_time, :out_time => emp_att.out_time, :employee_leav_request_id => emp_att.employee_leav_request_id, :on_duty_request_id => emp_att.on_duty_request_id, :working_hrs => emp_att.working_hrs, :comment => emp_att.comment }
+           { :id => emp_att.id, :manual_employee_code => emp_att.try(:employee).try(:manual_employee_code), :employee_id => emp_att.employee_id, :prefix => emp_att.try(:employee).try(:prefix), :employee_first_name => emp_att.try(:employee).try(:first_name), :employee_middle_name => emp_att.try(:employee).try(:middle_name), :employee_last_name => emp_att.try(:employee).try(:last_name), :day => emp_att.day, :present => emp_att.present, :in_time => emp_att.in_time, :out_time => emp_att.out_time, :employee_leav_request_id => emp_att.employee_leav_request_id, :on_duty_request_id => emp_att.on_duty_request_id, :working_hrs => emp_att.working_hrs, :comment => emp_att.comment }
         end
         } : []
     else
@@ -2712,5 +2717,75 @@ class Api::UserAuthsController < ApplicationController
     end
   end
 
+  def shift_schedule_list
+    employee_id = params[:employee_id]
+    emp = Employee.find(employee_id)
+    if emp.member.role.name == 'GroupAdmin'
+      shift_time = ShiftTime.where(status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    elsif emp.member.role.name == 'Admin'
+      shift_time = ShiftTime.where(status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    elsif emp.member.role.name == 'HOD'
+      employees = Employee.where(manager_id: employee_id).pluck("id")
+      joining_detail = JoiningDetail.where(employee_id: employees).pluck("cost_center_id")
+      shift_time = ShiftTime.where(cost_center_id: joining_detail,status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    elsif emp.member.role.name == 'Supervisor'
+      joining_detail = JoiningDetail.find_by(employee_id: employee_id)
+      shift_time =ShiftTime.where(cost_center_id: joining_detail.cost_center_id,status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    else emp.member.role.name == 'Employee'
+      shift_time = ShiftTime.where(cost_center_id: joining_detail.cost_center_id,status: true).pluck(:id)
+      @shift_schedules = ShiftSchedule.where(shift_time_id: shift_time).order("id desc")
+    end
+    render :json => @shift_schedules.present? ? @shift_schedules.collect{|ss| { :id => ss.id, :shift_time_id => ss.shift_time_id, :shift => ss.try(:shift_time).try(:shift), :name => ss.try(:shift_time).try(:name), :from => ss.from, :to => ss.to, :status => ss.status  }} : []
+  end
+
+  def employee_shift_schedule_list
+    employee_id = params[:employee_id]
+    shift_schedule_id = params[:shift_schedule_id]
+    cost_center = ShiftSchedule.find(shift_schedule_id).shift_time.cost_center
+    @employee = JoiningDetail.where(cost_center_id: cost_center.id).pluck(:employee_id)
+    @shift_schedule = ShiftSchedule.find(params[:shift_schedule_id])
+    shift_employee = ShiftEmployee.where(date: @shift_schedule.from.to_date..@shift_schedule.to.to_date).pluck(:employee_id)
+    @employees = Employee.where(id: @employee).where.not(id: shift_employee)
+    render :json => @employees.present? ? @employees.collect{ |emp| 
+      mn = emp.manager_id
+      manager = Employee.find(mn)
+      {:id => emp.id, :manual_employee_code => emp.manual_employee_code, :prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :contact_no => emp.contact_no, :designation => emp.try(:department).try(:name), :manager_prefix => manager.try(:prefix), :manager_first_name => manager.try(:first_name),:manager_last_name => manager.try(:last_name) }} : []
+  end
+
+  def created_employee_shift_schedule_list
+    employee_id = params[:employee_id]
+    shift_schedule_id = params[:shift_schedule_id]
+    cost_center = ShiftSchedule.find(shift_schedule_id).shift_time.cost_center
+    @employee = JoiningDetail.where(cost_center_id: cost_center.id).pluck(:employee_id)
+    @shift_schedule = ShiftSchedule.find(params[:shift_schedule_id])
+    shift_employee = ShiftEmployee.where(date: @shift_schedule.from.to_date..@shift_schedule.to.to_date).pluck(:employee_id)
+    @employees = Employee.where(id: @employee).where.not(id: shift_employee) 
+    shift_employees = ShiftEmployee.where(shift_schedule_id: @shift_schedule.id,employee_id: @employee).pluck(:employee_id)
+    @shift_employees = Employee.where(id: shift_employees)
+    render :json => @shift_employees.present? ? @shift_employees.collect{|emp| {:id => emp.id, :manual_employee_code => emp.manual_employee_code, :prefix => emp.prefix, :employee_first_name => emp.first_name, :employee_middle_name => emp.middle_name, :employee_last_name => emp.last_name, :contact_no => emp.contact_no, :designation => emp.try(:department).try(:name) }} : []
+  end
+
+  def set_employee_shift
+    shift_schedule_id = params[:shift_schedule]
+    shift_schedule = ShiftSchedule.find(shift_schedule_id)
+    @employee_ids = params[:employee_ids]
+    if @employee_ids.nil?
+      flash[:alert] = "Please Select Employees"
+      redirect_to show_employee_record_shift_schedules_path
+    else
+      @employee_ids.each do |eid|
+        @employee = Employee.find(eid)
+        for i in shift_schedule.from.to_date..shift_schedule.to.to_date
+          ShiftEmployee.create(shift_schedule_id: shift_schedule.id,employee_id: @employee.id,date: i,created_by_id: current_user.employee_id,shift_time_id: shift_schedule.shift_time_id,status: true)
+        end
+      end#do
+      flash[:notice] = "Set Successfully!!"
+    end#if
+    redirect_to new_shift_schedule_path
+  end
 
 end

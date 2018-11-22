@@ -24,3 +24,32 @@ test:
   username: root
   password: kiit
   database: hrms_development
+
+
+
+development_sec:
+  adapter: sqlserver
+  encoding: utf8
+  pool: 5
+  database: Premier
+  username: sa
+  password: root
+  host: 172.16.1.32
+
+production_sec:
+  adapter: sqlserver
+  encoding: utf8
+  pool: 5
+  database: Premier
+  username: sa
+  password: root
+  host: 172.16.1.32
+
+test_sec:
+  adapter: sqlserver
+  encoding: utf8
+  pool: 5
+  database: Premier
+  username: sa
+  password: root
+  host: 172.16.1.32

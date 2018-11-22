@@ -20,7 +20,7 @@ module DepartmentsHelper
       elsif current_user.role.name == 'Admin'
         @companys = CompanyLocation.where(company_id: current_user.company_location.company_id).pluck(:id)
         Department.where(company_location_id: @companys).collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
-      elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Costomize' || current_user.role.name == 'Branch'
         Department.where(company_location_id: current_user.company_location_id).collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
       elsif current_user.role.name == 'HOD'
         Department.where(id: current_user.department_id).collect { |d| [d.company_location.company.name + '-' + d.company_location.name + '-' + d.name, d.id] }
@@ -40,7 +40,7 @@ module DepartmentsHelper
         elsif current_user.role.name == 'Admin'
           @companys = CompanyLocation.where(company_id: current_user.company_location.company_id).pluck(:id)
           Department.where(company_location_id: @companys).collect { |d| [d.company_location.name + '-' + d.name, d.id] }
-          elsif current_user.role.name == 'Branch'
+          elsif current_user.role.name == 'Costomize' || current_user.role.name == 'Branch'
           Department.where(company_location_id: current_user.company_location_id).collect { |d| [d.company_location.name + '-' + d.name, d.id] }
           elsif current_user.role.name == 'HOD'
           Department.where(id: current_user.department_id).collect { |d| [d.company_location.name + '-' + d.name, d.id] }

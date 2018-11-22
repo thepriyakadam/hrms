@@ -1,0 +1,88 @@
+<%= bootstrap_form_for(@shift_schedule,html: {id: "shift_schedule"}, remote:true) do |f| %>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <label>Shift</label>
+      <div class="form-group required">
+        <%= f.select :shift_time_id,all_shift_time,{hide_label: true,include_blank: "Select Shift"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :from,class: 'rembursment',label:'From Date'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+            <%= f.text_field :to,class: 'rembursment',label:'To Date'%>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3" style="padding-top: 20px;">
+      <div class="field">
+        <%= f.check_box :status,label: "Active" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Shift Schedule",class: "btn btn-sm btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+   
+<script type="text/javascript">
+  $(function(){
+    $('.rembursment').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-5:+10',
+    dateFormat: 'dd-mm-yy' });
+     });
+
+$("#shift_schedule").validate({
+    rules: {
+      "shift_schedule[shift_time_id]":{
+        required: true,
+      },
+      "shift_schedule[from]":{
+        required: true,
+      },
+      "shift_schedule[to]":{
+        required: true,
+      }
+    },
+    messages: {
+      "shift_schedule[shift_time_id]":{
+        required: "Please Select Shift",
+      },
+      "shift_schedule[from]":{
+        required: "Please specify Date",
+      },
+      "shift_schedule[to]":{
+        required: "Please specify Date",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+
+</script>

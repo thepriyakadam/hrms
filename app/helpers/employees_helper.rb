@@ -90,6 +90,8 @@ module EmployeesHelper
         Employee.where(company_location_id: current_user.company_id,status: "Active").collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       elsif  current_user.role.name == 'HOD'
         Employee.where(department_id: current_user.department_id,status: "Active").collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' +e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'Costomize'
+        Employee.where(status: "Active").collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
       end
     end
   end
@@ -108,4 +110,8 @@ module EmployeesHelper
     end
   end
   
+  def employee_manager_wise
+    Employee.where("manager_id = ? OR manager_2_id = ?",current_user.employee_id,current_user.employee_id).where(status: "Active").collect {|e| [e.try(:manual_employee_code).to_s + ' ' + e.try(:prefix).to_s + ' ' +e.try(:first_name).to_s+ ' ' + e.try(:last_name).to_s, e.id]}
+  end
+
 end

@@ -62,6 +62,7 @@ class EmployeeWeekOffsController < ApplicationController
     end
   end
 
+
   def employee_week_off_list
     from_date = params[:employee_week_off][:from_date]
     to_date = params[:employee_week_off][:to_date]
@@ -84,7 +85,28 @@ class EmployeeWeekOffsController < ApplicationController
     else
       @employee_week_off_ids.each do |eid|
         @emp_week_off = EmployeeWeekOff.find_by_id(eid)
-        EmployeeAttendance.where(employee_week_off_id: eid).destroy_all 
+
+         @employee_attendance = EmployeeAttendance.where(employee_week_off_id: eid)
+          @latemark_master = LatemarkMaster.last
+          @employee_attendance.each do |e|
+            if e.holiday_id.present?  
+              e.update(employee_week_off_id: nil,present: "HP",comment: "WeekOff Cancelled/Holiday")
+            elsif e.in_time.present? && e.out_time.present?
+              if e.working_hrs < @latemark_master.halfday_working_hrs
+                e.update(employee_week_off_id: nil,present: "HD",comment: "WeekOff Cancelled/HalfDay")
+              else  
+                e.update(employee_week_off_id: nil,present: "P",comment: "WeekOff Cancelled/Present")
+              end #workking_hrs
+            elsif e.employee_leav_request_id.present?
+              leave_request = EmployeeLeavRequest.find_by(id: e.employee_leav_request_id)
+              leav_category = LeavCategory.find_by(id: leave_request.leav_category_id)
+              e.update(employee_week_off_id: nil,present: leav_category.code,comment: "WeekOff Cancelled/Leave")
+            else  
+            e.update(employee_week_off_id: nil,present: "A",comment: "WeekOff Cancelled/Absent")
+            end 
+          end #do
+
+        #EmployeeAttendance.where(employee_week_off_id: eid).destroy_all 
         @emp_week_off.destroy
         flash[:notice] = "Revert successfully"
       end
@@ -237,10 +259,10 @@ class EmployeeWeekOffsController < ApplicationController
       if company == ""
         @employees = Employee.where(status: 'Active').pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: false)
-      elsif location == ""
+      elsif location == ""  || location == nil
         @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-      elsif department == ""
+      elsif department == "" || department == nil
         @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
       else
@@ -252,10 +274,10 @@ class EmployeeWeekOffsController < ApplicationController
         if company == ""
           @employees = Employee.where(status: 'Active').pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: false)
-        elsif location == ""
+        elsif location == ""  || location == nil
           @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-        elsif department == ""
+        elsif department == "" || department == nil
           @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         else
@@ -266,10 +288,10 @@ class EmployeeWeekOffsController < ApplicationController
         if company == ""
           @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-        elsif location == ""
+        elsif location == ""  || location == nil
           @employees = Employee.where(status: 'Active',company_id: company.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-        elsif department == ""
+        elsif department == "" || department == nil
           @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         else
@@ -277,10 +299,10 @@ class EmployeeWeekOffsController < ApplicationController
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         end
       elsif current_user.role.name == 'Branch'
-        if company == "" || location == ""
+        if company == "" || location == ""  || location == nil
           @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
-        elsif department == ""
+        elsif department == "" || department == nil
           @employees = Employee.where(status: 'Active',company_location_id: location.to_i).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         else 
@@ -288,7 +310,7 @@ class EmployeeWeekOffsController < ApplicationController
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         end
       elsif current_user.role.name == 'HOD'
-        if company == "" || location == "" || department == ""
+        if company == "" || location == "" || department == "" || location == nil || department == nil
           @employees = Employee.where(status: 'Active',department_id: current_user.department_id).pluck(:id)
         @employee_week_offs = EmployeeWeekOff.where(employee_id: @employees,date: from_date.to_date..to_date.to_date,is_confirm: nil)
         else 

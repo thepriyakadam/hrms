@@ -52,9 +52,16 @@ class AdvanceSalariesController < ApplicationController
 
   # PATCH/PUT /advance_salaries/1
   # PATCH/PUT /advance_salaries/1.json
-  def update
+   def update
     respond_to do |format|
       if @advance_salary.update(advance_salary_params)
+        Instalment.where(advance_salary_id: @advance_salary.id).destroy_all
+        start_date = @advance_salary.advance_date
+        for i in 1..@advance_salary.no_of_instalment.to_i
+          #@advance_salary.instalments.build(instalment_amount: @advance_salary.instalment_amount, instalment_date: start_date)
+          Instalment.create(instalment_amount: @advance_salary.instalment_amount,advance_salary_id: @advance_salary.id,instalment_date: start_date)
+          start_date = start_date.next_month
+        end
         format.html { redirect_to @advance_salary, notice: 'Advance salary was successfully updated.' }
         format.json { render :show, status: :ok, location: @advance_salary }
       else
@@ -63,6 +70,19 @@ class AdvanceSalariesController < ApplicationController
       end
     end
   end
+
+
+  # def update
+  #   respond_to do |format|
+  #     if @advance_salary.update(advance_salary_params)
+  #       format.html { redirect_to @advance_salary, notice: 'Advance salary was successfully updated.' }
+  #       format.json { render :show, status: :ok, location: @advance_salary }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @advance_salary.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /advance_salaries/1
   # DELETE /advance_salaries/1.json

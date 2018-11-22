@@ -40,7 +40,7 @@ class EmployeeTemplatesController < ApplicationController
 
   def activate
     if params[:activate][:activate_date] == ''
-      flash[:alert] = 'Please specify date.'
+      flash[:alert] = 'Please specify date!'
       redirect_to template_list_employee_templates_path(format: params[:activate][:employee_id])
     else
       @employee_template = EmployeeTemplate.find(params[:activate][:id])
@@ -185,18 +185,21 @@ class EmployeeTemplatesController < ApplicationController
 
   def active_list
     if current_user.class == Group
-      @employee_templates = EmployeeTemplate.where(is_active: true)
+      @employees = Employee.where(status: "Active").pluck(:id)
+
+      @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
-        @employee_templates = EmployeeTemplate.where(is_active: true)
+      @employees = Employee.where(status: "Active").pluck(:id)
+        @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'Admin'
-        @employees = Employee.where(company_id: current_user.company_location.company_id)
+        @employees = Employee.where(company_id: current_user.company_location.company_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'Branch'
-        @employees = Employee.where(company_location_id: current_user.company_location_id)
+        @employees = Employee.where(company_location_id: current_user.company_location_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       elsif current_user.role.name == 'HOD'
-        @employees = Employee.where(department_id: current_user.department_id)
+        @employees = Employee.where(department_id: current_user.department_id,status: "Active")
         @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: @employees)
       else current_user.role.name == 'Employee'
          @employee_templates = EmployeeTemplate.where(is_active: true,employee_id: current_user.employee_id)
@@ -310,7 +313,12 @@ class EmployeeTemplatesController < ApplicationController
       format.xls {render template: 'employee_templates/employee_wise_salary.xls.erb'}
     end
   end
-
-  
+    
+  def employee_salaryslip_details
+    @employees = Employee.where(status: 'Active')
+    respond_to do |format|
+      format.xls {render template: 'employee_templates/employee_salaryslip_details_template.xls.erb'}
+    end 
+  end
 
 end

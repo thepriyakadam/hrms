@@ -1,0 +1,21 @@
+<table  id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr. No</th>
+      <th>ID</th>
+      <th>Reporting Manager</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 0 %>
+    <% @reporting_masters.each do |reporting_master| %>
+      <tr>
+        <td><%= i = i + 1 %></td>
+        <td><%= reporting_master.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(reporting_master.employee) %></td>
+        <td><%= reporting_master.is_active ? "Active" : "Inactive" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,5 +1,5 @@
 <%= bootstrap_form_for SelectedResume.new,url:{action:'confirm_interview_round',interview_schedule_id: @interview_schedule.id} do |f| %>   
-<table id="example2" class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
       <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -86,6 +86,13 @@
   });
 </script>
 
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script> -->
 <!-- <script type="text/javascript">
   $(document).ready(function() {
     $('#example').DataTable( {

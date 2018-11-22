@@ -33,6 +33,8 @@ class HolidaysController < ApplicationController
   # PATCH/PUT /holidays/1.json
   def update
     @holiday.update(holiday_params)
+    @date = holiday_params['holiday_date']
+    EmployeeAttendance.where(holiday_id: @holiday.id).update_all(day: @date.to_date)
     @holidays = Holiday.all
     @holiday = Holiday.new
   end
@@ -41,10 +43,12 @@ class HolidaysController < ApplicationController
   # DELETE /holidays/1.json
   def destroy
     @holiday.destroy
+    EmployeeAttendance.where(holiday_id: @holiday.id).destroy_all
     @holidays = Holiday.all
   end
 
   def employee_list
+    byebug
     department_id = params[:department_id]
     @holiday_id = params[:holiday_id]
     @holiday = Holiday.find_by(id: @holiday_id)
@@ -95,6 +99,24 @@ class HolidaysController < ApplicationController
 
   def modal
     @holiday = Holiday.find(params[:format])
+  end
+
+  def show_employee_list
+    @holiday = Holiday.find(params[:holiday_id])
+    @employee_attendances = EmployeeAttendance.where(holiday_id: @holiday.id)
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'holidays/show_employee_list.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' show_employee_list',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'holidays/show_employee_list.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
   end
 
   private

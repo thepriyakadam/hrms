@@ -22,7 +22,7 @@
                 <% @emp_id = emp.id %>
                 <% @man_id = emp.manager_id %>
                 <% @manual_emp_code = emp.manual_employee_code %>
-                <% @emp_desig = emp.joining_detail.employee_designation.name %>
+                <% @emp_desig = emp.try(:joining_detail).try(:employee_designation).try(:name) %>
                 <% @photo = emp.passport_photo%>
                 // For each orgchart box, provide the name, manager, and tooltip to show.
                 data.addRows([[{ v: '<%= @emp_id %>', f:'<div><%= image_tag emp.passport_photo.url, :size => "50x40", class: "img-circle" %></div>' + '<div><%= @manual_emp_code %></div>' + '<%= short_name(emp) %>' + '<div style="color:blue">(<span>' + '<%= @emp_desig %>' + '</span>)</div>'}, '<%= @man_id %>', '<%= @emp_desig %>' ]]);

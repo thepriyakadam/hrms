@@ -23,6 +23,8 @@ class DueDetailsController < ApplicationController
 
   # GET /due_details/1/edit
   def edit
+    # @due_detail = DueDetail.find(params[:format])
+    # @due_template = DueTemplate.where(id: @due_detail.due_template_id)
   end
 
   def create
@@ -84,6 +86,7 @@ class DueDetailsController < ApplicationController
      # @employee_resignation = EmployeeResignation.find(params[:format])
      # @employee = Employee.find(@employee_resignation.employee_id)
      @employee = Employee.find(params[:emp_id])
+    
      @employees = Employee.where(id: @employee.id)
   end
 

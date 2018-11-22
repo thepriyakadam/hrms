@@ -7,40 +7,33 @@
   <% emp = Employee.find_by(id: current_user.employee_id) %>
   <% manager = emp.manager_id %>
   <% reporting_master = ReportingMaster.find_by(employee_id: manager) %>
-  <%= f.hidden_field :reporting_master_id, :value => reporting_master.id %>
+  <%= f.hidden_field :reporting_master_id, :value => manager %>
   <%= f.hidden_field :employee_id, :value => current_user.employee_id %>
   <%= f.hidden_field :vacancy_post_date, value: Date.today %>
       <div class="row">
 
        <div class="col-sm-3">
+          <label>Company</label>
           <div class="form-group required">
+            <%= f.select :company_id, all_company,{include_blank: "Select Company",hide_label: true},{onchange:"var a={company_id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
+            <div id="company_location_with_label">
+              <%= render 'employees/company_location_dropdown_with_label' %> 
+          </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="field">
             <div class="input-group">
-              <%=f.select :company_id, all_company,{include_blank: "Select Company"},{onchange:"var a={id:$(this).val(), form : 'employee'}; $.get('/employees/collect_company_location_dropdown_with_label',a,function(response){});"}%>
+              <div id="department">
+                <%= render 'employees/department_dropdown' %> 
+              </div> 
             </div>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-             <%=f.select :company_location_id, all_company_location,{include_blank: "Select Company Location"}%>
-            
-            </div> 
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-         <div class="form-group required">
-          <div class="input-group">
-            <%=f.select :department_id, all_department_list,{include_blank: "Select Department"}%>
-          </div>
-         </div>
-        </div>
-
-      <div class="col-sm-3">
-         <div class="field">
-          <!--   <label>Job Title</label> -->
-            <%= f.select :sub_department_id,all_sub_department,{label: 'Sub Department',include_blank: " Select Sub Department"} %>
           </div>
         </div>
       </div>
@@ -49,12 +42,12 @@
        <div class="col-sm-3">
          <div class="form-group required">
           <!--   <label>Job Title</label> -->
-            <%= f.select :employee_designation_id,all_employee_designation,{label: 'Designation',include_blank: " Select Designation"} %>
+           <%= f.select :employee_designation_id, all_employee_designation, {include_blank: "Select Designation"},{:class=>"select2",:style=>"width: 100%;",:tabindex=>"-1"} %>
           </div>
         </div>
 
       <div class="col-sm-3">
-         <div class="form-group required">
+         <div class="field">
           <!--   <label>Job Title</label> -->
             <%= f.select :cost_center_id,all_cost_center,{label: 'Cost Center',include_blank: " Select Cost Center"} %>
           </div>
@@ -81,7 +74,7 @@
         </div>
        
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
              <%= f.text_field :experince_max,label: 'Maximum Experience'%>
           </div>
         </div> 
@@ -93,7 +86,7 @@
         </div> 
 
         <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
              <%= f.text_field :budget_max,label: 'Maximum Budget'%>
           </div>
         </div> 
@@ -109,7 +102,7 @@
         </div> 
 
           <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
 
              <%= f.select :reason,["New","Replacement","Bench"],{label: 'Reason for the Requirement',include_blank:"Select Reason"},{onchange:"var a={reason:$(this).val()}; $.get('/vacancy_masters/select_reason',a,function(response){});",class: 'form-control'} %>
 
@@ -143,7 +136,7 @@
         </div> 
 
          <div class="col-sm-3">
-          <div class="form-group required">
+          <div class="field">
 
              <%= f.select :relocation_rerimbursement,[['Yes','true'],['No','false']],{label: 'Relocation Reimbursment',include_blank:"Select Option"},{onchange:"var a={relocation_rerimbursement:$(this).val()}; $.get('/vacancy_masters/select_relocation',a,function(response){});",class: 'form-control'} %>
           </div>
@@ -170,7 +163,7 @@
         </div> 
 
           <div class="col-sm-3">
-         <div class="form-group required">
+         <div class="field">
             <div class="input-group">
               <div class="input-group-addon">
                 <%= link_to "", new_target_company_path,class: "fa fa-plus fa-success",:target => "_blank" %>
@@ -182,7 +175,7 @@
         </div>
 
         <div class="col-sm-3">
-         <div class="form-group required">
+         <div class="field">
           <!--   <label>Job Title</label> -->
             <%= f.select :billable,["Billable","Non Billable"],{label: 'Billable/Non Billable',include_blank: " Select Resource"} %>
           </div>
@@ -330,41 +323,18 @@ $("#vacancy_master").validate({
       },
       "vacancy_master[no_of_position]":{
         required: true,
+        numbersOnly: true
       },
       "vacancy_master[experience]":{
-        required: true,
-      },
-      "vacancy_master[experince_max]":{
         required: true,
       },
       "vacancy_master[budget]":{
         required: true,
       },
-      "vacancy_master[budget_max]":{
-        required: true,
-      },
-      "vacancy_master[reason]":{
-        required: true,
-      },
       "vacancy_master[notice_period]":{
         required: true,
       },
-      "vacancy_master[relocation_rerimbursement]":{
-        required: true,
-      },
       "vacancy_master[degree_id]":{
-        required: true,
-      },
-      "vacancy_master[cost_center_id]":{
-        required: true,
-      },
-      "vacancy_master[keyword]":{
-        required: true,
-      },
-      "vacancy_master[target_company_id]":{
-        required: true,
-      },
-      "vacancy_master[billable]":{
         required: true,
       },
       "vacancy_master[vacancy_fullfillment_date]":{
@@ -393,38 +363,14 @@ $("#vacancy_master").validate({
       "vacancy_master[experience]":{
         required: "Please specify min. exp.",
       },
-      "vacancy_master[experince_max]":{
-        required: "Please specify max. exp.",
-      },
       "vacancy_master[budget]":{
         required: "Please specify min. budget",
       },
-      "vacancy_master[budget_max]":{
-        required: "Please specify min. budget",
-      },
-      "vacancy_master[reason]":{
-        required: "Please specify reason for requirement",
-        },
       "vacancy_master[notice_period]":{
         required: "Please select notice period",
       },
-      "vacancy_master[relocation_rerimbursement]":{
-        required: "Please specify relocation reimbursment",
-      },
       "vacancy_master[degree_id]":{
         required: "Please select qualification",
-      },
-      "vacancy_master[cost_center_id]":{
-        required: "Please select cost center",
-      },
-      "vacancy_master[keyword]":{
-        required: "Please specify primary skill",
-      },
-      "vacancy_master[target_company_id]":{
-        required: "Please select target company",
-      },
-      "vacancy_master[billable]":{
-        required: "Please select resource",
       },
       "vacancy_master[vacancy_fullfillment_date]":{
         required: "Please select vacancy fulfillment date",

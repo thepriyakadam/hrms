@@ -1961,6 +1961,8 @@ end
       post :approve_c_off
       get :reject_c_off
       get :approve_modal
+      get :manager_approve
+      get :manager_reject
       get :final_approve
       get :final_reject
       get :admin_c_off_approval
@@ -1972,6 +1974,8 @@ end
       get :maintenance_report
       get :import_xl
       post :import
+      get :final_approved_coff_list
+      post :update_coff_changes
     end
   end
 

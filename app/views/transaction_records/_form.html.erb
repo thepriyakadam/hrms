@@ -55,17 +55,24 @@
     </div> -->
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :email_1, hide_label: true,placeholder: 'abc@gmail.com'%>
+        <%= f.text_field :email_1, hide_label: true,placeholder: 'To: abc@gmail.com'%>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :email_2, hide_label: true,placeholder: "abc@gmail.com"%>
+        <%= f.text_field :email_2, hide_label: true,placeholder: "CC: xyz@gmail.com"%>
       </div>
     </div>
     <div class="col-sm-3">
       <div class="form-group required">
-        <%= f.text_field :status, hide_label: true,placeholder: "Status"%>
+        <%= f.text_field :email_3, hide_label: true,placeholder: "BCC: pqr@gmail.com"%>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="form-group required">
+        <%= f.text_area :email_msg, hide_label: true,placeholder: "Email Text"%>
       </div>
     </div>
   </div>

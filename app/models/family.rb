@@ -26,9 +26,18 @@ class Family < ActiveRecord::Base
   def self.import(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
-        if @employee == nil
-        else
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+      if manual_employee_code == 0
+         manual_employee_code = spreadsheet.cell(i,'B')
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+      else
+         manual_employee_code = spreadsheet.cell(i,'B').to_i
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      end
+
+      #@employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      if @employee == nil
+      else
 
         employee_id = @employee.id
         @relation_master = RelationMaster.find_by_name(spreadsheet.cell(i,'C'))
@@ -75,11 +84,18 @@ class Family < ActiveRecord::Base
         is_handicap = spreadsheet.cell(i,'W')
         handicap_type = spreadsheet.cell(i,'X')
 
-
-        @family = Family.create(employee_id: employee_id,relation_master_id: relation_master_id,f_name: f_name,m_name: m_name,l_name: l_name,
+        @family = Family.where(employee_id: employee_id,relation_master_id: relation_master_id,f_name: f_name).take
+        if @family.nil?
+          @family = Family.create(employee_id: employee_id,relation_master_id: relation_master_id,f_name: f_name,m_name: m_name,l_name: l_name,
           date_of_birth: date_of_birth,age: age,contact_no: contact_no,email: email,current_address: current_address,gender: gender,blood_group_id: blood_group_id,
           adhar_no: adhar_no,pan_no: pan_no,marital: marital,medical_claim: medical_claim,profession: profession,passport_no: passport_no,passport_issue_date: passport_issue_date,
           passport_expiry_date: passport_expiry_date,religion_id: religion_id,is_handicap: is_handicap,handicap_type: handicap_type)
+        else
+          @family.udate(employee_id: employee_id,relation_master_id: relation_master_id,f_name: f_name,m_name: m_name,l_name: l_name,
+          date_of_birth: date_of_birth,age: age,contact_no: contact_no,email: email,current_address: current_address,gender: gender,blood_group_id: blood_group_id,
+          adhar_no: adhar_no,pan_no: pan_no,marital: marital,medical_claim: medical_claim,profession: profession,passport_no: passport_no,passport_issue_date: passport_issue_date,
+          passport_expiry_date: passport_expiry_date,religion_id: religion_id,is_handicap: is_handicap,handicap_type: handicap_type)
+        end  
     end
   end
 end

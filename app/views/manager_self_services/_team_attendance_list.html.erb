@@ -1,0 +1,55 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"> Attendance List</h3>
+	  <div class="pull-right">  
+	    <%= link_to " Excel",atten_report_manager_self_services_path(:salary => {:day => @date},format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+			<%= link_to " PDF",atten_report_manager_self_services_path(:salary => {:day => @date},format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+	  </div>
+  </div>
+  <div class="box-body">
+		<table id="example6" class="table table-bordered table-hover table-condensed">
+	      <thead>
+		      <tr>
+	          <td colspan="8"><center> 
+	            <% if current_user.employee.company_location.company.company_logo == nil %>
+	            <% else %>
+	              <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "90x50" %></center>
+	            <%end%> 
+	            <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
+	          </td>
+	        </tr>
+          <tr><th colspan="6"><center><%= @date.strftime("%A") %> - <%= @date.to_date %></center></th></tr>
+
+	        <tr>
+	          <th>ID</th>
+	          <th>Employee</th>
+	          <th>Present</th>
+	          <th>In</th>
+	          <th>Out</th>
+	          <th>Working Hrs.</th>
+	          
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <% @all_employee_attendances.each do |a| %>
+	          <tr>
+	            <td><%= a.try(:employee).try(:manual_employee_code) %></td>
+	            <td><%= a.try(:employee).try(:first_name) %> <%= a.try(:employee).try(:last_name) %></td>
+	            <td><%= a.try(:present) %></td>
+	            <td><%= a.try(:in_time) %></td>
+	            <td><%= a.try(:out_time) %></td>
+	            <td><%= a.try(:working_hrs) %></td>
+	            
+	          </tr>
+	        <% end %>
+	      </tbody>
+	    </table>
+	  </div>
+	</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

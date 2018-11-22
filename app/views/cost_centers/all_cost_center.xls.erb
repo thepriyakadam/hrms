@@ -1,0 +1,24 @@
+<table id="example2" class="table table-bordered table-hover table-condensed'">
+  <thead>
+   
+    <tr> 
+    	<th>Sr. No</th>
+      <th>Code</th> 
+      <th>Name</th>
+      <th>Description</th>
+      <th>Confirm</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% i = 0 %>
+    <% @cost_centers.each do |cost_center| %>
+      <tr>
+      	<td><%= i = i + 1 %></td>
+        <td><%= cost_center.code %></td>
+        <td><%= cost_center.name %></td>
+        <td><%= cost_center.description %></td>
+        <td><%= cost_center.is_confirm ? "Yes" : "No" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,22 +1,33 @@
-<p id="notice"><%= notice %></p>
+
 <div class="box">
   <div class="box-header">
     <h3 class="box-title">Partner Companies Master</h3>
     <div class="pull-right">
-      <%= link_to "New Company", new_listed_company_path, class: 'btn btn-sm btn-primary' %> 
+      <%= link_to "New Company", new_listed_company_path, class: 'btn btn-sm btn-primary' %>
+
+    <%= link_to " PDF ", listed_company_listed_companies_path(format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+    
+    <%= link_to " XLS ", listed_company_listed_companies_path( format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>
+
+    <%= link_to " Upload ", import_xl_listed_companies_path, class: 'fa fa-upload btn btn-xl btn-primary' %>
+    
+    <%= link_to " Template", "/Templates/73.Listed Company.xls", :class=>"fa fa-download btn-xl btn btn-warning" %> 
     </div>
-  </div>
+  </div> 
 <!-- <h1>Listing Plan Reason Masters</h1> -->
 <div class="box-body">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
           <th>Sr No.</th>
           <th>Name</th>
-          <th>Contact no</th>
+          <th>Contact No.</th>
+          <th>Optinal Contact No.</th>
+          <th>Account ID</th>
           <th>Email</th>
           <th>Location</th>
-          <th colspan="3">Action</th>
+          <th>Status</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -26,14 +37,26 @@
             <td><%= i=i+1 %></td>
             <td><%= listed_company.name %></td>
             <td><%= listed_company.contact_no %></td>
+            <td><%= listed_company.optinal_contact_no %></td>
+            <td><%= listed_company.code %></td>
             <td><%= listed_company.email %></td>
             <td><%= listed_company.location %></td>
-            <td><%= link_to ' ', view_company_listed_companies_path(listed_company), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %></td>
-            <td><%= link_to ' ', edit_listed_company_path(listed_company), class: 'btn btn-xs btn-success fa fa-edit' %></td>
-            <td><%= link_to ' ', listed_company, method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-xs btn-danger fa fa-trash' %></td>
+            <td><%= listed_company.status ? "Active" : "Inactive" %></td>
+            <td><%= link_to ' ', view_company_listed_companies_path(listed_company), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%= link_to ' ', edit_listed_company_path(listed_company), class: 'btn btn-xs btn-success fa fa-edit' %>
+            <%= link_to ' ', listed_company, method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-xs btn-danger fa fa-trash' %>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
 </div>
 <div id="view_company" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

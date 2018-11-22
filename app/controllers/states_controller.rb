@@ -80,8 +80,19 @@ class StatesController < ApplicationController
         template: 'states/state_master.pdf.erb',
         show_as_html: params[:debug].present?
         #margin:  { top:1,bottom:1,left:1,right:1 }
-            end
-          end
+      end
+    end
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_xl_states_path
+    else
+      State.import(params[:file])
+      redirect_to new_state_path, notice: "File imported."
+    end
   end
 
   private

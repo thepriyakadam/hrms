@@ -24,7 +24,6 @@
 
 <div class="box">
 
-
 <!-- < if @goal_rating.goal_type == 'Goal' %> -->
   <div class="row">
     <div class="col-sm-6">
@@ -117,14 +116,14 @@
         <small class="label label-info">Request has been sent for Confirmation</small>
 
         <%#= link_to " Created Goals ",goal_set_goal_ratings_path(format: "xls",employee_id: @employee.id,goal_bunch_id: @goal_bunch.id), class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
-        <% if @employee_id == current_user.employee_id %>
+        <% if @employee.id == current_user.employee_id %>
           <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
         <% else %>
           <%= link_to 'Back',admin_level_period_goal_ratings_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
         <% end %>
     <% elsif @goal_bunch.goal_approval == true %>
         <small class="label label-success">Goal Confirmed</small>
-        <% if @employee_id == current_user.employee_id %>
+        <% if @employee.id == current_user.employee_id %>
           <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
         <% else %>
           <%= link_to 'Back',admin_level_period_goal_ratings_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
@@ -135,7 +134,7 @@
           <div class="col-sm-3">
             <div class="actions">
              <%= f.submit "Send For Confirmation", class: 'btn btn-primary btn-xs' %>
-             <% if @employee_id == current_user.employee_id %>
+             <% if @employee.id == current_user.employee_id %>
               <%= link_to 'Back',new_goal_bunch_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>
             <% else %>
               <%= link_to 'Back',admin_level_period_goal_ratings_path, class: 'btn btn-sm btn-default fa fa-arrow-left' %>

@@ -185,7 +185,6 @@ class SelfServicesController < ApplicationController
 
 
   def holiday_setup
-    # byebug
     @day = params[:day]
     # @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).where.not(holiday_id: nil).order("day ASC")

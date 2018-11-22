@@ -1,0 +1,111 @@
+<%= bootstrap_form_for(@expenses_master,html: {id: 'expenses_master'}) do |f| %>
+
+<%#= f.hidden_field :employee_grade_id , value: current_user.employee.try(:joining_detail).try(:employee_grade).try(:id) %>
+ <div class="row">
+  <div class="col-sm-3">
+   <!--  <label> Employee Grade </label> -->
+    <div class="form-group required">
+      <%= f.select :employee_grade_id, all_employee_grade, {include_blank: " Select Expence Grade" },{onchange:"var a={employee_grade_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_expence_opestion',a,function(response){});"} %>
+       <%#= f.select :employee_grade_id, all_employee_grade, { hide_label:true, include_blank: "Select Employee Grade" } %>
+    </div>
+   </div>
+
+   <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div id="collect_expence_opestion">
+            <%= render 'expenses_masters/collect_expence_opestion' %> 
+          </div> 
+        </div>
+      </div>
+    </div>
+
+   <!-- <div class="col-sm-3">
+     <label> Expence Option </label>
+     <div class="form-group required">
+       <%#= f.select :expence_opestion_id, all_expence_opestion, { hide_label:true, include_blank: " Select Expence Option" },{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
+     </div>
+   </div> -->
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div id="collect_mode">
+            <%= render 'expenses_masters/collect_mode' %> 
+          </div> 
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div id="collect_opestion">
+            <%= render 'expenses_masters/collect_opestion' %> 
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :billing_opestion, ["With Bill","Without Bill"] ,{label: 'Billing Option',include_blank: " Select Option"} %>
+      </div>
+    </div>
+  
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :min_amount, label: 'Min Amount', placeholder: 'Min Amount' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :max_amount, label: 'Max Amount', placeholder: 'Max Amount' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3" style="padding-top: 20px;">
+      <div class="field">
+        <%= f.check_box :status, label:'Active' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3" style="padding-top: 20px;">
+      <div class="actions">
+        <%= f.submit "Create Expence Master" ,:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br>
+
+
+<script>
+$("#expenses_master").validate({
+    rules: {
+      "expenses_master[expence_opestion_id]":{
+        required: true,
+      },
+      "expenses_master[billing_opestion]":{
+        required: true,
+      }
+       },
+    messages: {
+      "expenses_master[expence_opestion_id]":{
+        required: "Please specify Expence Option",
+      },
+       "expenses_master[billing_opestion]":{
+        required: "Please specify Billing Option",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

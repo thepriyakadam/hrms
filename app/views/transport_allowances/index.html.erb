@@ -25,9 +25,9 @@
           <td><%= full_name(transport_allowance.employee) %></td>
           <td><%= transport_allowance.amount %></td>
           <td>
-           
+            <%= link_to '',show_allowance_transport_allowances_path(transport_allowance_id: transport_allowance.id),class: 'btn btn btn-xs btn-default fa fa-eye',remote: true %>
             <%= link_to '', edit_transport_allowance_path(transport_allowance), class: 'btn btn-xs btn-success fa fa-edit' %>
-            <%= link_to '', transport_allowance,class: 'btn btn-xs btn-default fa fa-eye' %>
+            <%#= link_to '', transport_allowance,class: 'btn btn-xs btn-default fa fa-eye' %>
             
           </td>
         </tr>
@@ -38,6 +38,7 @@
 </div>
 </div>
 
+<div id="allowance" class="modal fade"></div>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example6').DataTable( {

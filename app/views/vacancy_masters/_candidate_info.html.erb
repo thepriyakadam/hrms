@@ -1,0 +1,35 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Interview Analysis </center></h4>
+    </div>
+    <div class="modal-body">
+
+       <table id="example" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Sr.No.</th>
+              <th>Interview Evaluation</th>
+              <th>Attribute</th>
+              <th>Decision</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% i = 0 %>
+            <% @interview_analyses.each do |interview_analyses| %>
+              <tr>
+                <td><%= i=i+1 %></td>
+                <td><%= interview_analyses.interview_evalution.try(:name) %></td>
+                <td><%= interview_analyses.interview_attribute.try(:name) %></td>
+                <td><%= interview_analyses.interview_decision.try(:name) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+
+

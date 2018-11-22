@@ -12,7 +12,7 @@
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
          </div>
-       <%= f.text_field :day, class: 'date',label:'Date'%>
+       <%= f.text_field :day,label:'Date', class: 'arrear_date' %>
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@
 
 <script type="text/javascript">
   $(function(){
-    $('.date').datepicker({
+    $('.arrear_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-200:-0',

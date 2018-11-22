@@ -1,29 +1,21 @@
-<?xml version="1.0"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
-  xmlns:o="urn:schemas-microsoft-com:office:office"
-  xmlns:x="urn:schemas-microsoft-com:office:excel"
-  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
-  xmlns:html="http://www.w3.org/TR/REC-html40">
-  <Worksheet ss:Name="Sheet1">
-    <Table>
-      <Row>
-        <Cell ss:Index="1"><Data ss:Type="String">Sr.No.</Data></Cell>
-        <Cell ss:Index="2"><Data ss:Type="String">Country</Data></Cell>
-        <Cell ss:Index="3"><Data ss:Type="String">ID</Data></Cell>
-		<Cell ss:Index="4"><Data ss:Type="String">Code</Data></Cell>
-		<Cell ss:Index="5"><Data ss:Type="String">Name</Data></Cell>
-	  </Row>
-
-        <% i = 0 %>
-         <% @states.each do |state| %>
-        <Row>
-          <Cell ss:Index="1"><Data ss:Type="String"><%= i=i+1 %></Data></Cell>
-          <Cell ss:Index="2"><Data ss:Type="String"><%= state.country.try(:name) %></Data></Cell>
-          <Cell ss:Index="3"><Data ss:Type="String"><%= state.id %></Data></Cell>
-          <Cell ss:Index="4"><Data ss:Type="String"><%= state.code %></Data></Cell>
-          <Cell ss:Index="5"><Data ss:Type="String"><%= state.name%></Data></Cell>
-           </Row><!-- Row -->
-      <% end %><!-- slip -->
-    </Table>
-  </Worksheet>
-</Workbook>
+<table id="example1" class="table table-bordered table-hover table-condensed'">
+  <thead>
+    <tr>  
+      <th>Sr. No</th>
+      <th>Country</th>
+      <th>Code</th>
+      <th>State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 0 %>
+    <% @states.each do |state| %>
+      <tr>
+        <td><%= i = i + 1 %></td>
+        <td><%= state.country.try(:name) %></td>
+        <td><%= state.code %></td>
+        <td><%= state.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

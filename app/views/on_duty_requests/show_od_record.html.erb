@@ -3,9 +3,10 @@
     <h3 class="box-title">Employee Particular On Duty Request</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
+          <th>Sr. No</th>
           <th>On Duty Date</th>
           <th>On Duty Type</th>
           <th>Action</th>
@@ -13,15 +14,24 @@
       </thead>
 
       <tbody>
+        <% i = 0 %>
         <% @particular_od_records.each do |p| %>
           <tr>
+            <td><%= i = i + 1 %></td>
             <td><%= p.leave_date.to_date %></td>
             <td><%= p.is_full ? "Full Day" : "Half Day" %></td>
+           <td>
             <% if p.is_cancel_after_approve %>
-              <td><small class="label label-info">Cancelled After Approve</small></td>
+              <small class="label label-info">Cancelled After Approve</small>
             <% else %>
-              <td><%= link_to 'Revert',cancel_after_approve_od_status_records_path(p), class: 'btn btn-xs btn-danger'%></td>
+              <% @employee_attendances = EmployeeAttendance.where(on_duty_request_id: p.on_duty_request_id).take %>
+              <% if @employee_attendances.is_confirm == true %>
+                  <small class="label label-success">Attendance Confirmed</small>
+              <% else %>
+                <%= link_to 'Revert',cancel_after_approve_od_status_records_path(p), data: { confirm: 'Are you sure? This will revert OD ' }, class: 'btn btn-xs btn-danger'%>
+              <% end %>
             <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -30,3 +40,11 @@
       <%= link_to 'Back',hr_view_request_on_duty_requests_path(@on_duty_request.employee_id), class: 'btn btn-default btn-sm fa fa-arrow-left' %>
   </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

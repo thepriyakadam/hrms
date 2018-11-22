@@ -82,6 +82,10 @@ $("#employee_bank_detail").validate({
       },
       "employee_bank_detail[ifsc_code]":{
         required: true
+      },
+      "employee_bank_detail[contact_no]":{
+        maxlength: 13,
+        mobileNo: true
       }
     },
     messages: {
@@ -93,6 +97,9 @@ $("#employee_bank_detail").validate({
       },
       "employee_bank_detail[ifsc_code]":{
         required: "Please specify IFSC code"
+      },
+      "employee_bank_detail[contact_no]":{
+        required: "Please Enter the Correct contact number"
       }
     },
     errorPlacement: function(error, element) {

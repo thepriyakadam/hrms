@@ -1,0 +1,30 @@
+<table id="example5" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Employee</th>
+          <th>Date</th>
+          <th>Day</th>
+          <th>Present</th>
+          <th>In Time</th>
+          <th>Out Time</th>
+          <th>Working Hrs.</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <% @all_employee_attendances.each do |a| %>
+          <tr>
+            <td><%= a.try(:employee).try(:manual_employee_code) %></td>
+            <td><%= full_name(a.employee) %></td>
+            <td><%= a.try(:day).to_date %></td>
+            <td><%= a.try(:day).strftime('%A') %></td>
+            <td><%= a.try(:present) %></td>
+            <td><%= a.try(:in_time) %></td>
+            <td><%= a.try(:out_time) %></td>
+            <td><%= a.try(:working_hrs) %></td>
+            
+          </tr>
+        <% end %>
+      </tbody>
+    </table>

@@ -6,7 +6,7 @@
   	<% if @particular_od_record_id == nil %>
       <center><p class="text-primary"> Record Not Available </p></center> 
     <% else %>
-		  <table id="example1" class="table table-bordered table-hover table-condensed">
+		  <table id="example6" class="table table-bordered table-hover table-condensed">
 			  <thead>
 			    <tr>
 			      <th>ID</th>
@@ -38,3 +38,12 @@
 		   <% end %>
 		 </div>
 	</div>
+
+	
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

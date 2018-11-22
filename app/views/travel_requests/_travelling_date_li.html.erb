@@ -81,4 +81,9 @@
 <%= link_to " Excel Report ",print_travelling_datewise_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:travel_request][:company_id], company_location_id: params[:travel_request][:company_location_id],department_id: params[:travel_request][:department_id], format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
  
 <%= link_to " Print Report ",print_travelling_datewise_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:travel_request][:company_id], company_location_id: params[:travel_request][:company_location_id],department_id: params[:travel_request][:department_id],format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+
+<%= link_to " Advance PDF Report ", advance_travel_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:travel_request][:company_id], company_location_id: params[:travel_request][:company_location_id],department_id: params[:travel_request][:department_id], format: "pdf"), class: "btn btn-xl btn-warning fa fa-print", :target => "_blank" %>
+
+<%= link_to " Advance Excel Report ", advance_travel_report_travel_requests_path(from_date: params[:salary][:from_date],to_date: params[:salary][:to_date], company_id: params[:travel_request][:company_id], company_location_id: params[:travel_request][:company_location_id],department_id: params[:travel_request][:department_id], format: "xls"), class: "btn btn-xl btn-primary fa fa-print" %>
+
 </div>

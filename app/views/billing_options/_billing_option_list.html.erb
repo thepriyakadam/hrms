@@ -1,0 +1,40 @@
+<table id="example6" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>  
+    <tr>
+      <th>Expense Option</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @billing_options.each do |billing_option| %>
+      <tr>
+        <td><%= billing_option.expence_opestion.try(:name) %></td>
+        <td><%= billing_option.code %></td>
+        <td><%= billing_option.name %></td>
+        <td><%= billing_option.description %></td>
+        <td><%= billing_option.status ? "Active" : "Inactive" %></td>
+        <td>   
+        	<%= link_to '', edit_billing_option_path(billing_option),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
+            <%= link_to '',  billing_option, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

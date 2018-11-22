@@ -22,7 +22,8 @@ class Employee < ActiveRecord::Base
   has_many :trainees
   has_many :gps_dailies
   has_many :exit_interviews
-
+  has_many :topics
+  has_many :topic_comments
   has_many :reporting_masters
   has_many :employee_attendances
   has_many :leave_c_offs
@@ -99,6 +100,9 @@ class Employee < ActiveRecord::Base
   has_many :rembursments
   has_many :status_c_offs
   has_many :leave_transfers
+  has_many :shift_employees
+  has_many :shift_employees, class_name: "Employee",
+                          foreign_key: "created_by"
 
   has_many :leave_transfers, class_name: "Employee",
                           foreign_key: "transfer_to_id"

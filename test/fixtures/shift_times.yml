@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shift: MyString
+  from: 2018-09-10 10:53:38
+  to: 2018-09-10 10:53:38
+  working_hrs: MyString
+  description: MyText
+  status: false
+
+two:
+  shift: MyString
+  from: 2018-09-10 10:53:38
+  to: 2018-09-10 10:53:38
+  working_hrs: MyString
+  description: MyText
+  status: false

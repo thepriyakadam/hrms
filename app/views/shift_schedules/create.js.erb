@@ -1,0 +1,6 @@
+<%if @flag == true %>
+  $("#form").html("<%= j render 'form' %>");
+  $("#shift_schedule_list").html("<%= j render 'shift_schedule_list' %>");
+<%else%>
+  $("#form").html("<%= j render 'form' %>");
+<%end%>

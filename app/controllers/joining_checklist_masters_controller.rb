@@ -18,7 +18,7 @@ class JoiningChecklistMastersController < ApplicationController
     @joining_checklist_master = JoiningChecklistMaster.new
     @joining_checklist_masters = JoiningChecklistMaster.all
     session[:active_tab] = "GlobalSetup"
-     session[:active_tab1] = "OnBording"
+    session[:active_tab1] = "OnBording"
   end
 
   # GET /joining_checklist_masters/1/edit
@@ -84,6 +84,22 @@ class JoiningChecklistMastersController < ApplicationController
      JoiningChecklistMaster.import(params[:file])
      redirect_to new_joining_checklist_master_path, notice: "File imported."
      end
+  end
+
+  def set_checklist
+    @employees = Employee.where(status: "Active")
+    @employees.each do |e|
+      @joining_checklist_masters = JoiningChecklistMaster.where(status: true)
+      @joining_checklist_masters.each do |jc|
+        if EmployeeJcList.exists?(joining_checklist_master_id: jc.id,employee_id: e.id)
+        else
+          EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: e.id,status: false)
+          #EmployeeMailer.employee_create(e).deliver_now
+          flash[:notice] = "Successfully Added!"
+        end
+      end#do |jc|
+    end#do |e|
+    redirect_to new_joining_checklist_master_path
   end
 
   private

@@ -36,7 +36,7 @@ class HomeController < ApplicationController
       #elsif current_user.role.name == "Admin"
         @all_pending_od = OnDutyRequest.where(current_status: "Pending").count
         @all_pending_leave  = EmployeeLeavRequest.where(current_status: "Pending").count
-        @admin_c_off = LeaveCOff.where(current_status: "Pending").count
+        @admin_c_off = LeaveCOff.where(is_taken: false,status: false,is_expire: false).where("current_status = ? OR current_status = ?","FirstApproved" , "Pending").count
         @admin_employee_plan = EmployeePlan.where(current_status: "Pending").count
         @admin_travel_requests = TravelRequest.where(current_status: "Pending").count
         @admin_expense_claim = TravelRequest.where(current_status: "FinalApproved",is_confirm: true).count
@@ -119,6 +119,8 @@ class HomeController < ApplicationController
       elsif current_user.role.name == 'AdminTimeManagement'
         @employee = Employee.find(current_user.employee_id)
       elsif current_user.role.name == 'NewEmployee'
+        @employee = Employee.find(current_user.employee_id)
+      elsif current_user.role.name == 'Costomize'
         @employee = Employee.find(current_user.employee_id)
       end
     else

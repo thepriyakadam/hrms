@@ -38,9 +38,9 @@ class EmployeeTypesController < ApplicationController
     @employee_types = EmployeeType.all
   end
 
-   def employee_type_master
-     @employee_types = EmployeeType.all
-     respond_to do |f|
+  def employee_type_master
+    @employee_types = EmployeeType.all
+    respond_to do |f|
       f.js
       f.xls {render template: 'employee_types/employee_type_master.xls.erb'}
       f.html
@@ -51,9 +51,9 @@ class EmployeeTypesController < ApplicationController
         template: 'employee_types/employee_type_master.pdf.erb',
         show_as_html: params[:debug].present?
         #margin:  { top:1,bottom:1,left:1,right:1 }
-            end
-          end
+      end
     end
+  end
 
   def import
     file = params[:file]

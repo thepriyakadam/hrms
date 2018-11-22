@@ -8,17 +8,20 @@
     <table id="example6" class="table table-bordered table-hover table-condensed">
      <thead>
         <tr>
-         <th>Base</th>
-         <th>Period</th>
-         <th>Action</th>
+          <th>Sr. No</th>
+          <th>Base</th>
+          <th>Period</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
+        <% i = 0 %>
         <% @goal_bunches.each do |g| %>
         <tr>
-        <td><%= g.period.try(:name) %></td>
-        <td>From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
-        <td><%= link_to 'Appraisee Comment', appraisee_comment_goal_bunches_path(id: g,emp_id: g.employee_id) ,class: 'btn btn-xs btn-info' %></td>
+          <td><%= i = i + 1 %></td>
+          <td><%= g.period.try(:name) %></td>
+          <td>From: <%= g.period.try(:from) %> To: <%= g.period.try(:to) %> </td>
+          <td><%= link_to 'Appraisee Comment', appraisee_comment_goal_bunches_path(id: g,emp_id: g.employee_id) ,class: 'btn btn-xs btn-info' %></td>
         </tr>
         <% end %>
       </tbody>
@@ -34,4 +37,3 @@ $(document).ready(function() {
     } );
 } );
 </script>
-

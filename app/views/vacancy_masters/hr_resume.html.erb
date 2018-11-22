@@ -72,6 +72,15 @@
         <div id="myModal" class="modal fade"></div>
           <!-- < link_to '', show_selected_resume_vacancy_masters_path(vacancy_master_id: @vacancy_master.id,id: selected_resume.id),class: 'btn btn-xs btn-default fa fa-eye' %> -->
           <%= link_to '', modal_show_selected_resume_selected_resumes_path(selected_resume,vacancy_master_id: @vacancy_master.id),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+
+          <% if @vacancy_master.is_confirmed == true %>
+          <% else %>
+            <% if selected_resume.shortlist_for_interview == true %>
+            <% else %>
+              <%= link_to 'Approve', shortlist_for_interview_single_vacancy_masters_path(selected_resume,vacancy_master_id: @vacancy_master.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
+              <%= link_to 'Reject', reject_single_vacancy_masters_path(selected_resume,vacancy_master_id: @vacancy_master.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+            <% end %>
+          <% end %>
         </td>
       </tr>
     <% end %>

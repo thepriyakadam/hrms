@@ -1,0 +1,5 @@
+Your <%= @email_reminder.try(:task).try(:name) %> is due on <%= @email_reminder.task_date %>
+<br>
+Message : <%= @email_reminder.email_text %>
+<br>
+Thank You !!

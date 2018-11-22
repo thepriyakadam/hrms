@@ -1,0 +1,124 @@
+<div class="box box-default">
+  <div class="box-body">
+    <%= bootstrap_form_for :employee_attendances,html: {id: "employee_attendances"}, url: { action: 'create_managerwise_attendance',shift_time_id: @shift_time_id} do |f| %>
+    <!-- <= f.hidden_field :department_id, value: @department %> -->
+      <div class="row">
+        <div class="col-sm-3">
+        <label>Select Attendance </label>
+          <div class="field">
+            <%= f.select :present,['P','WO','WOP','A','HDL','H','HP','LWP','HD-LWP','PO','ACF'],{hide_label: true,include_blank: "Select Option"} %>
+            <%= f.hidden_field :day, value: @date %>
+          </div>
+        </div>
+        <div class="col-sm-3">
+         <label>In Time</label>
+            <div class="bootstrap-timepicker">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div> 
+                  <%= text_field :employee_attendance,:in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker',value: @employee_attendance.in_time %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+           <label>Out Time</label>
+            <div class="bootstrap-timepicker">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <%= text_field :employee_attendance,:out_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker',value: @employee_attendance.out_time %>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <table id="example1" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Cost Center</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employe_attendance.each do |e| %>
+            <tr>        
+              <td><%= check_box_tag "employee_ids[]",e.employee_id %></td>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.employee.try(:joining_detail).try(:cost_center).try(:name) %></td>
+              <%= f.hidden_field :department_id, value: e.employee.department_id %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="actions">
+            <%= f.submit "Create Attendance" ,class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+  <% end %>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+<script type="text/javascript">
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    }
+    else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+
+  $("#employee_attendances").validate({
+    rules: {
+      "employee_attendances[present]":{
+        required: true
+      }
+    },
+    messages: {
+      "employee_attendances[present]":{
+        required: "Please Specify Status"
+      }
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+     $(".timepicker").timepicker({
+    showInputs: false
+  });
+    $('.machine_attendance').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-100:-0',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

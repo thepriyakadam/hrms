@@ -25,11 +25,11 @@ class EmployeeCategory < ActiveRecord::Base
         	is_active = false
         end
 
-        @employee = EmployeeCategory.find_by(name: name)
-        if @employee.nil?
-        @employee_category = EmployeeCategory.create(code: code,name: name,description: description,is_active: is_active)     
+        @employee_category = EmployeeCategory.find_by(name: name)
+        if @employee_category.nil?
+          @employee_category = EmployeeCategory.create(code: code,name: name,description: description,is_active: is_active)     
         else
-          @employee.update(code: code,name: name,description: description,is_active: is_active)
+          @employee_category.update(code: code,name: name,description: description,is_active: is_active)
         end
     end
   end

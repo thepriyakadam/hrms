@@ -1,0 +1,54 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Shift Details </center></h4>
+      
+    </div>
+
+    <div class="modal-body">
+    	<table id="example4" class="table table-bordered table-hover table-condensed">
+        <thead>
+        	<tr>
+        		<th colspan="5"><center> Employee : <%= @employee.try(:manual_employee_code) %> - <%= full_name(@employee) %></center></th>
+          </tr>
+          <tr>
+            <th colspan="5"><center> Shift : <%= @shift_schedule.from.to_date %> - <%= @shift_schedule.to.to_date %></center></th>
+        	</tr>
+          <tr>
+            <th>Sr. No</th>
+            <th>Shift</th>
+            <th>Date</th>
+            <th>Created By</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% i = 0 %>
+          <% @shift_employees.each do |shift_employee| %>
+            <tr>
+              <td><%= i = i + 1 %></td>
+              <td><%= shift_employee.try(:shift_time).try(:shift) %> - <%= shift_employee.try(:shift_time).try(:name) %></td>
+              <td><%= shift_employee.date %></td>
+              <td><%= full_name(shift_employee.created_by) %></td>
+              <td>
+                <%= link_to '',  edit_employee_shift_shift_schedules_path(shift_employee),class: "btn btn-xs btn-default fa fa-edit",remote:true %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+		<div class="modal-footer"></div>
+	</div>
+</div>  
+<div id="edit_employee_shift" class="modal fade"></div>
+<!-- 
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example4').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script> -->

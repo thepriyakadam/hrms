@@ -53,7 +53,8 @@ class JoiningDetailsController < ApplicationController
       if @joining_detail.save
         EmployeePromotion.create(employee_id: @joining_detail.employee_id,department_id: @joining_detail.employee.department.id,employee_designation_id: @joining_detail.employee_designation_id,employee_grade_id: @joining_detail.employee_grade_id,employee_category_id: @joining_detail.employee_category_id,effective_from: @joining_detail.joining_date)
         #ChangeDesignation.create(employee_id: @joining_detail.employee_id,employee_designation_id: @joining_detail.employee_designation_id,effective_from: @joining_detail.joining_date,status: true, change_by_id: current_user.employee_id)
-        @joining_detail.update(contract_month: @joining_detail.contract_month)
+        joining_date = @joining_detail.joining_date.to_date + 6.months
+        @joining_detail.update(contract_month: @joining_detail.contract_month,confirmation_date: joining_date.to_date)
         #retirement_date
         employee = Employee.find_by(id: @joining_detail.employee_id)
         date_of_birth = employee.date_of_birth

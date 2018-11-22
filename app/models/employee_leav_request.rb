@@ -269,7 +269,6 @@ class EmployeeLeavRequest < ActiveRecord::Base
   end
 
   def create_attendance
-    
     if self.is_present?
     else
         if self.leave_type == "Full Day"

@@ -4,7 +4,7 @@
   </div><!-- /.box-header -->
 
   <div class="box-body">
-<%= bootstrap_form_for (:salary),url:{action:"leave" } ,html: {id: "employee_leav_balance"} do |f| %>
+<%= bootstrap_form_for (:salary),url:{action:"leave" } ,html: {id: "salary"} do |f| %>
   <div class="row">
 
           <div class="col-sm-3">
@@ -61,4 +61,35 @@
     dateFormat: 'dd-mm-yy' });
 
     });
+
+  //  $("#salary").validate({
+  //   rules: {
+  //     "salary[leav_category_id]":{
+  //       required: true,
+  //       maxlength: 20,
+  //     },
+  //     "salary[from_date]":{
+  //       required: true,
+  //     },
+  //     "salary[to_date]":{
+  //       required: true,
+  //     }
+  //   },
+  //   messages: {
+  //     "salary[leav_category_id]":{
+  //       required: "Please specify leav_category",
+  //     },
+  //     "salary[from_date]":{
+  //       required: "Please specify from date",
+  //     },
+  //      "salary[to_date]":{
+  //       required: "Please specify to date",
+  //     }
+      
+  //   },
+  //   errorPlacement: function(error, element) {
+  //    error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+  //    error.insertAfter(element.parent(element));
+  //   }
+  // });
 </script>

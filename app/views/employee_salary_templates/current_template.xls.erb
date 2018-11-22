@@ -12,15 +12,8 @@
         <Cell ss:Index="3"><Data ss:Type="String">Employee Name</Data></Cell>
         <Cell ss:Index="4"><Data ss:Type="String">Basic</Data></Cell>
         <Cell ss:Index="5"><Data ss:Type="String">HRA</Data></Cell>  
-        <Cell ss:Index="6"><Data ss:Type="String">Special Allowance</Data></Cell> 
-        <Cell ss:Index="7"><Data ss:Type="String">Convenience Allowance</Data></Cell> 
-        <Cell ss:Index="8"><Data ss:Type="String">Other Allowance</Data></Cell> 
-        <Cell ss:Index="9"><Data ss:Type="String">Washing Allowance</Data></Cell>
-        <Cell ss:Index="10"><Data ss:Type="String">DA</Data></Cell> 
-        <Cell ss:Index="11"><Data ss:Type="String">Driver Allow</Data></Cell>
-        <Cell ss:Index="12"><Data ss:Type="String">Medi Allow</Data></Cell>
-        <Cell ss:Index="13"><Data ss:Type="String">Child Edu Allow</Data></Cell>
-        <Cell ss:Index="14"><Data ss:Type="String">MRA</Data></Cell>
+        <Cell ss:Index="6"><Data ss:Type="String">Performance Allowance</Data></Cell> 
+        <Cell ss:Index="7"><Data ss:Type="String">Stipend</Data></Cell> 
       </Row>
 
         <% i = 0 %>
@@ -41,26 +34,11 @@
                   <Cell ss:Index="4"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
                 <% when "HRA" %>
                   <Cell ss:Index="5"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                <% when "Special Allowance" %>
+                <% when "Performance Allowance" %>
                   <Cell ss:Index="6"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                <% when "Convenience Allowance" %>
-                  <Cell ss:Index="7"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                <% when "Other Allowance" %>
-                  <Cell ss:Index="8"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                <% when "Washing Allowance" %>
-                  <Cell ss:Index="9"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                <% when "DA" %>
-                  <Cell ss:Index="10"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                 <% when "Driver Allowance" %>
-                  <Cell ss:Index="11"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                <% when "Medical Allowance" %>
-                  <Cell ss:Index="12"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                <% when "Children Education Allowance" %>
-                  <Cell ss:Index="13"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-                <% when "Rembursement of Medical Allowence" %>
-                  <Cell ss:Index="14"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>
-               
-              <% end %> 
+                <% when "Stipend" %>
+                  <Cell ss:Index="7"><Data ss:Type="Number"><%= item.monthly_amount.try(:round) %></Data></Cell>             
+                <% end %> 
             <% end %>
           </Row><!-- Row -->
         <% end %><!-- slip -->

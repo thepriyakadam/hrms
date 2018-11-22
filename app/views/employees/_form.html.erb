@@ -371,7 +371,19 @@ $("#employee").validate({
         numbersOnly: true
       },
       "employee[contact_no]":{
-        maxlength: 13,
+        maxlength: 6,
+        mobileNo: true
+      },
+      "employee[optinal_contact_no1]":{
+        maxlength: 6,
+        mobileNo: true
+      },
+      "employee[optinal_contact_no]":{
+        maxlength: 10,
+        mobileNo: true
+      },
+      "employee[emergency_contact_no]":{
+        maxlength: 10,
         mobileNo: true
       },
       "employee[status]":{
@@ -383,8 +395,6 @@ $("#employee").validate({
       "employee[company_id]":{
         required: true
       },
-     
-       
        "employee[email]":{
         required: true
       },
@@ -441,6 +451,15 @@ $("#employee").validate({
         maxlength: "Please Enter Valid Pincode Details"
       },
       "employee[contact_no]":{
+        maxlength: "Enter the Correct Extension Number"
+      },
+      "employee[optinal_contact_no1]":{
+        maxlength: "Enter the Correct Extension number"
+      },
+      "employee[optinal_contact_no]":{
+        maxlength: "Enter the Correct contact number"
+      },
+      "employee[emergency_contact_no]":{
         maxlength: "Enter the Correct contact number"
       },
       "employee[status]":{

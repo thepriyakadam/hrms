@@ -36,7 +36,7 @@
                 <small class="label label-primary">Already Assign</small>
               <% else %>
               	<%= link_to '', edit_modal_week_off_masters_path(week_off_master),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
-                <%= link_to '',  week_off_master, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-close' %>
+                <%= link_to '',  week_off_master, method: :delete, data: { confirm: 'Are you sure? This will permanantly delete this record!'},class: 'btn btn-danger btn-xs fa fa-close' %>
               <% end %>
             </td>
           </tr>

@@ -135,9 +135,10 @@
   <br>
     <table style="border-collapse: collapse; font-size:8pt;" border=1 width=1200 cellpadding="5">
       <thead>
-      <tr><th colspan="10"><center>Performance Record</center></th></tr>
-      <tr><th colspan="10">Goals</th></tr>
+      <tr><th colspan="11"><center>Performance Record</center></th></tr>
+      <tr><th colspan="11">Goals</th></tr>
         <tr>
+          <th>Sr. No</th>
           <th>Goal Perspective</th>
           <th>Goal Measure</th>
           <th>Activity</th>
@@ -151,8 +152,11 @@
         </tr>
       </thead>
       <tbody>
+        <% i = 0 %>
         <% @self_goal_ratings.each do |goal_rating| %>
+        <%# @goal_ratings.each do |goal_rating| %>
           <tr>
+            <td><%= i = i + 1 %></td>
             <td><%= goal_rating.goal_perspective.try(:name) %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.activity %></td>
@@ -168,8 +172,9 @@
       </tbody>
 
     <thead>
-      <tr><th colspan="9">Attributes</th></tr>
+      <tr><th colspan="10">Attributes</th></tr>
         <tr>
+          <th>Sr. No</th>
           <th>Attributes</th>
           <th>Goal Measure</th>
           <th>Activity</th>
@@ -183,8 +188,11 @@
         </tr>
       </thead>
       <tbody>
+        <% i = 0 %>
         <% @self_attribute_ratings.each do |goal_rating| %>
+        <%# @goal_attribute_ratings.each do |goal_rating| %>
           <tr>
+            <td><%= i = i + 1 %></td>
             <td><%= goal_rating.attribute_master.try(:name) %></td>
             <td><%= goal_rating.goal_measure %></td>
             <td><%= goal_rating.activity %></td>

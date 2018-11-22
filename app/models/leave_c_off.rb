@@ -33,12 +33,20 @@ class LeaveCOff < ActiveRecord::Base
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-      @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
 
-            @employee_id = @employee.id
-            c_off_date = spreadsheet.cell(i,'c')
-            c_off_type = spreadsheet.cell(i,'D')
-            comment = spreadsheet.cell(i,'E')
+        manual_employee_code = spreadsheet.cell(i,'B').to_i
+        if manual_employee_code == 0
+           manual_employee_code = spreadsheet.cell(i,'B')
+           @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+        else
+           manual_employee_code = spreadsheet.cell(i,'B').to_i
+           @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+        end
+
+        @employee_id = @employee.id
+        c_off_date = spreadsheet.cell(i,'c')
+        c_off_type = spreadsheet.cell(i,'D')
+        comment = spreadsheet.cell(i,'E')
         if c_off_type.nil? || c_off_date.nil?
         else
           if @employee == nil

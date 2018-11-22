@@ -78,7 +78,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <%= text_field :salary,:day,hide_label: true,class: 'day_date form-control'%>
+              <%= text_field :salary,:day,hide_label: true,class: 'attendance_date form-control'%>
             </div>
           </div>
         </div>
@@ -109,6 +109,16 @@
 </div><!-- /.box -->
 
 <script type="text/javascript">
+  $(function(){
+    $('.attendance_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+8',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script type="text/javascript">
   $("#buttonCtc").click(function(){
     $('.ajax-progress').show();
     $("#salary").submit();
@@ -130,7 +140,7 @@
    error.insertAfter(element.parent(element));
   }
  });
-
+</script>
 <script type="text/javascript">
   $("#buttonCtc").click(function(){
     $('.ajax-progress').show();

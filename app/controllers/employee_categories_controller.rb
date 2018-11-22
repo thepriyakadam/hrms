@@ -83,6 +83,23 @@ end
      end
   end
   
+  def employee_detail
+    @employees = Employee.where(status: "Active")
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_categories/employee_detail.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: ' employee_detail',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_categories/employee_detail.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+        end
+      end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

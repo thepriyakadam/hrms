@@ -8,6 +8,8 @@ class GalleriesController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @galleries }
     end
+    session[:active_tab] = "InformationManagement"
+    session[:active_tab1] = "Events"
   end
 
   # GET /galleries/1

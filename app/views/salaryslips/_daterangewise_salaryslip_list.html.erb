@@ -163,6 +163,9 @@
 
     <div class="col-sm-6">
       <%= link_to " Excel Report ",dynamic_daterange_report_salaryslips_path(:salaryslip =>{start_date: params[:salaryslip][:start_date], end_date: params[:salaryslip][:end_date],company_id: params[:salaryslip][:company_id],company_location_id: params[:salaryslip][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+
+      <%#= link_to " Excel ",salaryslip_format_salaryslips_path(:salaryslip =>{start_date: params[:salaryslip][:start_date], end_date: params[:salaryslip][:end_date],company_id: params[:salaryslip][:company_id],company_location_id: params[:salaryslip][:company_location_id]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+      
       <!-- <= link_to " Print Salaryslip ",salary_slip_pdf_salaryslips_path(month: params[:salaryslip][:month], year: params[:salaryslip][:year],company_id: params[:salaryslip][:company_id],company_location_id: params[:salaryslip][:company_location_id], format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %> -->
     </div>
   </div>

@@ -39,7 +39,7 @@
                 <small class="label label-info">On Duty</small>
               <%elsif a.employee_week_off_id != nil %>
                 <small class="label label-warning">Week Off</small>
-              <%elsif a.holiday_id != nil %>
+              <%elsif a.try(:holiday_id) != nil %>
                 <small class="label label-success">Holiday</small>
               <% else %>
 

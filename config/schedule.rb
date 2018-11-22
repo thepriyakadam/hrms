@@ -15,9 +15,14 @@ end
 #   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 # end
 
+
+every :day, :at => '01:00am' do
+  rake 'atte_task:reminder_msg', :environment => 'development',   :output => 'log/cron.log'
+end
+
 ##################  Transaction Record ####################
 
-every :day, :at => '02:50pm' do
+every :day, :at => '01:00am' do
   rake 'atte_task:transaction_att', :environment => 'development',   :output => 'log/cron.log'
 end
 

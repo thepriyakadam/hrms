@@ -1,0 +1,67 @@
+<%= bootstrap_form_for(@expence_opestion,html: {id: 'expence_opestion'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :employee_grade_id, all_employee_grade ,{label: 'Employee Grade',include_blank: " Select Employee Grade"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :code, label: 'Code', placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, label: 'Name', placeholder: 'Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :description,label: 'Description' , placeholder: 'Description' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.check_box :status, label:'Active' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Expence Option" ,:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br>
+
+<script>
+$("#expence_opestion").validate({
+    rules: {
+      "expence_opestion[employee_grade_id]":{
+        required: true,
+      },
+      "expence_opestion[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "expence_opestion[employee_grade_id]":{
+        required: "Please specify Employee Grade",
+      },
+       "expence_opestion[name]":{
+        required: "Please specify Name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

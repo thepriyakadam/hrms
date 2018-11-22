@@ -48,6 +48,35 @@ class CostCentersController < ApplicationController
     flash[:notice] = "Confirmed Successfully"
     redirect_to new_cost_center_path
   end
+
+  def all_cost_center
+    @cost_centers = CostCenter.all
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'cost_centers/all_cost_center.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'all_cost_center',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'cost_centers/all_cost_center.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_xl_cost_centers_path
+    else
+      CostCenter.import(params[:file])
+      redirect_to new_cost_center_path, notice: "File imported."
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -57,6 +86,6 @@ class CostCentersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def cost_center_params
-    params.require(:cost_center).permit(:is_confirm,:name)
+    params.require(:cost_center).permit(:is_confirm,:name,:code,:description)
   end
 end

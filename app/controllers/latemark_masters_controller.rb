@@ -183,7 +183,7 @@ class LatemarkMastersController < ApplicationController
     @latemark_master_late_time = @latemark_master.late_limit
     @late_limit = @latemark_master_late_time.strftime("%I:%M") #to_time
     @emp_att = []
-    @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,employee_leav_request_id: nil,on_duty_request_id: nil,employee_week_off_id: nil,holiday_id: nil,is_confirm: true).where.not(in_time: nil)
+    @employee_attendances = EmployeeAttendance.where(day: @from_date.to_date..@to_date.to_date,employee_leav_request_id: nil,on_duty_request_id: nil,employee_week_off_id: nil,holiday_id: nil).where.not(in_time: nil)
     @employee_attendances.each do |att|
       if att.in_time.strftime("%I:%M") >= @company_time && att.in_time.strftime("%I:%M") <= @late_limit
         # LatemarkTotal.create(employee_id: att.employee_id,latemark_date: att.day,in_time: att.in_time)

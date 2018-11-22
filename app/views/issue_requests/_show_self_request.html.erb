@@ -22,7 +22,7 @@
 
       <tbody>
         <% i = 0 %>
-        <% @issue_requests.each do |issue_request| %>
+        <% @show_issue_requests.try(:each) do |issue_request| %>
           <tr>
             <td><%= i = i + 1 %></td>
             <td><%= issue_request.issue_master.try(:name) %></td>

@@ -24,6 +24,10 @@
               <th><strong>Location</strong></th>
               <td><%= @listed_company.location %></td>
           </tr>
+          <tr>
+              <th><strong>Status</strong></th>
+              <td><%= @listed_company.status ? "Active" : "Inactive" %></td>
+          </tr>
       </tbody>
 	    </table> <br>
 	    <div align="center">

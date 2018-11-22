@@ -45,6 +45,34 @@ class ReportingMastersController < ApplicationController
     @reporting_masters = ReportingMaster.all
   end
 
+  def reporting_master
+      @reporting_masters = ReportingMaster.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'reporting_masters/reporting_master.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'reporting_master',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'reporting_masters/reporting_master.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+  def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_reporting_masters_path
+      else
+     ReportingMaster.import(params[:file])
+     redirect_to new_reporting_master_path, notice: "File imported."
+     end
+  end
+  
   def update_reporting_manager
     session[:active_tab] ="UserAdministration"
   end

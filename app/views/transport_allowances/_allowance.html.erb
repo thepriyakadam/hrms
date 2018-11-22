@@ -1,0 +1,32 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h5 class="modal-title"><center> Transport Allowance </center></h5>
+    </div>
+    <div class="modal-body">
+    	<table id="example2" class="table table-bordered table-hover table-condensed">
+	      <tr>
+	        <th> <strong> ID</strong></th>
+	        <td><%= @transport_allowance.employee.try(:manual_employee_code) %></td>
+	      </tr>
+	      <tr>
+	        <th><strong>Emplyee Name</strong></th>
+	        <td><%= @transport_allowance.employee.first_name %><%= @transport_allowance.employee.middle_name %><%= @transport_allowance.employee.last_name %></td>
+	      </tr>
+	      <tr>
+	        <th><strong>Amount</strong></th>
+	        <td><%= @transport_allowance.amount %></td>
+	      </tr>
+	      <tr>
+	        <th><strong>Option</strong></th>
+	        <td><%= @transport_allowance.option ? "Yes" : "No" %></td>
+	      </tr>
+	      <tr>
+	        <th><strong>Status</strong></th>
+	        <td><%= @transport_allowance.status ? "Active" : "Inactive" %></td>
+	      </tr>
+    	</table>
+    </div>
+  </div>
+</div>

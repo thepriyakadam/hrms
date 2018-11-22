@@ -1,0 +1,50 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Shift Details </center></h4>
+    </div>
+    <div class="modal-body">
+    
+			<table class="table table-bordered table-hover table-condensed">
+			  <thead>
+			  	<tr>
+                  <th>Cost Center</th>
+			      <td><%= @shift_time.cost_center.try(:name) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>Shift</strong></th>
+			      <td> <%= @shift_time.try(:shift) %></td>
+			    </tr>    
+			    <tr>
+			     <th><strong>Name</strong></th>
+			      <td><%= @shift_time.try(:name) %></td>
+			    </tr>
+			    <tr>
+			     <th><strong>From</strong></th>
+			      <td><%= @shift_time.try(:from) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>To</strong></th>
+			      <td> <%= @shift_time.try(:to) %></td>
+			    </tr>
+			    <tr>
+			     <th><strong>Working Hrs</strong></th>
+			      <td><%= @shift_time.try(:working_hrs) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>Description</strong></th>
+			      <td> <%= @shift_time.try(:description) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>Status</strong></th>
+			      <td><%= @shift_time.try(:status) ? "Active" : "Inactive" %></td>
+			    </tr> 
+			    
+			  </thead>
+			</table>
+
+		</div>
+		<div class="modal-footer"></div>
+	</div>
+</div>  

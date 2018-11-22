@@ -1,18 +1,19 @@
 <table id="example6" class="table table-bordered table-hover table-condensed'">
   <thead>
     <tr>  
+      <th>Sr. No</th>
       <th>Country</th>
-      <th>ID</th>
       <th>Code</th>
-      <th>Name</th>
+      <th>State</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
+    <% i = 0 %>
     <% @states.each do |state| %>
       <tr>
+        <td><%= i = i + 1 %></td>
         <td><%= state.country.try(:name) %></td>
-        <td><%= state.id %></td>
         <td><%= state.code %></td>
         <td><%= state.name %></td>
         <td> <!-- link_to '', state,class: 'btn btn-xs btn-default fa fa-eye',remote:true  %> -->

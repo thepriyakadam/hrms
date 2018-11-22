@@ -40,6 +40,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'awesome_print'
 gem 'datagrid', '~> 1.4', '>= 1.4.1'
 gem 'quiet_assets'
+gem 'will_paginate'
+
 
 
 gem 'fullcalendar-rails', '~> 3.4.0.0'
@@ -103,8 +105,12 @@ gem 'bcrypt'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# ADFS
 gem 'omniauth'  
 gem 'omniauth-wsfed', '0.3.2.pre.beta'
+
+
 group :development, :test do
 	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
 	gem 'byebug'

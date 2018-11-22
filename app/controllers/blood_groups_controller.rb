@@ -44,7 +44,7 @@ class BloodGroupsController < ApplicationController
       f.xls {render template: 'blood_groups/blood_group_master.xls.erb'}
       f.html
       f.pdf do
-        render pdf: ' blood_group_master',
+        render pdf: " blood_group_master_#{Date.today.to_s}_#{Time.now.to_s}",
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'blood_groups/blood_group_master.pdf.erb',

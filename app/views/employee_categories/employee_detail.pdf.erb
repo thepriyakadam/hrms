@@ -1,0 +1,98 @@
+<table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
+  <thead>
+    <tr>
+      <th>Sr. No</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Basic</th>
+      <th>Onboarding</th>
+      <th>Bank</th>
+      <th>Qualification</th>
+      <th>Experience</th>
+      <th>Skillset</th>
+      <th>Certification</th>
+      <th>Award</th>
+      <th>Physical</th>
+      <th>Family</th>
+      <th>Asset</th>
+      <th>Document</th>
+      <th>Check List</th>
+    </tr>
+  </thead>
+
+  <tbody>
+          <% i = 0 %>
+          <% @employees.each do |employee| %>
+            <tr>
+              <td><%= i = i + 1 %></td>
+              <td><%= employee.manual_employee_code %></td>
+              <td><%= full_name(employee) %></td>
+                <% if Employee.exists?(id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if JoiningDetail.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if EmployeeBankDetail.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if Qualification.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if Experience.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if Skillset.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if Certification.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if Award.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if EmployeePhysical.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if Family.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if AssignedAsset.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if EmployeeDocument.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+                <% if EmployeeJcList.exists?(employee_id: employee.id) %>
+                  <td><font color="green"><%= "Yes" %></font></td>
+                <% else %>
+                  <td><font color="red"><%= "No" %></font></td>
+                <% end %>
+            </tr>
+          <% end %>                                                                       
+        </tbody>
+</table>   

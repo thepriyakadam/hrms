@@ -69,6 +69,7 @@ class EmployeeSalaryTemplatesController < ApplicationController
     @employee_id = params[:employee][:employee_id]
     @template_id = params[:template][:template_id]
     @previous_employee_template = EmployeeTemplate.where('employee_id = ? and is_active = ?', @employee_id, true).take
+    
     if params[:increement][:date] == ''
       flash[:alert] = 'Please specify date.'
       redirect_to new_employee_salary_template_path(id: @employee_id)

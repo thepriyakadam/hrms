@@ -167,8 +167,9 @@
               <% else %>
                 <table id="example1" class="table table-bordered table-hover table-condensed">
                   <thead>
-                  <tr><th colspan="10"><center>Goal Rating</center></th></tr>
+                  <tr><th colspan="11"><center>Goal Rating</center></th></tr>
                     <tr>
+                      <th>Sr. No</th>
                       <th>Goal Perspective</th>
                       <th>Measure</th>
                       <th>Activity</th>
@@ -184,8 +185,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <% i = 0 %>
                     <% @goal_ratings.each do |goal_rating| %>
                       <tr>
+                        <td><%= i = i + 1 %></td>
                         <td><%= goal_rating.goal_perspective.try(:name) %></td>
                         <td><%= goal_rating.goal_measure %></td>
                         <td><%= goal_rating.activity %></td>
@@ -217,8 +220,9 @@
               <% else %>
                 <table id="example1" class="table table-bordered table-hover table-condensed">
                   <thead>
-                  <tr><th colspan="10"><center>Attribute Rating</center></th></tr>
+                  <tr><th colspan="11"><center>Attribute Rating</center></th></tr>
                     <tr>
+                      <th>Sr. No</th>
                       <th>Attribute</th>
                       <th>Measure</th>
                       <th>Activity</th>
@@ -234,8 +238,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <% i = 0 %>
                     <% @goal_attribute_ratings.each do |goal_rating| %>
                       <tr>
+                        <td><%= i = i + 1 %></td>
                         <td><%= goal_rating.attribute_master.try(:name) %></td>
                         <td><%= goal_rating.goal_measure %></td>
                         <td><%= goal_rating.activity %></td>
@@ -268,7 +274,11 @@
                 <div class="col-sm-3">
                   <div class="actions">
                     <%#= f.submit "Create Comment & Rating", class: 'btn btn-primary btn-sm' %>
-                    <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                    <% if @employee.manager_id == current_user.employee_id %>
+                      <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+                    <% else %>
+                      <%= link_to 'Back',admin_level_appraiser_evaluation_goal_ratings_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+                    <% end %>
                   </div>
                 </div>
               </div>
@@ -290,8 +300,9 @@
         <% else %>
           <table id="example1" class="table table-bordered table-hover table-condensed">
             <thead>
-              <tr><th colspan="12"><center>Goal Details</center></th></tr>
+              <tr><th colspan="13"><center>Goal Details</center></th></tr>
               <tr>
+                <th>Sr. No</th>
                 <th>Goal Perspective</th>
                 <th>Measure</th>
                 <th>Activity</th>
@@ -307,10 +318,12 @@
               </tr>
             </thead>
             <tbody>
+              <% i = 0 %>
               <% appraiser_goal_sum = 0 %>
               <% appraiser_goalrating_sum = 0 %>
               <% @appraiser_goal_ratings.each do |goal_rating| %>
                 <tr>
+                  <td><%= i = i + 1 %></td>
                   <td><%= goal_rating.goal_perspective.try(:name) %></td>
                   <td><%= goal_rating.goal_measure %></td>
                   <td><%= goal_rating.activity %></td>
@@ -518,13 +531,23 @@
         
         <% unless @goal_bunch.nil? %>
         <% if @goal_bunch.appraiser_comment == nil or @goal_bunch.appraiser_confirm == true %>
-           <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+
+          <% if @employee.manager_id == current_user.employee_id %>
+              <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+          <% else %>
+            <%= link_to 'Back',admin_level_appraiser_evaluation_goal_ratings_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+          <% end %>
+
           <% else %>
             <div class="row">
               <div class="col-sm-6">
                 <div class="actions">
                   <%= f.submit "Confirm", class: 'btn btn-primary btn-sm' %>
-                   <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+                  <% if @employee.manager_id == current_user.employee_id %>
+                    <%= link_to 'Back',period_list_appraiser_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+                  <% else %>
+                    <%= link_to 'Back',admin_level_appraiser_evaluation_goal_ratings_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+                  <% end %>
                 </div>
               </div>
             </div>

@@ -10,21 +10,19 @@
         <%= f.text_field :name, label: 'Name', placeholder: 'Name' %>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <%= f.check_box :status, label:'Status' %>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       <div class="form-group required">
         <%= f.text_area :description, label:'Description'%>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-2">
+      <div class="form-group required">
+        <%= f.check_box :status, label:'Status' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
       <div class="actions" style="padding-top: 20px;">
         <%= f.submit 'Create',class: "btn btn-primary btn-sm"%>
       </div>
@@ -41,9 +39,6 @@
       "plan_reason_master[name]":{
         required: true,
       },
-      "plan_reason_master[status]":{
-        required: true,
-      },
       "plan_reason_master[description]":{
         required: true,
       }
@@ -54,9 +49,6 @@
       },
        "plan_reason_master[name]":{
         required: "Please Specify Name",
-      },
-      "plan_reason_master[status]":{
-        required: "Please Specify Status",
       },
       "plan_reason_master[description]":{
         required: "Please Specify Description",

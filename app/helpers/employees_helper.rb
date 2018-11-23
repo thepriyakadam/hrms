@@ -96,6 +96,28 @@ module EmployeesHelper
     end
   end
 
+  def employee_coff_list
+    if current_user.class == Group
+      emp = JoiningDetail.where(c_off: true).pluck(:employee_id)
+      Employee.where(status: "Active",id: emp).collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' +e.try(:middle_name).to_s + ' ' +  e.last_name.to_s, e.id] }
+    else
+      emp = JoiningDetail.where(c_off: true).pluck(:employee_id)
+      if current_user.role.name == 'GroupAdmin'
+        Employee.where(status: "Active",id: emp).collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'Admin'
+        Employee.where(company_id: current_user.company_location.company_id,status: "Active",id: emp).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'Branch'
+        Employee.where(company_location_id: current_user.company_location_id,status: "Active",id: emp).collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == "AccountAdmin"
+        Employee.where(company_location_id: current_user.company_id,status: "Active",id: emp).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif  current_user.role.name == 'HOD'
+        Employee.where(department_id: current_user.department_id,status: "Active",id: emp).collect { |e| [e.manual_employee_code + '  ' + e.try(:prefix).to_s + ' ' +e.first_name.to_s + ' ' +e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
+      elsif current_user.role.name == 'Costomize'
+        Employee.where(status: "Active",id: emp).collect { |e| [e.manual_employee_code + '  ' +e.try(:prefix).to_s + ' ' + e.first_name.to_s + ' ' + e.try(:middle_name).to_s + ' ' + e.last_name.to_s, e.id] }
+      end
+    end
+  end
+
   def role_employee_list
     if current_user.class == Member
       if current_user.role.name == 'Supervisor' || current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' || current_user.role.name == 'Branch' || current_user.role.name == 'HOD'  || current_user.role.name == 'CEO'

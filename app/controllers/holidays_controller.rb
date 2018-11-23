@@ -48,6 +48,7 @@ class HolidaysController < ApplicationController
   end
 
   def employee_list
+    byebug
     department_id = params[:department_id]
     @holiday_id = params[:holiday_id]
     @holiday = Holiday.find_by(id: @holiday_id)

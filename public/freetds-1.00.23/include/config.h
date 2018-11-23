@@ -211,6 +211,9 @@
 /* Define to 1 if you have the `gnutls_rnd' function. */
 /* #undef HAVE_GNUTLS_RND */
 
+/* Define if you have the iconv() function and it works. */
+#define HAVE_ICONV 1
+
 /* Define to 1 if you have the `inet_ntoa_r' function. */
 /* #undef HAVE_INET_NTOA_R */
 
@@ -512,7 +515,7 @@
 /* #undef HAVE___RECVFROM */
 
 /* Define as const if the declaration of iconv() needs const. */
-/* #undef ICONV_CONST */
+#define ICONV_CONST 
 
 /* Define to value of INADDR_NONE if not provided by your system header files.
    */

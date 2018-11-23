@@ -20,9 +20,9 @@
             <td><%= e.employee.company_location.try(:name) %> - <%= e.employee.department.try(:name) %></td> 
             <td>
               <% if e.appraisee_confirm == true %>
-                <%= link_to 'Show Detail', appraisee_comment_goal_bunches_path(emp_id: e.employee_id,id: e.id,) ,class: 'btn btn-xs btn-primary' %>
+                <%= link_to 'Show Evaluation', appraisee_comment_goal_bunches_path(emp_id: e.employee_id,id: e.id,) ,class: 'btn btn-xs btn-info' %>
               <% else %>
-                <%= link_to 'Self Evaluation', appraisee_comment_goal_bunches_path(emp_id: e.employee_id,id: e.id,) ,class: 'btn btn-xs btn-info' %>
+                <%= link_to 'Self Evaluation', appraisee_comment_goal_bunches_path(emp_id: e.employee_id,id: e.id,) ,class: 'btn btn-xs btn-warning' %>
               <% end %>
             </td>
           </tr>

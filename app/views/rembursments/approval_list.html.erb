@@ -1,14 +1,14 @@
 <div class="box">
   <div class="box-header">
-    <h3 class="box-title">Approval Rembursment List</h3>
+    <h3 class="box-title">Approval Reimbursement List</h3>
     <div class="pull-right">
     </div>
   </div>
 
 <div class="box-body">
 
-    <table id="example1" class="table table-bordered table-hover table-condensed">
-     <thead>
+<table id="example6" class="table table-bordered table-hover table-condensed">
+    <thead>
       <tr>
        <th>ID</th>
        <th>Employee</th>
@@ -35,3 +35,12 @@
       </table>
     </div>
   </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
+        "scrollX": true
+    } );
+} );
+</script>

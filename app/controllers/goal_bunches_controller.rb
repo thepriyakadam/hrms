@@ -263,7 +263,7 @@ class GoalBunchesController < ApplicationController
     @all = emps.where(status: "Active")
     @emps = @all.pluck(:id)
     #@emp1 = Employee.where(id: @emps).pluck(:id)
-    @employees = GoalBunch.where(employee_id: @emps,period_id: @period.id,goal_confirm: true,goal_approval: false)
+    @employees = GoalBunch.where(employee_id: @emps,period_id: @period.id,goal_confirm: true)
     # end
     # @employee = Employee.find(params[:format])
     # @goal_bunches = GoalBunch.where(employee_id: @employee.id)

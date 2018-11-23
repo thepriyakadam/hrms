@@ -2,7 +2,8 @@ class CreateEmployeeLocationHistories < ActiveRecord::Migration
   def change
     create_table :employee_location_histories do |t|
       t.references :employee, index: true, foreign_key: true
-      t.datetime :date_time
+      t.date :date
+      t.time :time
       t.float :latitude
       t.float :longitude
       t.string :location

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  resources :c_off_cash_masters
   resources :shift_schedules do
     collection do
+      get :all_shift_schedule
+      get :import_xl
+      post :import
       get :employee_shift
       post :set_employee_shift
       get :view_employee_shift
@@ -165,7 +169,11 @@ Rails.application.routes.draw do
       post :import
     end
   end
-  resources :transport_allowances
+  resources :transport_allowances do
+    collection do
+      get :show_allowance
+    end
+  end
   resources :events
   resources :resource_pool_masters
   resources :service_masters
@@ -1311,6 +1319,8 @@ end
 
   resources :goal_ratings do
     collection do
+      get :period_for_status
+      get :managerwise_status
       get :periodwise_goal_set
       post :periodwise_goal_list
       post :set_goal_periodwise
@@ -1517,6 +1527,7 @@ end
 
   resources :exit_interviews  do
     collection do
+      get :print_exit_interview
       post :print_exit_interview
     end
   end
@@ -2071,6 +2082,8 @@ end
       post :approve_c_off
       get :reject_c_off
       get :approve_modal
+      get :manager_approve
+      get :manager_reject
       get :final_approve
       get :final_reject
       get :admin_c_off_approval
@@ -2082,6 +2095,8 @@ end
       get :maintenance_report
       get :import_xl
       post :import
+      get :final_approved_coff_list
+      post :update_coff_changes
     end
   end
 
@@ -2394,6 +2409,9 @@ end
       get :update_reporting_manager
       post :update_manager
       get :show_employee
+      get :reporting_master
+      get :import_xl
+      post :import
     end
   end
   resources :leave_status_records do
@@ -2868,6 +2886,9 @@ end
   resources :cost_centers do
     collection do
       get :is_confirm
+      get :all_cost_center
+      get :import_xl
+      post :import
     end
   end
   resources :degrees do
@@ -2953,6 +2974,7 @@ end
 
   resources :employee_leav_balances do
     collection do
+      get :show_balance
       get :all_balance
       get :collect_employee_for_leave
       get :employee_leave_balance

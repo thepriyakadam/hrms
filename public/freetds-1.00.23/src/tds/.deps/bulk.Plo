@@ -67,7 +67,7 @@ bulk.lo: bulk.c /usr/include/stdc-predef.h ../../include/config.h \
  /usr/include/getopt.h ../../include/freetds/proto.h \
  ../../include/freetds/checks.h ../../include/freetds/bytes.h \
  /usr/include/byteswap.h ../../include/freetds/iconv.h \
- /usr/include/x86_64-linux-gnu/bits/wchar2.h \
+ /usr/include/iconv.h /usr/include/x86_64-linux-gnu/bits/wchar2.h \
  ../../include/freetds/stream.h ../../include/freetds/string.h
 
 /usr/include/stdc-predef.h:
@@ -263,6 +263,8 @@ bulk.lo: bulk.c /usr/include/stdc-predef.h ../../include/config.h \
 /usr/include/byteswap.h:
 
 ../../include/freetds/iconv.h:
+
+/usr/include/iconv.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar2.h:
 

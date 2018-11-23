@@ -76,6 +76,6 @@ class CompanyLocationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def company_location_params
-    params.require(:company_location).permit(:manual_company_location_code, :company_id, :name, :email, :address, :country_id, :state_id, :district_id, :city, :pin_code, :contact_no)
+    params.require(:company_location).permit(:is_active, :manual_company_location_code, :company_id, :name, :email, :address, :country_id, :state_id, :district_id, :city, :pin_code, :contact_no)
   end
 end

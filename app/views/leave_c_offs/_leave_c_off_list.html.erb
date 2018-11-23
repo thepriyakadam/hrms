@@ -4,7 +4,7 @@
     	<th>ID</th>
       <th>Employee</th>
     	<th>Date</th>
-      <th>Days</th>
+      <th>Expire Days</th>
       <th>Status</th>
     	<th>Action</th>
    </tr>
@@ -26,13 +26,13 @@
               <% when "FirstApproved" %>
                 <small class="label label-primary">FirstApproved</small>
               <% when "FinalApproved" %>
-                <small class="label label-info">FinalApproved</small>
+                <small class="label label-success">FinalApproved</small>
               <% when "Rejected" %>
                 <small class="label label-danger">Rejected</small>
               <% when "Cancelled" %>
                 <small class="label label-warning">Cancelled</small>
               <% when "Approved" %>
-                <small class="label label-success">Approved</small>
+                <small class="label label-info">Approved</small>
               <% when "Approved & Send Next" %>
                 <small class="label label-warning">Approved & Send Next</small>
             <%end%>

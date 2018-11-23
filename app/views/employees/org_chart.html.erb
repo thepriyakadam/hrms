@@ -25,7 +25,7 @@
                 <% @emp_desig = emp.try(:joining_detail).try(:employee_designation).try(:name) %>
                 <% @photo = emp.passport_photo%>
                 // For each orgchart box, provide the name, manager, and tooltip to show.
-                data.addRows([[{ v: '<%= @emp_id %>', f:'<div><%= image_tag emp.passport_photo.url, :size => "30x30", class: "img-circle" %></div>' + '<div><%= @manual_emp_code %></div>' + '<%= short_name(emp) %>' + '<div>(<span>' + '<%= @emp_desig %>' + '</span>)</div>'}, '<%= @man_id %>', '<%= @emp_desig %>' ]]);
+                data.addRows([[{ v: '<%= @emp_id %>', f:'<div><%= image_tag emp.passport_photo.url, :size => "50x40", class: "img-circle" %></div>' + '<div><%= @manual_emp_code %></div>' + '<%= short_name(emp) %>' + '<div style="color:blue">(<span>' + '<%= @emp_desig %>' + '</span>)</div>'}, '<%= @man_id %>', '<%= @emp_desig %>' ]]);
               <% end %>
               // Create the chart.
               var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));

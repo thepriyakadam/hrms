@@ -12,7 +12,6 @@ gem 'mysql2', '~> 0.3.18'
 gem 'numbers_in_words'
 
 gem 'tiny_tds'
-
 gem 'activerecord-sqlserver-adapter'
 gem 'ruby-odbc'
 gem 'dbi'
@@ -26,9 +25,9 @@ gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
- gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
- gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'coffee-rails', '~> 4.0.0'
 gem 'whenever', '~> 0.9.7', :require => false
@@ -106,6 +105,11 @@ gem 'bcrypt'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# ADFS
+gem 'omniauth'  
+gem 'omniauth-wsfed', '0.3.2.pre.beta'
+
 
 group :development, :test do
 	# Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -275,7 +275,6 @@ class ManagerSelfServicesController < ApplicationController
       if current_user.class == Member
         if current_user.role.name == 'GroupAdmin' || current_user.role.name == "GroupTimeManagement" || current_user.role.name == "GroupRecruiter"
           joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
-
           @employees = Employee.where(status: "Active",id: joining_detail).where("manager_id = ? OR manager_2_id = ?", current_user.employee_id,current_user.employee_id).filter_by_date(@date)
           employee_id = @employees.pluck(:id)
           @employe_attendance = ShiftEmployee.where(shift_time_id: @shift_time_id,date: @date,employee_id: employee_id)

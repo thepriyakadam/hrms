@@ -61,8 +61,9 @@ query.lo: query.c /usr/include/stdc-predef.h ../../include/config.h \
  ../../include/replacements/readpassphrase.h /usr/include/libgen.h \
  /usr/include/getopt.h ../../include/freetds/proto.h \
  ../../include/freetds/enum_cap.h ../../include/freetds/iconv.h \
- /usr/include/errno.h /usr/include/x86_64-linux-gnu/bits/errno.h \
- /usr/include/linux/errno.h /usr/include/x86_64-linux-gnu/asm/errno.h \
+ /usr/include/iconv.h /usr/include/errno.h \
+ /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
+ /usr/include/x86_64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
  ../../include/freetds/convert.h ../../include/freetds/string.h \
@@ -245,6 +246,8 @@ query.lo: query.c /usr/include/stdc-predef.h ../../include/config.h \
 ../../include/freetds/enum_cap.h:
 
 ../../include/freetds/iconv.h:
+
+/usr/include/iconv.h:
 
 /usr/include/errno.h:
 

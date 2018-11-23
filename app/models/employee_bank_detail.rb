@@ -15,7 +15,7 @@ class EmployeeBankDetail < ActiveRecord::Base
   # validate :micr_code_regex
   # validate :account_no_regex
   
-def self.to_csv(options = {})
+  def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
       all.each do |employee_bank_detail|
@@ -25,22 +25,28 @@ def self.to_csv(options = {})
   end
 
   def self.import(file)
-  spreadsheet = open_spreadsheet(file)
+    spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
-        if @employee.nil?
-        else
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+      if manual_employee_code == 0
+         manual_employee_code = spreadsheet.cell(i,'B')
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+      else
+         manual_employee_code = spreadsheet.cell(i,'B').to_i
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      end
 
+      if @employee.nil?
+      else
         employee_id = @employee.id
         account_no = spreadsheet.cell(i,'C').to_i
         @bank = Bank.find_by_name(spreadsheet.cell(i,'D'))
         if @bank == nil
           bank_name = spreadsheet.cell(i,'D')
-           @bank_entry = Bank.create(name: bank_name)
-           bank_id = @bank_entry.id
-
+          @bank_entry = Bank.create(name: bank_name)
+          bank_id = @bank_entry.id
         else
-        bank_id = @bank.id
+          bank_id = @bank.id
         end
         branch_name = spreadsheet.cell(i,'E')
         ifsc_code = spreadsheet.cell(i,'F')
@@ -51,17 +57,15 @@ def self.to_csv(options = {})
 
         @employee_prsent = EmployeeBankDetail.find_by(employee_id: employee_id)
         if @employee_prsent.nil?
-        @employee_bank_detail = EmployeeBankDetail.create(employee_id: employee_id,account_no: account_no,bank_id: bank_id,
-        branch_name: branch_name,ifsc_code: ifsc_code,micr_code:  micr_code,branch_code: branch_code,address: address,contact_no: contact_no)
+          @employee_bank_detail = EmployeeBankDetail.create(employee_id: employee_id,account_no: account_no,bank_id: bank_id,
+          branch_name: branch_name,ifsc_code: ifsc_code,micr_code:  micr_code,branch_code: branch_code,address: address,contact_no: contact_no)
         else
-        @employee_prsent.update(employee_id: employee_id,account_no: account_no,bank_id: bank_id,
-        branch_name: branch_name,ifsc_code: ifsc_code,micr_code:  micr_code,branch_code: branch_code,address: address,contact_no: contact_no)
-   end
-
+          @employee_prsent.update(employee_id: employee_id,account_no: account_no,bank_id: bank_id,
+          branch_name: branch_name,ifsc_code: ifsc_code,micr_code:  micr_code,branch_code: branch_code,address: address,contact_no: contact_no)
+        end
+      end
+    end
   end
-end
-end
-
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

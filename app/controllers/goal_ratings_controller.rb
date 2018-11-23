@@ -31,6 +31,23 @@ class GoalRatingsController < ApplicationController
     redirect_to new_goal_rating_path(id: @goal_bunch, emp_id:@employee)
   end
   
+  def period_for_status
+  end
+
+  def managerwise_status
+    @period = Period.find(params[:format])
+    @emp = Employee.find(current_user.employee_id)
+    employees = @emp.subordinates
+    employees_ind = @emp.indirect_subordinates
+
+    @employees = employees.where(status: "Active").pluck(:id)
+    @employees_ind = employees_ind.where(status: "Active").pluck(:id)
+
+    @employee = @employees + @employees_ind
+
+    @goal_bunches = GoalBunch.where(period_id: @period,employee_id: @employees)
+  end
+
   def download_self_document
     @goal_rating = GoalRating.find(params[:id])
     send_file @goal_rating.document.path,

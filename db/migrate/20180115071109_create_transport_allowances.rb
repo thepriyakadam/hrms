@@ -1,4 +1,4 @@
-class CreateTransportAllowances < ActiveRecord::Migration
+ CreateTransportAllowances < ActiveRecord::Migration
   def change
     create_table :transport_allowances do |t|
       t.references :employee, index: true, foreign_key: true

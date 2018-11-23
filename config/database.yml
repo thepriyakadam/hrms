@@ -7,26 +7,27 @@ development:
   database: hrms_development
   username: root
   password: kiit
-  host: localhost
 
 production:
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: root  
-  password: kiit
+  socket: /var/run/mysqld/mysqld.sock
+  reconnect: true
   database: hrms_development
+  username: root
+  password: kiit
 
 test:
   adapter: mysql2
   encoding: utf8
   pool: 5
+  socket: /var/run/mysqld/mysqld.sock
+  reconnect: true
+  database: hrms_development
   username: root
   password: kiit
-  database: hrms_development
-
-
-
+  
 development_sec:
   adapter: sqlserver
   encoding: utf8
@@ -53,3 +54,28 @@ test_sec:
   username: sa
   password: root
   host: 172.16.1.32
+
+#   development_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 123.201.35.198
+#   database: ZKA
+#   username: sa
+#   password: pass
+
+# production_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 123.201.35.198
+#   database: ZKA
+#   username: sa
+#   password: pass
+
+# test_sec:
+#   adapter: sqlserver
+#   encoding: utf8
+#   host: 123.201.35.198
+#   database: ZKA
+#   username: sa
+#   password: pass
+

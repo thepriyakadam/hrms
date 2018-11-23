@@ -1,6 +1,6 @@
 class Skillset < ActiveRecord::Base
   belongs_to :employee
-  # validates :name, presence: true, uniqueness: true
+   validates :name, presence: true, uniqueness: true
   # validates :skill_level, presence: true
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
@@ -14,18 +14,31 @@ class Skillset < ActiveRecord::Base
   def self.import(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+      if manual_employee_code == 0
+         manual_employee_code = spreadsheet.cell(i,'B')
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+      else
+         manual_employee_code = spreadsheet.cell(i,'B').to_i
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      end
+
+      #@employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee == nil
         else
-        employee_id = @employee.id
-        name = spreadsheet.cell(i,'C')
-        skill_level = spreadsheet.cell(i,'D')
+          employee_id = @employee.id
+          name = spreadsheet.cell(i,'C')
+          skill_level = spreadsheet.cell(i,'D')
 
-        @skillset = Skillset.create(employee_id: employee_id,name: name,skill_level: skill_level)
-    end
-
+          @skillset = Skillset.where(employee_id: employee_id,name: name).take
+          if @skillset.nil?
+            @skillset = Skillset.create(employee_id: employee_id,name: name,skill_level: skill_level)
+          else
+            @skillset.update(employee_id: employee_id,name: name,skill_level: skill_level)
+          end
+        end
+    end#do
   end
-end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

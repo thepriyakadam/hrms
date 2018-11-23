@@ -239,9 +239,35 @@ class ShiftSchedulesController < ApplicationController
           end
         end
     redirect_to update_shift_for_employee_shift_schedules_path
-
   end
 
+  def all_shift_schedule
+    @shift_schedules = ShiftSchedule.all
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'shift_schedules/all_shift_schedule.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'all_shift_schedule',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'shift_schedules/all_shift_schedule.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_xl_shift_schedules_path
+    else
+      ShiftSchedule.import(params[:file])
+      redirect_to new_shift_schedule_path, notice: "File imported."
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_shift_schedule

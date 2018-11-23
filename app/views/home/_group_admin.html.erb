@@ -38,8 +38,8 @@
       <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Employees</span>
-        <span class="info-box-text"><font color='green'><%= @employees.where(status: "Active").try(:count) %></font> / <font color='red'><%= @employees.where(status: "Inactive").try(:count) %></font></span>
-        <span class="info-box-text"><%= @employees.try(:count) %></span>
+        <span class="info-box-text"><font color='green'><%= @employees.where(status: "Active").try(:count) %></font> + <font color='red'><%= @employees.where(status: "Inactive").try(:count) %></font> = <font color='green'><%= @employees.try(:count) %></font></span>
+        <span class="info-box-text"></span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -331,163 +331,7 @@
 </script>
       <div id="anniversary_email" class="modal fade"></div>
 
-  <!-- Attendance Leave -->
        <div class="box box-info">
-        <div class="box-header with-border">
-            <% @employee = Employee.where(status: "Active").pluck(:id) %>
-        <% @employees = EmployeeAttendance.where(day: Date.today,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
-          <h3 class="box-title"><font color="red"> Leave - <%= @employees.count %></font></h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <% date = Date.today %>
-            <% @employee = Employee.where(status: "Active").pluck(:id) %>
-           <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
-          <% if @employees.empty? %>
-          <%else%>
-            <table id="example2" class="table no-margin">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Employee</th>
-                  <th>Department</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <% @employees.each do |e| %>
-                  <tr>
-                    <td>
-                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
-                         <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
-                         <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                         <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
-                         <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                         <%else%>
-                         <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                         <%end%> <!-- if -->
-                      <%end%> <!-- unless -->
-                    </td>
-                    <td><%= e.employee.manual_employee_code %> - <%= full_name(e.employee) %></td>
-                    <td><%= e.employee.try(:department).try(:name) %></td>
-                    <td><%= e.present %></td>
-                  </tr>
-              <% end %> <!-- do -->
-            </table>
-          <%end%> <!-- if employee.empty? -->
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
-
-
-
-
-<!-- MANAGER Attendance Leave -->
-       <div class="box box-info">
-        <div class="box-header with-border">
-            <% @employee = Employee.where("status = ? AND manager_id = ? OR manager_2_id = ?", "Active",current_user.employee_id,current_user.employee_id).pluck(:id) %>
-        <% @employees = EmployeeAttendance.where(day: Date.today,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
-          <h3 class="box-title"><font color="red">Manager Leave - <%= @employees.count %></font></h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <% date = Date.today %>
-            <% @employee = Employee.where("status = ? AND manager_id = ? OR manager_2_id = ?", "Active",current_user.employee_id,current_user.employee_id).pluck(:id) %>
-           <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
-          <% if @employees.empty? %>
-          <%else%>
-           <table id="example6" class="table table-bordered table-hover table-condensed">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Employee</th>
-                  <th>Department</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <% @employees.each do |e| %>
-                  <tr>
-                    <td>
-                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
-                         <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
-                         <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                         <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
-                         <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                         <%else%>
-                         <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                         <%end%> <!-- if -->
-                      <%end%> <!-- unless -->
-                    </td>
-                    <td><%= e.employee.manual_employee_code %> - <%= full_name(e.employee) %></td>
-                    <td><%= e.employee.try(:department).try(:name) %></td>
-                    <td><%= e.present %></td>
-                  </tr>
-              <% end %> <!-- do -->
-            </table>
-          <%end%> <!-- if employee.empty? -->
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
-
-       <div class="box box-info">
-        <div class="box-header with-border">
-            <% @employee = Employee.where(status: "Active").pluck(:id) %>
-         <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where(present: "A") %>
-          <h3 class="box-title"><font color="red"> Absent - <%= @employees.count %></font></h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <% date = Date.today %>
-            <% @employee = Employee.where(status: "Active").pluck(:id) %>
-           <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where(present: "A") %>
-          <% if @employees.empty? %>
-          <%else%>
-              <table id="example9" class="table table-bordered table-hover table-condensed">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Employee</th>
-                  <th>Department</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <% @employees.each do |e| %>
-                  <tr>
-                    <td>
-                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
-                         <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
-                         <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                         <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
-                         <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                         <%else%>
-                         <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                         <%end%> <!-- if -->
-                      <%end%> <!-- unless -->
-                    </td>
-                    <td><%= e.employee.manual_employee_code %> - <%= full_name(e.employee) %></td>
-                    <td><%= e.employee.try(:department).try(:name) %></td>
-                    <td><%= e.present %></td>
-                  </tr>
-              <% end %> <!-- do -->
-            </table>
-          <%end%> <!-- if employee.empty? -->
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#example9').DataTable( {
-        "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]]
-    } );
-} );
-</script>
-      
-      <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title">Today's Birthday</h3>
           <div class="box-tools pull-right">
@@ -495,18 +339,14 @@
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
         </div><!-- /.box-header -->
-
-               
-                <div class="box-body">
-                  
-                   
+          <div class="box-body">
               <% date = Date.today %>
              <% @employees = Employee.where("status = ? AND DATE_FORMAT(date_of_birth,'%d/%m') = ?", "Active" , date.strftime('%d/%m')) %>
             <% if @employees.empty? %>
              
             <%else%>
             <table id="birthday" class="table no-margin">
-                   <thead>
+              <thead>
               <tr>
                 <th></th>
                 <th>Employee</th>
@@ -550,8 +390,8 @@
                   </table>
                 
                  
-                  </div><!-- /.box-body -->
-              </div><!-- /.box -->
+              </div><!-- /.box-body -->
+          </div><!-- /.box -->
               
 
       <div id="birthday_email" class="modal fade"></div>
@@ -616,17 +456,128 @@
         </div><!-- /.box-body -->
       </div><!-- /.box -->
 
-      <!-- PRODUCT LIST -->
-      
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Newly Joined Employees</h3>
+  <!-- Attendance Leave -->
+       <div class="box box-info">
+        <div class="box-header with-border"> 
+          <h3 class="box-title"><font color="red"> Employee Attendance </font></h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div>
         </div><!-- /.box-header -->
         <div class="box-body">
+         <% @employee = Employee.where(status: "Active").pluck(:id) %>
+        <% @employees = EmployeeAttendance.where(day: Date.today,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
+         <h6 class="box-title"> Leave - <%= @employees.count %></font></h6>
+          <% date = Date.today %>
+            <% @employee = Employee.where(status: "Active").pluck(:id) %>
+           <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where.not(employee_leav_request_id: nil) %>
+          <% if @employees.empty? %>
+          <%else%>
+            <table id="example2" class="table no-margin">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Employee</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <% @employees.each do |e| %>
+                  <tr>
+                    <td>
+                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                         <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <%else%>
+                         <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                         <%end%> <!-- if -->
+                      <%end%> <!-- unless -->
+                    </td>
+                    <td><%= e.employee.manual_employee_code %> - <%= full_name(e.employee) %></td>
+                    <td><%= e.employee.try(:department).try(:name) %></td>
+                    <td><%= e.present %></td>
+                  </tr>
+              <% end %> <!-- do -->
+            </table>
+          <%end%> <!-- if employee.empty? -->
+        </div><!-- /.box-body -->
+ 
+       
+  
+     
+        <div class="box-body">
+          <% @employee = Employee.where(status: "Active").pluck(:id) %>
+         <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where(present: "A") %>
+          <h6 class="box-title"><font color="red"> Absent - <%= @employees.count %></font></h6>
+          <% date = Date.today %>
+            <% @employee = Employee.where(status: "Active").pluck(:id) %>
+           <% @employees = EmployeeAttendance.where(day: date,employee_id: @employee).where(present: "A") %>
+          <% if @employees.empty? %>
+          <%else%>
+              <table id="example9" class="table table-bordered table-hover table-condensed">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Employee</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <% @employees.each do |e| %>
+                  <tr>
+                    <td>
+                      <%unless e.nil? or e.nil? or  e.employee.member.nil? or e.employee.member.avatar.nil? %>
+                         <% if e.employee.gender == "Male" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <% elsif e.employee.gender == "Female" && e.employee.member.avatar_file_name == nil  %>
+                         <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                         <%else%>
+                         <%= image_tag e.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                         <%end%> <!-- if -->
+                      <%end%> <!-- unless -->
+                    </td>
+                    <td><%= e.employee.manual_employee_code %> - <%= full_name(e.employee) %></td>
+                    <td><%= e.employee.try(:department).try(:name) %></td>
+                    <td><%= e.present %></td>
+                  </tr>
+              <% end %> <!-- do -->
+            </table>
+          <%end%> <!-- if employee.empty? -->
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example9').DataTable( {
+        "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]]
+    } );
+} );
+</script>
+      
+     
+
+      <!-- PRODUCT LIST -->
+      
+    
+
+<!-- ============== -->
+
+
+
+        <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Notifications</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div><!-- /.box-header -->
+
+        
+        <div class="box-body">
+          <h6 class="box-title">Newly Joined Employees</h6>
           <ul class="products-list product-list-in-box">
               <% fifteen_days_back = Time.now.to_date - 30.days %>
                <% JoiningDetail.where(joining_date: fifteen_days_back.to_date..Time.now.to_date).try(:each) do |j| %>
@@ -658,15 +609,92 @@
               <% end %>
           </ul>
         </div><!-- /.box-body -->
+
+
+        <div class="box-body">
+        <hr>
+          <h6 class="box-title">Upcoming Retirement</h6>
+          <hr>
+          <ul class="products-list product-list-in-box">
+              <% fifteen_days_back = Time.now.to_date + 60.days %>
+               <% JoiningDetail.where(retirement_date: Time.now.to_date..fifteen_days_back.to_date).try(:each) do |j| %>
+                <% if j.employee.status == "Active" %>
+                  <li class="item">
+                    <div class="product-img">
+                      <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
+                        <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
+                        <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
+                        <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%else%>
+                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                        <%end%>
+                      <%else%>
+                        <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
+                      <%end%>
+                    </div>
+                    <div class="product-info">
+                      <%= full_name(j.employee)%>
+                      <span class="label label-info pull-right"><%= j.try(:retirement_date) %></span>
+                      <span class="product-description"><%= j.employee.try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
+                      <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
+                    </div>
+                  </li><!-- /.item -->
+                <% else %>
+                
+                <% end %> <!-- j.employee.status == "Active"  -->
+              <% end %>
+          </ul>
+        </div><!-- /.box-body -->
+     
+        
+        <div class="box-body">
+           <hr>
+         <h6 class="box-title">Probation  Completing</h6>
+         <hr>
+          <ul class="products-list product-list-in-box">
+          
+              <% fifteen_days_back = Time.now.to_date + 30.days %>
+              <% data = JoiningDetail.where(confirmation_date: Time.now.to_date..fifteen_days_back.to_date).take %>
+              <% if data == nil%>
+               <li class="item"> <center>NA</center> </li><!-- /.item -->
+              <%else%>
+               <% data.try(:each) do |j| %>
+                <% if j.employee.status == "Active" %>
+                  <li class="item">
+                    <div class="product-img">
+                      <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
+                        <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
+                        <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
+                        <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
+                        <%else%>
+                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
+                        <%end%>
+                      <%else%>
+                        <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
+                      <%end%>
+                    </div>
+                    <div class="product-info">
+                      <%= full_name(j.employee)%>
+                      <span class="label label-info pull-right"><%= j.try(:confirmation_date) %></span>
+                      <span class="product-description"><%= j.employee.try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
+                      <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
+                    </div>
+                  </li><!-- /.item -->
+                <% else %>
+                 
+                <% end %> <!-- j.employee.status == "Active"  -->
+              <% end %>
+              <%end%>
+          </ul>
+        </div><!-- /.box-body -->
       </div><!-- /.box -->
-
-
-<!-- ============== -->
 
 
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">Employee Pending Requests</h3>
+          <h3 class="box-title"> Task Status</h3>
           <div class="box-tools pull-right">
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -676,6 +704,7 @@
           <div class="table-responsive">
             <table class="table no-margin">
             <thead>
+            <tr><td colspan="3">Employee Pending Requests</td></tr>  
                 <tr>
                   <td>
                     <div></div>
@@ -750,21 +779,13 @@
           <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
           <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
         </div><!-- /.box-footer -->
-      </div><!-- /.box -->
-
-<!-- manager -->
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">Manager Pending Task</h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
+      
+      
         <div class="box-body">
           <div class="table-responsive">
             <table class="table no-margin">
             <thead>
+            <tr><td colspan="3">Manager Pending Task</td></tr>
               <tr>
                 <td>
                   <div>
@@ -840,22 +861,14 @@
           <!-- <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
           <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a> -->
         </div><!-- /.box-footer -->
-      </div><!-- /.box -->
-
-
-
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">Admin Task</h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
+      
+       
         <div class="box-body">
+
           <div class="table-responsive">
             <table class="table no-margin">
               <thead>
+              <tr><td colspan="3"> Admin Task </td></tr>  
                 <tr>
                   <td>
                     <a href="/employee_leav_requests/all_leave_request_list" class="dropdown-toggle" title="Leave Request">
@@ -925,95 +938,6 @@
         </div><!-- /.box-footer -->
       </div><!-- /.box -->
 
-
-
-
-
-
-            <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Upcoming Retirement</h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <ul class="products-list product-list-in-box">
-              <% fifteen_days_back = Time.now.to_date + 60.days %>
-               <% JoiningDetail.where(retirement_date: Time.now.to_date..fifteen_days_back.to_date).try(:each) do |j| %>
-                <% if j.employee.status == "Active" %>
-                  <li class="item">
-                    <div class="product-img">
-                      <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
-                        <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
-                        <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                        <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
-                        <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                        <%else%>
-                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                        <%end%>
-                      <%else%>
-                        <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
-                      <%end%>
-                    </div>
-                    <div class="product-info">
-                      <%= full_name(j.employee)%>
-                      <span class="label label-info pull-right"><%= j.try(:retirement_date) %></span>
-                      <span class="product-description"><%= j.employee.try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
-                      <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
-                    </div>
-                  </li><!-- /.item -->
-                <% else %>
-                
-                <% end %> <!-- j.employee.status == "Active"  -->
-              <% end %>
-          </ul>
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
-
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Probation  Completing</h3>
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-          <ul class="products-list product-list-in-box">
-          
-              <% fifteen_days_back = Time.now.to_date + 30.days %>
-               <% JoiningDetail.where(confirmation_date: Time.now.to_date..fifteen_days_back.to_date).try(:each) do |j| %>
-                <% if j.employee.status == "Active" %>
-                  <li class="item">
-                    <div class="product-img">
-                      <%unless j.nil? or j.employee.nil? or  j.employee.member.nil? or j.employee.member.avatar.nil? %>
-                        <% if j.employee.gender == "Male" && j.employee.member.avatar_file_name == nil  %>
-                        <%= image_tag "avatar5.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                        <% elsif j.employee.gender == "Female" && j.employee.member.avatar_file_name == nil  %>
-                        <%= image_tag "avatar2.png",class: "img-circle", alt: "User Image", size: "25x25" %>
-                        <%else%>
-                          <%= image_tag j.employee.member.avatar.url(:medium),class: "img-circle", alt: "User Image", size: "25x25"%>
-                        <%end%>
-                      <%else%>
-                        <%= image_tag "user.jpg",class: "img-circle", alt: "User Image", size: "25x25" %>
-                      <%end%>
-                    </div>
-                    <div class="product-info">
-                      <%= full_name(j.employee)%>
-                      <span class="label label-info pull-right"><%= j.try(:confirmation_date) %></span>
-                      <span class="product-description"><%= j.employee.try(:cost_center).try(:name) %> - <%= j.employee.try(:department).try(:name) %> <%= j.try(:employee).try(:sub_department).try(:name) %>  </span>
-                      <span class="product-description"><%= full_name(j.employee.try(:manager)) %></span>
-                    </div>
-                  </li><!-- /.item -->
-                <% else %>
-                
-                <% end %> <!-- j.employee.status == "Active"  -->
-              <% end %>
-          </ul>
-        </div><!-- /.box-body -->
-      </div><!-- /.box -->
       
     </section><!-- right col -->
 

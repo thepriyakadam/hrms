@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :c_off_cash_masters
   resources :shift_schedules do
     collection do
       get :all_shift_schedule

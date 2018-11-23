@@ -23,9 +23,10 @@
 			        <td><%= leave_c_off.employee.try(:first_name) %> <%= leave_c_off.employee.try(:middle_name) %> <%= leave_c_off.employee.try(:last_name) %></td>
 			        <td><%= leave_c_off.c_off_date %></td>
 			        <td>
-			          <%= submit_tag 'COff', name: 'coff', id: "buttonCtc" %>
-			          <%= submit_tag 'Encashment', name: 'encashment', id: "buttonCtc" %>
-			          <%= submit_tag 'Reject', name: 'reject', id: "buttonCtc" %>
+			        	<%= submit_tag("COff Leave",name: 'coff', id: "buttonCtc", :class => "btn btn-xs btn-primary",:title => "COff Leave" ) %>
+			          <%= submit_tag("COff Pay", name: 'encashment', id: "buttonCtc",:class => "btn btn-xs btn-info",:title => "COff Pay" ) %>
+			          <%= submit_tag("COff Leave + Pay",name: 'coffencashment', id: "buttonCtc", :class => "btn btn-xs btn-success",:title => "COff Leave + Pay" ) %>
+			        	<%= submit_tag("COff Reject",name: 'reject', id: "buttonCtc", :class => "btn btn-xs btn-danger",:title => "COff Reject" ) %>
 			        </td>
 			      </tr>
 			  	<% end %>

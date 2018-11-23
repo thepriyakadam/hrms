@@ -48,7 +48,7 @@
 #endif				/* !tds_sysdep_int32_type */
 
 #ifndef tds_sysdep_int64_type
-#define tds_sysdep_int64_type long	/* 64-bit int */
+#define tds_sysdep_int64_type long long	/* 64-bit int */
 #endif				/* !tds_sysdep_int64_type */
 
 #ifndef tds_sysdep_real32_type
@@ -60,7 +60,7 @@
 #endif				/* !tds_sysdep_real64_type */
 
 #ifndef tds_sysdep_intptr_type
-#define tds_sysdep_intptr_type long
+#define tds_sysdep_intptr_type int
 #endif				/* !tds_sysdep_intptr_type */
 
 #if !defined(MSDBLIB) && !defined(SYBDBLIB)

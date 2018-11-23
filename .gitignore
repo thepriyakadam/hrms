@@ -51,11 +51,11 @@ bower.json
 # Ignore .byebug_history
 .byebug_history
 
-# Ignore files
-# app/models/daily_attendance.rb
-# app/mailers/application_mailer.rb
-# config/environments/development.rb
-# config/database.yml
+#Ignore files
+app/models/daily_attendance.rb
+app/mailers/application_mailer.rb
+config/environments/development.rb
+config/database.yml
 
 
 

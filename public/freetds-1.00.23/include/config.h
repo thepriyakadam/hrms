@@ -56,7 +56,7 @@
 #define HAVE_CLOCK_GETTIME 1
 
 /* Define to 1 if you have the <com_err.h> header file. */
-/* #undef HAVE_COM_ERR_H */
+#define HAVE_COM_ERR_H 1
 
 /* Define to 1 if you have the `daemon' function. */
 #define HAVE_DAEMON 1
@@ -199,7 +199,7 @@
 /* #undef HAVE_GNUTLS */
 
 /* Define to 1 if you have the <gnutls/abstract.h> header file. */
-/* #undef HAVE_GNUTLS_ABSTRACT_H */
+#define HAVE_GNUTLS_ABSTRACT_H 1
 
 /* Define to 1 if you have the `gnutls_certificate_set_verify_function'
    function. */
@@ -354,10 +354,10 @@
 #define HAVE_SQLLEN 1
 
 /* Define to 1 if the system has the type `SQLROWOFFSET'. */
-/* #undef HAVE_SQLROWOFFSET */
+#define HAVE_SQLROWOFFSET 1
 
 /* Define to 1 if the system has the type `SQLROWSETSIZE'. */
-/* #undef HAVE_SQLROWSETSIZE */
+#define HAVE_SQLROWSETSIZE 1
 
 /* Define to 1 if the system has the type `SQLSETPOSIROW'. */
 #define HAVE_SQLSETPOSIROW 1
@@ -521,7 +521,8 @@
    */
 /* #undef INADDR_NONE */
 
-/* Define to the sub-directory where libtool stores uninstalled libraries. */
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
 #define LT_OBJDIR ".libs/"
 
 /* Define to 1 if the BSD-style netdb interface is reentrant. */
@@ -568,10 +569,10 @@
 #define SIZEOF_INT 4
 
 /* The size of `long', as computed by sizeof. */
-#define SIZEOF_LONG 8
+#define SIZEOF_LONG 4
 
 /* The size of `long double', as computed by sizeof. */
-#define SIZEOF_LONG_DOUBLE 16
+#define SIZEOF_LONG_DOUBLE 12
 
 /* The size of `long long', as computed by sizeof. */
 #define SIZEOF_LONG_LONG 8
@@ -583,7 +584,7 @@
 #define SIZEOF_SQLWCHAR 2
 
 /* The size of `void *', as computed by sizeof. */
-#define SIZEOF_VOID_P 8
+#define SIZEOF_VOID_P 4
 
 /* The size of `wchar_t', as computed by sizeof. */
 #define SIZEOF_WCHAR_T 4
@@ -639,7 +640,7 @@
 #define TDS_HAVE_STDIO_LOCKED 1
 
 /* define to prefix format string used for 64bit integers */
-#define TDS_I64_PREFIX "l"
+#define TDS_I64_PREFIX "ll"
 
 /* Define if you don't care about thread safety */
 /* #undef TDS_NO_THREADSAFE */
@@ -702,7 +703,7 @@
 #endif
 
 /* Number of bits in a file offset, on hosts where this is settable. */
-/* #undef _FILE_OFFSET_BITS */
+#define _FILE_OFFSET_BITS 64
 
 /* Define to 1 to make fseeko visible on some hosts (e.g. glibc 2.2). */
 /* #undef _LARGEFILE_SOURCE */

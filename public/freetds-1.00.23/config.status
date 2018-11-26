@@ -437,11 +437,19 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
+<<<<<<< HEAD
 ac_pwd='/home/admin123/hrms/public/freetds-1.00.23'
+=======
+<<<<<<< HEAD
+ac_pwd='/home/kiit/workspace/hrms/public/freetds-1.00.23'
+=======
+ac_pwd='/home/ubuntu/hrms/public/freetds-1.00.23'
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
-AWK='gawk'
+AWK='mawk'
 test -n "$AWK" || AWK=awk
 # The default lists apply if the user does not specify any file.
 ac_need_defaults=:
@@ -675,8 +683,18 @@ postuninstall_cmds=''
 finish_cmds='PATH="\$PATH:/sbin" ldconfig -n $libdir'
 finish_eval=''
 hardcode_into_libs='yes'
+<<<<<<< HEAD
 sys_lib_search_path_spec='/usr/lib/gcc/i686-linux-gnu/4.8 /usr/lib/i386-linux-gnu /usr/lib /lib/i386-linux-gnu /lib '
 sys_lib_dlsearch_path_spec='/lib /usr/lib /usr/lib/i386-linux-gnu/libfakeroot /usr/lib/i386-linux-gnu/mesa-egl /usr/lib/i386-linux-gnu/mesa /lib/i386-linux-gnu /usr/lib/i386-linux-gnu /lib/i686-linux-gnu /usr/lib/i686-linux-gnu /usr/local/lib '
+=======
+sys_lib_search_path_spec='/usr/lib/gcc/x86_64-linux-gnu/5 /usr/lib/x86_64-linux-gnu /usr/lib /lib/x86_64-linux-gnu /lib '
+<<<<<<< HEAD
+configure_time_dlsearch_path='/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/mesa-egl /usr/lib/x86_64-linux-gnu/mesa '
+=======
+configure_time_dlsearch_path='/lib /usr/lib /usr/lib/x86_64-linux-gnu/libfakeroot /usr/local/lib /lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu '
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+configure_time_lt_sys_library_path=''
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 hardcode_action='immediate'
 enable_dlopen='unknown'
 enable_dlopen_self='unknown'
@@ -939,9 +957,15 @@ S["INCODBC_TRUE"]=""
 S["ALLOCA"]=""
 S["LIBOBJS"]=" ${LIBOBJDIR}readpassphrase$U.o ${LIBOBJDIR}strlcpy$U.o ${LIBOBJDIR}strlcat$U.o"
 S["FREETDS_LIBGCC"]=""
+<<<<<<< HEAD
 S["FREETDS_SYMBOLIC"]="-Wl,-Bsymbolic"
 S["tds_sysdep_intptr_type"]="int"
 S["tds_sysdep_int64_type"]="long long"
+=======
+S["FREETDS_SYMBOLIC"]=""
+S["tds_sysdep_intptr_type"]="long"
+S["tds_sysdep_int64_type"]="long"
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 S["tds_sysdep_real64_type"]="double"
 S["tds_sysdep_real32_type"]="float"
 S["tds_sysdep_int32_type"]="int"
@@ -1026,7 +1050,15 @@ S["PKG_CONFIG"]="/usr/bin/pkg-config"
 S["SED"]="/bin/sed"
 S["LN_S"]="ln -s"
 S["GREP"]="/bin/grep"
+<<<<<<< HEAD
 S["BUILD_NUMBER"]="6913"
+=======
+<<<<<<< HEAD
+S["BUILD_NUMBER"]="6913"
+=======
+S["BUILD_NUMBER"]="6793"
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 S["SUBVERSION"]="23"
 S["MINOR"]="00"
 S["MAJOR"]="1"
@@ -1039,17 +1071,35 @@ S["am__tar"]="$${TAR-tar} chof - \"$$tardir\""
 S["AMTAR"]="$${TAR-tar}"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
-S["AWK"]="gawk"
+S["AWK"]="mawk"
 S["mkdir_p"]="$(MKDIR_P)"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]="strip"
+<<<<<<< HEAD
 S["install_sh"]="${SHELL} /home/admin123/hrms/public/freetds-1.00.23/install-sh"
 S["MAKEINFO"]="${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing makeinfo"
 S["AUTOHEADER"]="${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing autoheader"
 S["AUTOMAKE"]="${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing automake-1.14"
 S["AUTOCONF"]="${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing autoconf"
 S["ACLOCAL"]="${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing aclocal-1.14"
+=======
+<<<<<<< HEAD
+S["install_sh"]="${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/install-sh"
+S["MAKEINFO"]="${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing autoheader"
+S["AUTOMAKE"]="${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing automake-1.15"
+S["AUTOCONF"]="${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing autoconf"
+S["ACLOCAL"]="${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing aclocal-1.15"
+=======
+S["install_sh"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/install-sh"
+S["MAKEINFO"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoheader"
+S["AUTOMAKE"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing automake-1.15"
+S["AUTOCONF"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoconf"
+S["ACLOCAL"]="${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing aclocal-1.15"
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 S["VERSION"]="1.00.23"
 S["PACKAGE"]="freetds"
 S["CYGPATH_W"]="echo"

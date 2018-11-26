@@ -1,0 +1,41 @@
+
+    	<table id="example6" class="table table-bordered table-hover table-condensed">
+	      <thead>
+	      	<% date = Date.today %>
+	      	<tr><th colspan="6"><center><%= date.strftime("%A") %> - <%= date.to_date %></center></th></tr>
+	        <tr>
+	          <th>ID</th>
+	          <th>Employee</th>
+	          <th>Present</th>
+	          <th>In</th>
+	          <th>Out</th>
+	          <!-- <th>Working Hrs.</th> -->
+	          <th>Action</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <% @employee_attendances.each do |a| %>
+	          <tr>
+	            <td><%= a.try(:employee).try(:manual_employee_code) %></td>
+	            <td><%= full_name(a.employee) %></td>
+	            <td><%= a.try(:present) %></td>
+	            <td><%= a.try(:in_time) %></td>
+	            <td><%= a.try(:out_time) %></td>
+	            <!-- <td><%#= a.try(:working_hrs) %></td> -->
+	            <td><%= link_to '', edit_current_attendance_manager_self_services_path(employee_attendance: a), class: 'btn btn-xs btn-success fa fa-edit',remote: true %>
+	            	<%= link_to '', detail_attendance_modal_manager_self_services_path(employee_attendance: a),class: 'btn btn-xs btn-default fa fa-eye',remote: true %>
+	            </td>
+	          </tr>
+	        <% end %>
+	      </tbody>
+	    </table>
+<div id="myModal" class="modal fade"></div>
+<div id="detail_attendance_modal" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

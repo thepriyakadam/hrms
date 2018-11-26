@@ -139,7 +139,9 @@ class Employee < ActiveRecord::Base
 
   has_many :reimbursement_requests, class_name: "Employee",
                           foreign_key: "approval_id"
-                          
+  
+  
+                                                
   belongs_to :user, class_name: 'Employee'
 
   has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'second_reporter_id'
@@ -158,6 +160,7 @@ class Employee < ActiveRecord::Base
   has_many :change_designations, class_name: "Employee", foreign_key: "change_by_id"
   has_many :frequest_questions
   has_many :contact_details
+  has_many :shift_employees,class_name: "Employee", foreign_key: "created_by_id"
 
 
   # has_many :reporting_masters, class_name: "Employee",
@@ -174,6 +177,7 @@ class Employee < ActiveRecord::Base
   validates :email, presence: true
   validates :adhar_no, presence: true
   validates :pan_no, presence: true
+  validates :department_id, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
@@ -250,6 +254,17 @@ class Employee < ActiveRecord::Base
       end
     end
   end
+
+
+  def self.filter_by_date(date)
+    month = date.strftime("%B")
+    year = date.strftime("%Y")
+    @workingday = Workingday.where(month_name: month,year: year).pluck(:employee_id)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    finals = (@attendances - @workingday)
+    Employee.where.not(id: finals)
+  end
+  
 
   def self.filter_by_date_and_costcenter(date, costcenter, current_user)
     month = date.strftime("%B")
@@ -468,6 +483,7 @@ class Employee < ActiveRecord::Base
         else
            manual_employee_code = spreadsheet.cell(i,'B').to_i
         end
+
         prefix = spreadsheet.cell(i,'C')
         first_name = spreadsheet.cell(i,'D')
         middle_name = spreadsheet.cell(i,'E')
@@ -611,8 +627,14 @@ end
 
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-       manual_member_code = spreadsheet.cell(i,'B').to_i
-       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      manual_member_code = spreadsheet.cell(i,'B').to_i
+      if manual_member_code == 0
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+         manual_member_code = spreadsheet.cell(i,'B')
+      else
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+         manual_member_code = spreadsheet.cell(i,'B').to_i
+      end
         if @employee.nil?
         else
         employee_id = @employee.id
@@ -634,26 +656,37 @@ end
         else
         role_id = @role.id
         end
-        @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
+        manager1 = spreadsheet.cell(i,'D').to_i
+        if manager1 == 0
+          @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D'))
+        else
+          @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
+        end
         manager_id = @manager.id
 
-        @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E').to_i)
+        manager2 = spreadsheet.cell(i,'E').to_i
+        if manager2 == 0
+          @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E'))
+        else
+          @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E').to_i)
+        end
+
         if @manager_2.nil?
         else
         manager_2_id = @manager_2.id
         end
-        @employee.update(manager_id: manager_id,manager_2_id: manager_2_id)
+          @employee.update(manager_id: manager_id,manager_2_id: manager_2_id)
 
-         @employee_prsent = Member.find_by(manual_member_code: manual_member_code)
+          @employee_prsent = Member.find_by(manual_member_code: manual_member_code)
 
         if @employee_prsent.nil?
-
-        @member = Member.create(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
-       else
-       end
+          @member = Member.create(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
+        else
+          @employee_prsent.update(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
+        end
+      end
     end
   end
-end
 
 #   spreadsheet = open_spreadsheet(file)
 #     (2..spreadsheet.last_row).each do |i|

@@ -14,12 +14,16 @@ class JoiningChecklistMaster < ActiveRecord::Base
         status = spreadsheet.cell(i,'E')
         if status == "Yes" || status == "yes"
            status = true
-       else
+        else
        	   status = false
        	end
-
-        @checklist = JoiningChecklistMaster.create(code: code,name: name,description: description,status: status)     
-    end
+        @checklist = JoiningChecklistMaster.find_by(name: name)
+        if @checklist.nil?
+          @checklist = JoiningChecklistMaster.create(code: code,name: name,description: description,status: status)     
+        else
+          @checklist.update(code: code,name: name,description: description,status: status)     
+        end   
+    end#do
   end
 
 

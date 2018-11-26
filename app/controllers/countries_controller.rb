@@ -47,11 +47,40 @@ class CountriesController < ApplicationController
     @country.destroy
     @countries = Country.all
   end
+
   def list_country
     reporter(Country.filter_records(current_user), template_class: PdfReportTemplate) do
       column(:ID, sortable: true) { |country| country.id }
       column(:Code, sortable: true) { |country| country.code }
       column(:Name, sortable: true) { |country| country.name }
+    end
+  end
+
+  def print_all_country
+    @countries = Country.all
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'countries/print_all_country.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'print_all_country',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'countries/print_all_country.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+  def import
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_xl_countries_path
+    else
+      Country.import(params[:file])
+      redirect_to new_country_path, notice: "File imported."
     end
   end
 

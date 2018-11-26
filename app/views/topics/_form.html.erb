@@ -1,0 +1,54 @@
+<%= bootstrap_form_for(@topic,html: {id: 'topic'},remote:true) do |f| %>
+  <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group required">
+        <%= f.text_field :post_topic, label: 'Topic Title', placeholder: 'Topic Title' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group required">
+        <%= f.text_area :description, rows:10, label:'Description', placeholder: 'Description' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">  
+    <div class="col-sm-3">
+      <%= f.file_field :avatar, label:'Add Image' %>
+    </div>
+  </div> 
+
+  <div class="row">  
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Topic",:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  $("#topic").validate({
+    rules: {
+      "topic[post_topic]":{
+        required: true,
+      }
+       },
+    messages: {
+      "topic[post_topic]":{
+        required: "Please specify blood group",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+
+
+

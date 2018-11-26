@@ -190,18 +190,42 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
+<<<<<<< HEAD
 ACLOCAL = ${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing aclocal-1.14
+=======
+<<<<<<< HEAD
+ACLOCAL = ${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing aclocal-1.15
+=======
+ACLOCAL = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing aclocal-1.15
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 ALLOCA = 
 AMTAR = $${TAR-tar}
 AM_CFLAGS =  -pthread
 AM_DEFAULT_VERBOSITY = 0
 AR = ar
 AS = as
+<<<<<<< HEAD
 AUTOCONF = ${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing autoconf
 AUTOHEADER = ${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing autoheader
 AUTOMAKE = ${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing automake-1.14
 AWK = gawk
 BUILD_NUMBER = 6913
+=======
+<<<<<<< HEAD
+AUTOCONF = ${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing autoconf
+AUTOHEADER = ${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing autoheader
+AUTOMAKE = ${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing automake-1.15
+AWK = mawk
+BUILD_NUMBER = 6913
+=======
+AUTOCONF = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoconf
+AUTOHEADER = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing autoheader
+AUTOMAKE = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing automake-1.15
+AWK = gawk
+BUILD_NUMBER = 6793
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2   -Wdeclaration-after-statement
@@ -222,7 +246,7 @@ EXEEXT =
 FGREP = /bin/grep -F
 FREETDS_LIBGCC = 
 FREETDS_ODBC_MODULE = 
-FREETDS_SYMBOLIC = -Wl,-Bsymbolic
+FREETDS_SYMBOLIC = 
 GCRYPT_CFLAGS = 
 GCRYPT_LIBS = 
 GNUTLS_CFLAGS = 
@@ -252,7 +276,15 @@ LTLIBOBJS =  ${LIBOBJDIR}readpassphrase$U.lo ${LIBOBJDIR}strlcpy$U.lo ${LIBOBJDI
 LT_DLLOADERS =  dlopen.la
 LT_DLPREOPEN = -dlpreopen dlopen.la 
 MAJOR = 1
+<<<<<<< HEAD
 MAKEINFO = ${SHELL} /home/admin123/hrms/public/freetds-1.00.23/missing makeinfo
+=======
+<<<<<<< HEAD
+MAKEINFO = ${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/missing makeinfo
+=======
+MAKEINFO = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/missing makeinfo
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 MANIFEST_TOOL = :
 MINOR = 00
 MKDIR_P = /bin/mkdir -p
@@ -297,10 +329,24 @@ SHELL = /bin/bash
 STRIP = strip
 SUBVERSION = 23
 VERSION = 1.00.23
+<<<<<<< HEAD
 abs_builddir = /home/admin123/hrms/public/freetds-1.00.23/src
 abs_srcdir = /home/admin123/hrms/public/freetds-1.00.23/src
 abs_top_builddir = /home/admin123/hrms/public/freetds-1.00.23
 abs_top_srcdir = /home/admin123/hrms/public/freetds-1.00.23
+=======
+<<<<<<< HEAD
+abs_builddir = /home/kiit/workspace/hrms/public/freetds-1.00.23/src
+abs_srcdir = /home/kiit/workspace/hrms/public/freetds-1.00.23/src
+abs_top_builddir = /home/kiit/workspace/hrms/public/freetds-1.00.23
+abs_top_srcdir = /home/kiit/workspace/hrms/public/freetds-1.00.23
+=======
+abs_builddir = /home/ubuntu/hrms/public/freetds-1.00.23/src
+abs_srcdir = /home/ubuntu/hrms/public/freetds-1.00.23/src
+abs_top_builddir = /home/ubuntu/hrms/public/freetds-1.00.23
+abs_top_srcdir = /home/ubuntu/hrms/public/freetds-1.00.23
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -331,7 +377,15 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
+<<<<<<< HEAD
 install_sh = ${SHELL} /home/admin123/hrms/public/freetds-1.00.23/install-sh
+=======
+<<<<<<< HEAD
+install_sh = ${SHELL} /home/kiit/workspace/hrms/public/freetds-1.00.23/install-sh
+=======
+install_sh = ${SHELL} /home/ubuntu/hrms/public/freetds-1.00.23/install-sh
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale

@@ -6,8 +6,18 @@
 //
 
 VS_VERSION_INFO VERSIONINFO
+<<<<<<< HEAD
  FILEVERSION 1,00,23,6913
  PRODUCTVERSION 1,00,23,6913
+=======
+<<<<<<< HEAD
+ FILEVERSION 1,00,23,6913
+ PRODUCTVERSION 1,00,23,6913
+=======
+ FILEVERSION 1,00,23,6793
+ PRODUCTVERSION 1,00,23,6793
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -25,14 +35,30 @@ BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "FreeTDS.org\0"
             VALUE "FileDescription", "FreeTDS\0"
+<<<<<<< HEAD
             VALUE "FileVersion", "1, 00, 23, 6913\0"
+=======
+<<<<<<< HEAD
+            VALUE "FileVersion", "1, 00, 23, 6913\0"
+=======
+            VALUE "FileVersion", "1, 00, 23, 6793\0"
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
             VALUE "InternalName", "FreeTDS\0"
             VALUE "LegalCopyright", "Copyright © 2004-2015 under terms of GNU LGPL\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "FreeTDS.dll\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "FreeTDS ODBC Driver\0"
+<<<<<<< HEAD
             VALUE "ProductVersion", "1, 00, 23, 6913\0"
+=======
+<<<<<<< HEAD
+            VALUE "ProductVersion", "1, 00, 23, 6913\0"
+=======
+            VALUE "ProductVersion", "1, 00, 23, 6793\0"
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
             VALUE "SpecialBuild", "\0"
         END
     END

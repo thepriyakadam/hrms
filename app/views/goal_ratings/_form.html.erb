@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="form-group required">
-        <%= f.select :goal_type,["Goal","Attribute"],{label: 'Performance Type',include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
+        <%= f.select :goal_type,["Goal"],{label: 'Performance Type',include_blank: "Select Type"},{onchange:"var a={goal_type:$(this).val()}; $.get('/goal_ratings/select_dropdown',a,function(response){});",class: 'form-control'} %>
       </div>
     </div>
 
@@ -17,7 +17,7 @@
       
       <div class="col-sm-6">
         <div class="field">
-          <%= f.text_field :target,{label: 'Target/Unit',placeholder: 'Target/Unit'} %>
+          <%#= f.text_field :target,{label: 'Target/Unit',placeholder: 'Target/Unit'} %>
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group required">
-          <%= f.text_area :goal_measure,{label: 'Measure',placeholder: 'Measure'} %>
+          <%= f.text_area :goal_measure,{label: 'KRA',placeholder: 'Measure'} %>
         </div>
       </div>
 
@@ -37,6 +37,13 @@
     </div>
 
     <div class="row">
+
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.text_field :target,{label: 'Target/Unit',placeholder: 'Target/Unit'} %>
+        </div>
+      </div>
+
       <div class="col-sm-3">
         <div class="form-group required">
           <%= f.text_field :goal_weightage,{label: 'Weightage',placeholder: 'Weightage'} %>

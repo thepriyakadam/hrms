@@ -67,7 +67,6 @@ class CertificatesController < ApplicationController
 
  def certificate_print
     @employee = Employee.find(params[:salary][:employee_id])
-    
     certificate_id = params[:salary][:certificate_master_id]
     certificate = CertificateMaster.find_by(id: certificate_id)
     @certificate = certificate.try(:name)

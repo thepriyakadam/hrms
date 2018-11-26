@@ -58,15 +58,36 @@ class EmployeeLeavBalance < ActiveRecord::Base
     end
   end
   
-  def is_present(e)
+  def self.is_present(e)
     LeaveMaster.exists?(leav_category_id: e.leav_category_id)
+  end
+
+  def emp_available(e)
+    from_date = e.from_date
+    to_date = e.to_date
+
+    from_month = from_date.strftime('%B')
+    to_month = to_date.strftime('%B')
+    flag = 0
+    for i in from_month..to_month
+      flag = Workingday.exists?(employee_id: e.employee_id,month_name: i)
+    end
+    flag
   end
 
 
   def self.import(file)
-     spreadsheet = open_spreadsheet(file)
+    spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+      if manual_employee_code == 0
+         manual_employee_code = spreadsheet.cell(i,'B')
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+      else
+         manual_employee_code = spreadsheet.cell(i,'B').to_i
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      end
+
         if @employee.nil?
         else
         employee_id = @employee.id
@@ -119,18 +140,5 @@ class EmployeeLeavBalance < ActiveRecord::Base
   #   LeaveMaster.exists?(leav_category_id: e.leav_category_id)
   # end
 
-
-  def emp_available(e)
-    from_date = e.from_date
-    to_date = e.to_date
-
-    from_month = from_date.strftime('%B')
-    to_month = to_date.strftime('%B')
-    flag = 0
-    for i in from_month..to_month
-      flag = Workingday.exists?(employee_id: e.employee_id,month_name: i)
-    end
-    flag
-  end
 
 end

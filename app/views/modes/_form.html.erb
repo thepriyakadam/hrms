@@ -1,0 +1,68 @@
+<%= bootstrap_form_for(@mode,html: {id: 'mode'},remote:true) do |f| %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :expence_opestion_id, all_expence_opestion ,{label: 'Expence Option',include_blank: " Select Expence Option"} %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :code, label: 'Code', placeholder: 'Code' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :name, label: 'Name', placeholder: 'Name' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.text_field :description,label: 'Description' , placeholder: 'Description' %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.check_box :status, label:'Active' %>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Mode" ,:class => class_name, data: { disable_with: data_info } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br />
+
+<script>
+$("#mode").validate({
+    rules: {
+      "mode[expence_opestion_id]":{
+        required: true,
+      },
+      "mode[name]":{
+        required: true,
+      }
+       },
+    messages: {
+      "mode[expence_opestion_id]":{
+        required: "Please specify code",
+      },
+       "mode[name]":{
+        required: "Please specify name",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>
+

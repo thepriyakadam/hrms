@@ -47,15 +47,16 @@
 	    </table> <br>
       <% if @emp_atte.present? %>
         <table id="example2" class="table table-bordered table-hover table-condensed">
-        <tr><th colspan="2"><center> Regularized Attendance Details </center></th></tr>
+        <tr><th colspan="4"><center> Regularized Attendance Details </center></th></tr>
           <tbody>
             <% @emp_atte.each do |a| %>
-              <tr><th>Day</th><td><%= a.try(:day) %></td></tr>
-              <tr><th>Present</th><td><%= a.try(:present) %></td></tr>
-              <tr><th>In Time</th><td><%= a.try(:in_time) %></td></tr>
-              <tr><th>Out Time</th><td><%= a.try(:out_time) %></td></tr>
-              <tr><th>Working Hours</th><td><%= a.try(:working_hrs) %></td></tr>
-              <tr><th>Comment</th><td><%= a.try(:comment) %></td></tr>
+              <tr><th colspan="2">Day</th><td colspan="2"><%= a.try(:day) %></td></tr>
+              <tr><th>In Time</th><td><%= a.try(:in_time) %></td>
+              <th>Out Time</th><td><%= a.try(:out_time) %></td></tr>
+              <tr><th>Working Hrs</th><td><%= a.try(:working_hrs) %></td>
+              <th>Present</th><td><%= a.try(:present) %></td>
+              </tr>
+              <tr><th colspan="2">Comment</th><td colspan="2"><%= a.try(:comment) %></td></tr>
             <% end %> <!-- do -->
           </tbody>
         </table>

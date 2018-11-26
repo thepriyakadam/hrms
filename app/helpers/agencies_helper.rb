@@ -3,3 +3,5 @@ module AgenciesHelper
 		Agency.where(is_active: true).collect { |x| [x.name, x.id] }
 	end
 end
+
+

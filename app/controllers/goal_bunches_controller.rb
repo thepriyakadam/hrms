@@ -20,6 +20,7 @@ class GoalBunchesController < ApplicationController
   def new
     @goal_bunch = GoalBunch.new
     @goal_bunches = GoalBunch.where(employee_id: current_user.employee_id)
+    @employee = Employee.find_by(id: current_user.employee_id)
     #@period_id = params[:period_id]
     session[:active_tab] ="EmployeeSelfService"
   end
@@ -142,6 +143,22 @@ class GoalBunchesController < ApplicationController
     session[:active_tab] ="EmployeeSelfService"
   end
 
+  def goal_approval
+    @goal_bunch_id = GoalBunch.find(params[:id])
+    @employee = Employee.find(params[:emp_id])
+    @period =  Period.find(params[:period_id])
+    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
+
+    @employees = Employee.where(id: @employee.id)
+    @qualifications = Qualification.where(employee_id: @employee.id)
+    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
+    @experiences = Experience.where(employee_id: @employee.id)
+    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
+    @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
+    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ? AND appraisee_id = ?", @goal_bunch_id.id ,'Attribute',@employee.id)
+    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
+  end
+
   def appraiser_confirm
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     @employee = Employee.find(params[:emp_id])
@@ -163,20 +180,33 @@ class GoalBunchesController < ApplicationController
     else
       flash[:alert] = "Goal weightage sum should be 100"
     end 
-    if @employee.id == current_user.employee_id
+    # member = Member.find_by(manual_member_code: @employee.manual_employee_code)
+    # if member.role.try(:name) == "GroupAdmin" || member.role.try(:name) == "Admin"
+    #   redirect_to admin_level_goal_approval_goal_bunches_path(period_id: @period.id)
+    # else
+    #   redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    # end
+    if @employee.manager_id == current_user.employee_id
       redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
     else
       redirect_to admin_level_goal_approval_goal_bunches_path(period_id: @period.id)
     end
+    
   end
 
   def revert_goal
     @goal_bunch_id = GoalBunch.find(params[:goal_bunch_id])
     @period = Period.find(params[:period_id])
+    emp = params[:emp_id]
+    @employee = Employee.find(params[:emp_id])
     @goal_bunch = GoalBunch.find_by(id: @goal_bunch_id)
     @goal_bunch.update(goal_approval: false,goal_confirm: false)
       flash[:alert] = "Goal Rejected Successfully"
+    if @employee.manager_id == current_user.employee_id
       redirect_to goal_period_list_goal_bunches_path(period_id: @period.id)
+    else
+      redirect_to admin_level_goal_approval_goal_bunches_path(period_id: @period.id)
+    end
   end
 
   def create_multiple_bunch
@@ -229,28 +259,14 @@ class GoalBunchesController < ApplicationController
   def goal_period_list
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
-    @emps = current_login.subordinates.pluck(:id)
+    emps = current_login.subordinates
+    @all = emps.where(status: "Active")
+    @emps = @all.pluck(:id)
     #@emp1 = Employee.where(id: @emps).pluck(:id)
-    @employees = GoalBunch.where(employee_id: @emps,period_id: @period.id,goal_confirm: true,goal_approval: false)
+    @employees = GoalBunch.where(employee_id: @emps,period_id: @period.id,goal_confirm: true)
     # end
     # @employee = Employee.find(params[:format])
     # @goal_bunches = GoalBunch.where(employee_id: @employee.id)
-  end
-
-  def goal_approval
-    @goal_bunch_id = GoalBunch.find(params[:id])
-    @employee = Employee.find(params[:emp_id])
-    @period =  Period.find(params[:period_id])
-    @goal_bunches = GoalBunch.find_by(id: @goal_bunch_id.id)
-
-    @employees = Employee.where(id: @employee.id)
-    @qualifications = Qualification.where(employee_id: @employee.id)
-    @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
-    @experiences = Experience.where(employee_id: @employee.id)
-    @ctc = EmployeeSalaryTemplate.where(employee_id: @employee.id).sum(:monthly_amount)
-    @goal_ratings = GoalRating.where(appraisee_id: @employee.id,goal_bunch_id: @goal_bunch_id.id, goal_type: 'Goal')
-    @goal_attribute_ratings = GoalRating.where("goal_bunch_id = ? AND goal_type = ? AND appraisee_id = ?", @goal_bunch_id.id ,'Attribute',@employee.id)
-    @employee_promotions = EmployeePromotion.where(employee_id: @employee.id)
   end
 
   def appraiser_subordinate
@@ -261,9 +277,12 @@ class GoalBunchesController < ApplicationController
   end
 
   def period_list_appraiser
-     @period = Period.find(params[:period_id])
+    @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
-    @emps = current_login.subordinates.pluck(:id)
+    emps = current_login.subordinates.pluck(:id)
+    employee = Employee.where(id: emps)
+    @all = employee.where(status: "Active")
+    @emps = @all.pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,goal_approval: true,period_id: @period.id)
   end
 
@@ -566,7 +585,9 @@ class GoalBunchesController < ApplicationController
   def period_list_reviewer
     @period = Period.find(params[:period_id])
     current_login = Employee.find(current_user.employee_id)
-    @emps = current_login.indirect_subordinates.pluck(:id)
+    emps = current_login.indirect_subordinates
+    @all = emps.where(status: "Active")
+    @emps = @all.pluck(:id)
     @employees = GoalBunch.where(employee_id: @emps,appraiser_confirm: true,period_id: @period.id)
   end
 
@@ -1058,7 +1079,8 @@ class GoalBunchesController < ApplicationController
 
   def subordinate_list_for_appraisee
     current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.subordinates
+    employees = current_login.subordinates
+    @employees = employees.where(status: "Active")
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_report"
   end
@@ -1070,7 +1092,8 @@ class GoalBunchesController < ApplicationController
 
   def subordinate_list_for_reviewer
     current_login = Employee.find(current_user.employee_id)
-    @employees = current_login.indirect_subordinates
+    employees = current_login.indirect_subordinates
+    @employees = employees.where(status: "Active")
     session[:active_tab] ="performancemgmt"
     session[:active_tab1] ="perform_report"
   end

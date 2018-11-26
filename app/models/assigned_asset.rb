@@ -14,7 +14,16 @@ class AssignedAsset < ActiveRecord::Base
   def self.import(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+      if manual_employee_code == 0
+         manual_employee_code = spreadsheet.cell(i,'B')
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+      else
+         manual_employee_code = spreadsheet.cell(i,'B').to_i
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      end
+
+        #@employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
         if @employee == nil
         else
         employee_id = @employee.id
@@ -33,8 +42,14 @@ class AssignedAsset < ActiveRecord::Base
         issue_date = spreadsheet.cell(i,'H')
         remarks = spreadsheet.cell(i,'I')
 
-        @assigned_asset = AssignedAsset.create(employee_id: employee_id,asset_type_id: asset_type_id,assets_detail: assets_detail,assets_id: assets_id,assets_value: assets_value,
+         @assigned_asset = AssignedAsset.where(employee_id: employee_id,asset_type_id: asset_type_id).take
+          if @assigned_asset.nil?
+            AssignedAsset.create(employee_id: employee_id,asset_type_id: asset_type_id,assets_detail: assets_detail,assets_id: assets_id,assets_value: assets_value,
+            assest_status: assest_status,issue_date: issue_date,remarks: remarks)
+          else
+            @assigned_asset.update(employee_id: employee_id,asset_type_id: asset_type_id,assets_detail: assets_detail,assets_id: assets_id,assets_value: assets_value,
           assest_status: assest_status,issue_date: issue_date,remarks: remarks)
+          end
      end
   end
 end

@@ -1,0 +1,36 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body">    
+
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr><th colspan="4"><center>Week Off Detail</center></th></tr>
+             <tr><th colspan="4"><center>Employee : <%= @employee_attendances.first.employee.manual_employee_code rescue nil %> - <%= full_name(@employee_attendances.first.employee) rescue nil %></center></th></tr>
+          <tr>
+            <th>Sr. No</th>
+            <th>Date</th>
+            <th>Day</th>
+            <th>Present</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% i = 0 %>
+          <% @employee_attendances.each do |e| %>
+            <tr>
+              <td><%= i = i + 1 %></td>
+              <td><%= e.day %></td>
+              <td><%= e.employee_week_off.day %></td>
+              <td><%= e.present %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+
+    </div>
+    <div class="modal-footer"></div>
+  </div>
+</div> 

@@ -9,11 +9,11 @@
 
   <!-- <= image_tag "redefine_logo.jpg",size: "120x120" %> -->
   <!-- <= image_tag "spark.jpg",size: "270x100" %> -->
-<!--   <= image_tag "span_pumps_logo.jpg",size: "120x120" %> -->
+  <%= image_tag "span_pumps_logo.jpg",size: "120x120" %>
 
   <% t = Company.first %>
-	<% company_logo = t.company_logo.url %>
-  <%= image_tag company_logo ,size: "210x100" %>   
+<!-- 	<#% company_logo = t.company_logo.url %>
+  <%#= image_tag company_logo ,size: "210x100" %>  -->  
 
   </div><!-- /.login-logo -->
 
@@ -53,6 +53,8 @@
           <a target="_blank" href="/Apk/spanpum/spanpump.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
         <% elsif t.name == "Sparkline" %>
           <a target="_blank" href="/Apk/sparkline/sparkline.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
+        <% elsif t.name == "Netcore" %>
+          <a target="_blank" href="/Apk/netcore/netcore.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
         <% elsif t.name == "ABC" %>
           <a target="_blank" href="/Apk/demo/demo.apk" class="btn btn-social-icon btn-download"><i class="fa fa-download" style="font-size:35px;color:black;"></i></a>
         <% else %>

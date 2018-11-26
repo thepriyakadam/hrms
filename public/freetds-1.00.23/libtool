@@ -2,7 +2,15 @@
 
 # libtool - Provide generalized library-building support services.
 # Generated automatically by config.status (freetds) 1.00.23
+<<<<<<< HEAD
 # Libtool was configured on host admin123-ProLiant-DL160-G5:
+=======
+<<<<<<< HEAD
+# Libtool was configured on host kiit-HP-ProBook-440-G2:
+=======
+# Libtool was configured on host ip-172-31-0-73:
+>>>>>>> 77d4f74bf543b72925c66511e6b246def51cf93a
+>>>>>>> 1721a8b73ddebc5a2f71f39f497698dfcd64d16f
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
 #   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,

@@ -1,9 +1,9 @@
 <%= bootstrap_form_for @shift_time,html: {id: "shift_time"}, remote:true do |f| %>
   <div class="row">
      <div class="col-sm-3">
-      <label>Cost Center</label>
+      <label>Department</label>
       <div class="form-group required">
-        <%= f.select :cost_center_id,all_cost_center,{hide_label: true,include_blank: "Select Cost Center"} %>
+        <%= f.select :cost_center_id,all_cost_center,{hide_label: true,include_blank: "Select Department"} %>
       </div>
     </div>
 

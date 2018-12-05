@@ -34,7 +34,7 @@ class WeekOffMastersController < ApplicationController
       f.xls {render template: 'week_off_masters/show_employee_attendance.xls.erb'}
       f.html
       f.pdf do
-        render pdf: ' show_employee_attendance',
+        render pdf: 'show_employee_attendance',
         layout: 'pdf.html',
         orientation: 'Landscape',
         template: 'week_off_masters/show_employee_attendance.pdf.erb',

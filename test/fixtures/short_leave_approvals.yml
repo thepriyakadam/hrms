@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  short_leave_request_id: 
+  employee_id: 
+  status: MyString
+
+two:
+  short_leave_request_id: 
+  employee_id: 
+  status: MyString

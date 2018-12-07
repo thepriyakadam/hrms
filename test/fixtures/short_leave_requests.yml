@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_id: 
+  day: 2018-12-06
+  in_time: 2018-12-06 19:54:11
+  out_time: 2018-12-06 19:54:11
+  description: MyText
+  manager_id: 
+  status: MyString
+
+two:
+  employee_id: 
+  day: 2018-12-06
+  in_time: 2018-12-06 19:54:11
+  out_time: 2018-12-06 19:54:11
+  description: MyText
+  manager_id: 
+  status: MyString

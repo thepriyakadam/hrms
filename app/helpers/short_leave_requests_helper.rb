@@ -1,0 +1,2 @@
+module ShortLeaveRequestsHelper
+end

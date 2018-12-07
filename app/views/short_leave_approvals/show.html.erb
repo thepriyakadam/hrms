@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Short leave request:</strong>
+  <%= @short_leave_approval.short_leave_request %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @short_leave_approval.employee %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @short_leave_approval.status %>
+</p>
+
+<%= link_to 'Edit', edit_short_leave_approval_path(@short_leave_approval) %> |
+<%= link_to 'Back', short_leave_approvals_path %>

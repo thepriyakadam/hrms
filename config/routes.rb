@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :short_leave_approvals
+  resources :short_leave_requests do
+    collection do
+      get :show_leave
+    end
+  end
   resources :c_off_cash_masters
   resources :shift_schedules do
     collection do

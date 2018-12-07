@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Short Leave Approvals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Short leave request</th>
+      <th>Employee</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @short_leave_approvals.each do |short_leave_approval| %>
+      <tr>
+        <td><%= short_leave_approval.short_leave_request %></td>
+        <td><%= short_leave_approval.employee %></td>
+        <td><%= short_leave_approval.status %></td>
+        <td><%= link_to 'Show', short_leave_approval %></td>
+        <td><%= link_to 'Edit', edit_short_leave_approval_path(short_leave_approval) %></td>
+        <td><%= link_to 'Destroy', short_leave_approval, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Short leave approval', new_short_leave_approval_path %>

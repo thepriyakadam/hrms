@@ -27,7 +27,7 @@
 	          	<td><%= employee.try(:manual_employee_code) %></td>
 	          	<td><%= full_name(employee) %></td>
 	          	<td><%= employee.department.try(:name) %></td>
-              <% manager = Employee.find(employee.manager_id)%>
+              <% manager = Employee.find_by(id: employee.manager_id)%>
               <td><%= short_name(manager) %></td>
 	        	</tr>
 	      	<% end %>

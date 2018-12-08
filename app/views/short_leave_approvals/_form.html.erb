@@ -1,0 +1,29 @@
+<%= form_for(@short_leave_approval) do |f| %>
+  <% if @short_leave_approval.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@short_leave_approval.errors.count, "error") %> prohibited this short_leave_approval from being saved:</h2>
+
+      <ul>
+      <% @short_leave_approval.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :short_leave_request_id %><br>
+    <%= f.text_field :short_leave_request_id %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br>
+    <%= f.text_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

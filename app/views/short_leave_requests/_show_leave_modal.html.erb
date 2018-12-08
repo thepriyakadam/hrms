@@ -1,0 +1,45 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Short Leave Details </center></h4>
+    </div>
+    <div class="modal-body">
+    
+			<table class="table table-bordered table-hover table-condensed">
+			  <thead>
+			  	<tr>
+                  <th>Employee</th>
+			      <td><%= full_name(@short_leave_request.employee) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>Day</strong></th>
+			      <td> <%= @short_leave_request.try(:day) %></td>
+			    </tr>    
+			    <tr>
+			     <th><strong>In Time</strong></th>
+			      <td><%= @short_leave_request.try(:in_time) %></td>
+			    </tr>
+			    <tr>
+			     <th><strong>Out Time</strong></th>
+			      <td><%= @short_leave_request.try(:out_time) %></td>
+			    </tr>
+			    <tr>
+			     <th><strong> Count</strong></th>
+			      <td><%= @short_leave_request.try(:count) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>Description</strong></th>
+			      <td> <%= @short_leave_request.try(:description) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>Status</strong></th>
+			      <td> <%= @short_leave_request.try(:status) %></td>
+			    </tr>
+			  </thead>
+			</table>
+
+		</div>
+		<div class="modal-footer"></div>
+	</div>
+</div>  

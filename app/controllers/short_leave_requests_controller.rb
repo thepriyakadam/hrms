@@ -14,8 +14,8 @@ class ShortLeaveRequestsController < ApplicationController
 
   # GET /short_leave_requests/new
   def new
-    emp = Employee.find_by(id: current_user.employee_id)
-    @manager = emp.manager_id
+    @employee = Employee.find_by(id: current_user.employee_id)
+    @manager = @employee.manager_id
     @short_leave_request = ShortLeaveRequest.new
     @short_leave_requests = ShortLeaveRequest.where(employee_id: current_user.employee_id)
   end
@@ -29,6 +29,14 @@ class ShortLeaveRequestsController < ApplicationController
   def create
     @short_leave_request = ShortLeaveRequest.new(short_leave_request_params)
       if @short_leave_request.save
+        #shrt_leave = @short_leave_request.save
+        emp = Employee.find_by(id: @short_leave_request.employee_id)
+        total_hrs = @short_leave_request.out_time.to_time - @short_leave_request.in_time.to_time
+        working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+        @short_leave_request.update(count: working_hrs,status: "Pending",manager_id: emp.manager_id)
+
+        ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: @short_leave_request.employee_id,
+          status: "Pending")
         @short_leave_request = ShortLeaveRequest.new
         @short_leave_requests = ShortLeaveRequest.all
         @flag=true
@@ -48,11 +56,17 @@ class ShortLeaveRequestsController < ApplicationController
   # DELETE /short_leave_requests/1
   # DELETE /short_leave_requests/1.json
   def destroy
+    @short_leave_reques
+    if ShortLeaveApproval.exists?(short_leave_request_id: @short_leave_request.id)
+      flash[:alert] = "Record is created ! "
+    else
     @short_leave_request.destroy
     @short_leave_requests = ShortLeaveRequest.all
+    end
   end
 
   def show_leave
+
     @short_leave_request = ShortLeaveRequest.find(params[:format])
   end
 

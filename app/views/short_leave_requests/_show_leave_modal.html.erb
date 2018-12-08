@@ -25,6 +25,10 @@
 			      <td><%= @short_leave_request.try(:out_time) %></td>
 			    </tr>
 			    <tr>
+			     <th><strong> Count</strong></th>
+			      <td><%= @short_leave_request.try(:count) %></td>
+			    </tr>
+			    <tr>
 			      <th><strong>Description</strong></th>
 			      <td> <%= @short_leave_request.try(:description) %></td>
 			    </tr>

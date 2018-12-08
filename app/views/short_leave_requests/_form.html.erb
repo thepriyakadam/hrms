@@ -1,31 +1,30 @@
 
 
-<%= bootstrap_form_for(@short_leave_request) do |f| %>
+<%= bootstrap_form_for(@short_leave_request,remote: true) do |f| %>
  
     <% f.hidden_field :manager_id, value: @manager  %>
     <% f.hidden_field :status, value: 'Pending' %>
-    <% f.hidden_field :employee_id, value: current_user.employee_id%>
-<div class="row">
-   
- <div class="col-sm-3">
-          <div class="form-group required">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <%= f.text_field :day, label: 'Date', class: 'request_from_date'%>
-            </div>
+      <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+  <div class="row">  
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
           </div>
+          <%= f.text_field :day, label: 'Date', class: 'request_from_date'%>
         </div>
-<div class="col-sm-3">
-     <label>Out Time</label>
+      </div>
+    </div>
+    <div class="col-sm-3">
+     <label>In Time</label>
       <div class="bootstrap-timepicker">
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon">
               <i class="fa fa-clock-o"></i>
             </div>
-            <%= f.text_field :in_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker'%>
+            <%= f.text_field :in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker'%>
           </div>
         </div>
       </div>

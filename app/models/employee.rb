@@ -33,6 +33,7 @@ class Employee < ActiveRecord::Base
   has_many :awards
   has_many :certifications
   has_many :interview_schedules
+  has_many :short_leave_approvals
   #has_many :vacancy_masters
   has_many :interview_reschedules
   has_many :qualifications
@@ -104,6 +105,9 @@ class Employee < ActiveRecord::Base
   has_many :rembursments
   has_many :status_c_offs
   has_many :leave_transfers
+  has_many :short_leave_requests
+  has_many :short_leave_requests, class_name: "Employee",
+                          foreign_key: "manager_id"
 
   has_many :leave_transfers, class_name: "Employee",
                           foreign_key: "transfer_to_id"

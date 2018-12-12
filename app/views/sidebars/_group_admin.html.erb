@@ -303,8 +303,8 @@
             <li><a href="/employees/personal_detail" title="Contains full personal details of employee"><i class="fa fa-tags"></i> Personal Details </a></li>
             <li><a href="/employee_leav_requests" title="For initiating self leave request"><i class="fa fa-tags"></i> Leave Request </a></li>
             <li><a href="/on_duty_requests" title="For initiating self on duty request"><i class="fa fa-tags"></i> On Duty Request </a></li>
+            <li><a href="/short_leave_requests/new" title="For creating self compensatory off"><i class="fa fa-tags"> </i> Short Leave Request</a></li>
             <li><a href="/self_services/leave_c_off" title="For creating self compensatory off"><i class="fa fa-tags"> </i> Comp. Off Request</a></li>
-
 
             <li><a href="/attendance_regularizations" title="To view the details of attendance regularizations"><i class="fa fa-tags"></i> Regularize Attendance </a></li>
             <!-- <li><a href="/leave_transfers/new" title="For applying leave transfer request"><i class="fa fa-tags"></i> Leave Transfer </a></li> -->
@@ -360,6 +360,7 @@
             <li><a href="/manager_self_services/reporties_list" title="For approving the compensatory off which raise by employee"><i class="fa fa-thumbs-up"> </i> Reporties </a></li>
              <li><a href="/manager_self_services/approved_or_rejected_leave_request" title="Leave approval and rejection"><i class="fa fa-thumbs-up"></i> Leave Approval </a></li>
             <li><a href="/manager_self_services/request_approval_list" title="On duty approval and rejection"><i class="fa fa-thumbs-up"></i> On Duty Approval </a></li>
+            <li><a href="/manager_self_services/short_leave_approval" title="On duty approval and rejection"><i class="fa fa-thumbs-up"></i> Short Leave Approval </a></li>
             <li><a href="/manager_self_services/leave_c_off" title="For approving the compensatory off which raise by employee"><i class="fa fa-thumbs-up"> </i> Comp. Off Approval </a></li>
             <li><a href="/attendance_regularizations/attendance_regularization_approve" title="For approving attendance regularization"><i class="fa fa-thumbs-up"></i> Regularize Attendance </a></li>
             <li><a href="/employee_attendances/access_card_approval" title="For approving the access card"><i class="fa fa-tags"></i> ACF Approval </a></li>
@@ -435,11 +436,11 @@
                   <li><a href="/employee_leav_requests/leave_request_report"><i class="fa fa-tags"></i> Leave Request </a></li>
                   <li><a href="/employee_leav_requests/leave_req_status_report"><i class="fa fa-tags"></i> Status Wise Leave </a></li>
                   <li><a href="/particular_leave_records/leave_approval_report"><i class="fa fa-thumbs-up"></i> Leave Approved </a></li>
-                  <!-- <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i> Comp. Off Report </a></li> -->
-                 <!--  <li><a href="/employee_leav_balances/employee_leave_balance"><i class="fa fa-tags"></i> Leave Balance </a></li> -->
+                  <!-- <li><a href="/leave_c_offs/search_by_c_off_date"><i class="fa fa-tags"></i> Comp. Off Report </a></li> --> 
+                  <!--<li><a href="/employee_leav_balances/employee_leave_balance"><i class="fa fa-tags"></i> Leave Balance </a></li> -->
                   <li><a href="/employee_leav_requests/balancewise_report"><i class="fa fa-tags"></i> Balance Wise </a></li>
-                  <li><a href="/leave_transfers/employee_wise_report"><i class="fa fa-tags"></i> Leave Transfer </a></li>
-                </ul>
+                  <!-- <li><a href="/leave_transfers/employee_wise_report"><i class="fa fa-tags"></i> Leave Transfer </a></li>
+                 --></ul>
             </li>  
             <li class="treeview" id="ODProcess">
               <a href="#"><i class="fa fa-edit"></i> On Duty Process <i class="fa fa-angle-left pull-right"></i></a>
@@ -457,6 +458,7 @@
                   <li><a href="/on_duty_requests/on_duty_approval_report"><i class="fa fa-thumbs-up"></i> Approved </a></li>
                 </ul>
             </li>
+            <li><a href="/short_leave_approvals/approved_short_leave" title="For creating leave request, and to view leave request"><i class="fa fa-tags"></i> Short Leave List</a></li>
           </ul>
         </li>
         <li class="treeview" id="TimeManagement">
@@ -589,8 +591,8 @@
                 <!--  <li><a href="/employee_attendances/select_date_department_form"><i class="fa fa-tags"></i> Department Wise </a></li> -->
                 <li><a href="/employee_attendances/select_from_and_to_date"><i class="fa fa-tags"></i> Status Wise </a></li>
                 <li><a href="/employee_attendances/attendance_average_report"><i class="fa fa-tags"></i> Average Attendance </a></li>
-                <li><a href="/employee_attendances/managerwise_average_report"><i class="fa fa-tags"></i> Manager Wise </a></li>
-                <li><a href="/employee_plans/gps_tracking"><i class="fa fa-tags"></i> GPS Tracking </a></li>
+                <li><a href="/employee_attendances/managerwise_average_report"><i class="fa fa-tags"></i> Manager Wise </a></li><!-- 
+                <li><a href="/employee_plans/gps_tracking"><i class="fa fa-tags"></i> GPS Tracking </a></li> -->
                 <li><a href="/workingdays/datewise_workingday"><i class="fa fa-tags"></i> Workingday </a></li>
                 <li><a href="/attendance_regularizations/date_wise_regularization"><i class="fa fa-tags"></i> Attendance Regularize </a></li>
                 <li><a href="/attendance_regularizations/employee_wise_regularization"><i class="fa fa-tags"></i> Employee Wise Regularize </a></li>

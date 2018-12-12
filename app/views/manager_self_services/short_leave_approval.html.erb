@@ -17,13 +17,14 @@
           <tbody>
             <% @short_leave_requests.try(:each) do |short_leave_request| %>
               <tr>
-                <td><%= on_duty_request.employee.try(:manual_employee_code) %></td>
-                <td><%= on_duty_request.employee.try(:first_name) %> <%= on_duty_request.employee.try(:middle_name) %> <%=on_duty_request.employee.try(:last_name) %></td>
-                <td><%= on_duty_request.try(:start_date).to_date %> - <%= on_duty_request.try(:end_date).to_date %></td>
+                <td><%= short_leave_request.employee.try(:manual_employee_code) %></td>
+                <td><%= short_leave_request.employee.try(:first_name) %> <%= short_leave_request.employee.try(:middle_name) %> <%=short_leave_request.employee.try(:last_name) %></td>
+                <td><%= short_leave_request.try(:day) %></td>
                 <td>
-                  <%= link_to 'Approve', second_approve_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
-                  <%= link_to 'Reject', second_reject_od_status_record_path(on_duty_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
-                  <%= link_to '', employee_od_request_detail_on_duty_requests_path(on_duty_request),class: 'btn btn-xs btn-default fa fa-eye' %>
+                  <%= link_to '', approve_short_leave_requests_path(short_leave_request), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
+                  <%= link_to '', reject_short_leave_requests_path(short_leave_request), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                  <%#= link_to '', view_request_short_leave_requests_path(short_leave_request),class: 'btn btn-xs btn-default fa fa-eye' %>
+                   <%= link_to '', view_request_short_leave_requests_path(short_leave_request), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
                 </td>
               </tr>
             <% end %>
@@ -32,6 +33,7 @@
   </div>
 </div>
 
+<div id="myModal" class="modal fade"></div>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#example6').DataTable( {

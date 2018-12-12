@@ -45,6 +45,28 @@ class ShortLeaveRequestsController < ApplicationController
       end
   end
 
+  def approve
+    @short_leave_request = ShortLeaveRequest.find(params[:format])
+    ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: @short_leave_request.employee_id,
+      status: "Approved")
+    @short_leave_request.update(status: "Approved")
+    flash[:notice] = "Short Leave Approved Successfully!"
+    redirect_to short_leave_approval_manager_self_services_path
+  end
+
+  def reject
+    @short_leave_request = ShortLeaveRequest.find(params[:format])
+    ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: @short_leave_request.employee_id,
+      status: "Rejected")
+    @short_leave_request.update(status: "Rejected")
+    flash[:alert] = "Short Leave Rejected Successfully!"
+    redirect_to short_leave_approval_manager_self_services_path
+  end
+
+  def view_request
+    @short_leave_request = ShortLeaveRequest.find(params[:format])
+  end
+
   # PATCH/PUT /short_leave_requests/1
   # PATCH/PUT /short_leave_requests/1.json
   def update
@@ -56,7 +78,7 @@ class ShortLeaveRequestsController < ApplicationController
   # DELETE /short_leave_requests/1
   # DELETE /short_leave_requests/1.json
   def destroy
-    @short_leave_reques
+    @short_leave_request
     if ShortLeaveApproval.exists?(short_leave_request_id: @short_leave_request.id)
       flash[:alert] = "Record is created ! "
     else

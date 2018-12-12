@@ -61,6 +61,10 @@ class ShortLeaveApprovalsController < ApplicationController
     end
   end
 
+  def approved_short_leave
+    @short_leave_approvals = ShortLeaveApproval.all
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_short_leave_approval

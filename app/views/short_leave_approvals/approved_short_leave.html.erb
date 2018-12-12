@@ -1,0 +1,36 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Short Leave List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+      <thead>
+        <tr>  
+          <th>Sr. No</th>
+          <th>Employee</th>
+          <th>Day</th>
+          <th>Status</th>
+          <!-- <th>Description</th>
+          <th>Manager</th>
+          <th>Status</th> -->
+        </tr>
+      </thead>
+
+      <tbody>
+        <% i = 0 %>
+        <% @short_leave_approvals.each do |short_leave_approval| %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= short_leave_approval.employee.manual_employee_code %>-<%= full_name(short_leave_approval.employee) %></td>
+            <td><%= short_leave_approval.try(:short_leave_request).try(:day) %></td>
+            <td><%= short_leave_approval.status %></td>
+            <!-- <td><%#= short_leave_request.description %></td>
+            <td><%#= short_leave_request.manager %></td>
+            <td><%#= short_leave_request.status %></td> -->
+            
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

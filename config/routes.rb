@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
-  resources :short_leave_approvals
+  resources :short_leave_approvals do
+    collection do
+      get :approved_short_leave
+    end
+  end
   resources :short_leave_requests do
     collection do
       get :show_leave
+      get :approve
+      get :reject
+      get :view_request
     end
   end
   resources :c_off_cash_masters
@@ -554,6 +561,7 @@ Rails.application.routes.draw do
 
   resources :manager_self_services do
     collection do
+      get :short_leave_approval
       get :show_system_attendance
       get :detail_attendance_modal
       get :shift_wise_system_base

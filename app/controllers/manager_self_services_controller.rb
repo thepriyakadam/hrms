@@ -67,6 +67,27 @@ class ManagerSelfServicesController < ApplicationController
     session[:active_tab] ="ManagerSelfService"
   end
 
+  def short_leave_approval
+   # @emp = Employee.find_by(id: current_user.employee_id)
+    #current_login = Employee.find_by(id: current_user.employee_id)  
+    @emp = Employee.find(current_user.employee_id)
+    employees = @emp.subordinates
+    employees_ind = @emp.indirect_subordinates
+    @employees = employees.where(status: "Active").pluck(:id)
+    @employees_ind = employees_ind.where(status: "Active").pluck(:id)
+
+    @employee = @employees + @employees_ind
+
+    # emps = current_login.subordinates
+    # @all = emps.where(status: "Active")
+    # subordinates = @all.pluck(:id)
+    # emps = current_login.indirect_subordinates
+    # @all = emps.where(status: "Active")
+    # indirect_subordinates = @all.pluck(:id)
+    
+    @short_leave_requests = ShortLeaveRequest.where(employee_id: @employee,status: "Pending" )
+  end
+
   def od_request_list
    
       @first_level_request_lists = OnDutyRequest.where(current_status: "Pending")

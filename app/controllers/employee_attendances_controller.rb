@@ -481,6 +481,45 @@ end
     end
   end
 
+  def officers_attendance
+    emp = ["367","369","368","228","26","43","52","212","255"]
+    @date = Time.now.to_date
+    @employees = EmployeeAttendance.where(day: @date, employee_id: emp)
+    respond_to do |f|
+      f.js
+      f.html
+      f.pdf do
+        render pdf: 'employee_attendances',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_attendances/officers_attendance.pdf.erb',
+        show_as_html: params[:debug].present?
+      end
+    end
+  end
+
+  def officers_daily
+    emp = ["367","369","368","228","26","43","52","212","255"]
+    if params[:format] == "pdf"
+      @date = params[:date]
+      @employees = EmployeeAttendance.where(day: @date, employee_id: emp).order("employee_id ASC")
+      respond_to do |f|
+        f.js
+        f.html
+        f.pdf do
+          render pdf: 'employee_attendances',
+          layout: 'pdf.html',
+          orientation: 'Landscape',
+          template: 'employee_attendances/officers_daily.pdf.erb',
+          show_as_html: params[:debug].present?
+        end
+      end
+    else
+      @date = params[:employee][:from]
+      @employees = EmployeeAttendance.where(day: @date, employee_id: emp)
+    end
+  end
+
   def department_wise_emp
     @year = params[:year]
     @month = params[:month]

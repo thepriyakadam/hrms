@@ -1272,6 +1272,9 @@ end
       get :employee_attendance
       get :import_xl
       post :attendance_upload_report
+      get :officers_attendance
+      get :officers_daily
+      post :officers_daily
     end
   end
   resources :salary_comp_mappings

@@ -270,6 +270,22 @@
           <%end%>
         </div>
       </div>
+
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :chief_operating_officer, label: 'Chief Operating Officer'%>
+          <%end%>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="field" style="padding: 10px">
+          <% if current_user.role.name == 'GroupAdmin' %>
+            <%= f.check_box :head_officer, label: 'Head Officer'%>
+          <%end%>
+        </div>
+      </div>
     </div>
 
   <div class="box-header with-border">

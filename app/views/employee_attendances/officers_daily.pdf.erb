@@ -22,32 +22,51 @@ div.nobreak{ page-break-inside: avoid;
                 <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
             </td>
           </tr>
-          <th colspan="7"><center> Date : <%= params[:date] %></center></th>
+          <th colspan="5"><center> Date : <%= params[:date] %></center></th>
           <tr>
             <th>Sr.No.</th>
             <th>Emp. No.</th>
             <th>Employee Name</th>
             <th>In Time</th>
             <th>Remark</th>
-            <th>Out Time</th>
-            <th>Remark</th>
           </tr>
         </thead>
         <tbody>
           <% i = 0 %>
-          <% @employees.each do |e| %>
+          <th colspan="5"> CHIEF OPERATING OFFICER</th>
+          <% @chief_operating_officer.try(:each) do |e| %>
             <tr>
               <td><%= i = i + 1 %></td>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.try(:in_time) %></td>
               <td><%= %></td>
-              <td><%= e.try(:out_time) %></td>
-              <td></td>
+            </tr>
+          <% end %> <!-- do -->
+          <% j = 1 %>
+          <th colspan="5"> HEAD </th>
+          <% @head_officer.try(:each) do |e| %>
+            <tr>
+              <td><%= j = j + 1 %></td>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.try(:in_time) %></td>
+              <td><%= %></td>
             </tr>
           <% end %> <!-- do -->
         </tbody>
+      </table><br><br><br><br>
+      <table>
+       <tr>
+          <td>
+        HEAD(IR & ADMIN.)</td>
+        </tr>
+        <tr>
+          <td><br><br>
+            CC: 1.COO<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                2.HEAD (HR & ADMIN.)
+          </td>
+        </tr>
       </table>
     </div>
-  </div> 
-</div>
+  

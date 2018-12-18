@@ -37,7 +37,7 @@
       <table id="example6" class="table table-bordered table-hover table-condensed">
         <thead>
           <tr>
-            <th colspan="7"><center> Date : <%= Time.now.to_date %></center></th>
+            <th colspan="5"><center> Date : <%= Time.now.to_date %></center></th>
           </tr>
           <tr>
             <th>Sr.No.</th>
@@ -45,13 +45,11 @@
             <th>Employee Name</th>
             <th>In Time</th>
             <th>Remark</th>
-            <th>Out Time</th>
-            <th>Remark</th>
           </tr>
         </thead>
         <tbody>
           <% i = 0 %>
-          <% @employees.each do |e| %>
+          <% @chief_operating_officer.try(:each) do |e| %>
             <tr>
               <td><%= i = i + 1 %></td>
               <td><%= e.employee.manual_employee_code %></td>
@@ -62,10 +60,21 @@
               <td></td>
             </tr>
           <% end %> <!-- do -->
+
+          <% @head_officer.try(:each) do |e| %>
+            <tr>
+              <td><%= i = i + 1 %></td>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.try(:in_time) %></td>
+              <td><%= %></td5
+            </tr>
+          <% end %> <!-- do -->
         </tbody>
       </table>
       <br>
       <%= link_to " PDF Report ",officers_attendance_employee_attendances_path(format: "pdf"), class: "btn btn-xl btn-info fa fa-print", target: "_blank" %>
+      <%= link_to " Excel Report ",officers_attendance_employee_attendances_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
     </div>
   </div> 
 </div>
@@ -88,11 +97,8 @@ $("#employee").validate({
     rules: {
       "employee[from]":{
         required: true,
-      }
-       },
-    messages: {
-      "employee[from]":{
-        required: "Please Select Date",
+      {
+      required: "Please Select Date",
       }
        },
     errorPlacement: function(error, element) {

@@ -482,12 +482,15 @@ end
   end
 
   def officers_attendance
-    emp = ["367","369","368","228","26","43","52","212","255"]
+    emp1 = JoiningDetail.where(chief_operating_officer: true).pluck(:employee_id)
+    emp2 = JoiningDetail.where(head_officer: true).pluck(:employee_id)
     @date = Time.now.to_date
-    @employees = EmployeeAttendance.where(day: @date, employee_id: emp)
+    @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1)
+    @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2)
     respond_to do |f|
       f.js
       f.html
+      f.xls {render template: 'employee_attendances/officers_attendance.xls.erb'}
       f.pdf do
         render pdf: 'employee_attendances',
         layout: 'pdf.html',
@@ -499,13 +502,16 @@ end
   end
 
   def officers_daily
-    emp = ["367","369","368","228","26","43","52","212","255"]
-    if params[:format] == "pdf"
+    emp1 = JoiningDetail.where(chief_operating_officer: true).pluck(:employee_id)
+    emp2 = JoiningDetail.where(head_officer: true).pluck(:employee_id)
+    if params[:format] == "pdf" || params[:format] == "xls"
       @date = params[:date]
-      @employees = EmployeeAttendance.where(day: @date, employee_id: emp).order("employee_id ASC")
+      @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1).order("employee_id ASC")
+      @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2).order("employee_id ASC")
       respond_to do |f|
         f.js
         f.html
+        f.xls {render template: 'employee_attendances/officers_daily.xls.erb'}
         f.pdf do
           render pdf: 'employee_attendances',
           layout: 'pdf.html',
@@ -516,7 +522,8 @@ end
       end
     else
       @date = params[:employee][:from]
-      @employees = EmployeeAttendance.where(day: @date, employee_id: emp)
+      @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1).order("employee_id ASC")
+      @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2)
     end
   end
 

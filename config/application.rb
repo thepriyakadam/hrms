@@ -24,7 +24,7 @@ module Hrms
 
     # config.time_zone = 'Central Time (US & Canada)'
 
-    config.time_zone = 'Asia/Kolkata'
+    #config.time_zone = 'Asia/Kolkata'
 
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.

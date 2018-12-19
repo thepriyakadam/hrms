@@ -27,8 +27,16 @@
             <td><%= employee_attendance.try(:day) %></td>
             <th><%= employee_attendance.try(:day).strftime("%A") %></th>
             <td><%= employee_attendance.try(:in_time) %></td>
-            <td><%= employee_attendance.try(:out_time) %></td>
-            <td><%= employee_attendance.try(:working_hrs) %></td>
+            <% if employee_attendance.try(:in_time) == employee_attendance.try(:out_time) %>
+              <td></td>
+            <% else %>
+              <td><%= employee_attendance.try(:out_time) %></td>
+            <% end %>
+            <% if employee_attendance.try(:in_time) == employee_attendance.try(:out_time) %>
+              <td></td>
+            <% else %>
+              <td><%= employee_attendance.try(:working_hrs) %></td>
+            <% end %>
             <td><%= employee_attendance.try(:present) %></td>
             <td><%= employee_attendance.try(:comment) %></td>
           </tr>

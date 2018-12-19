@@ -42,7 +42,7 @@
             <% else %>
               <% if employee_attendance.try(:in_time).present? %>
                 <% time = Time.at(employee_attendance.try(:in_time)).utc.strftime("%H:%M") %>
-                <% if time > "08:33" %>
+                <% if time > "09:11" %>
                   <td class="danger"><%= employee_attendance.try(:in_time) %></td>
                 <% else %>
                   <td></td>

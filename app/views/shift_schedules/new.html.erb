@@ -13,7 +13,7 @@
 
   </div><!-- /.box-header -->
 	<div class="box-body">
-		<% if current_user.role.name == "GroupAdmin" || current_user.role.name == "HOD" %>
+		<% if current_user.role.name == "GroupAdmin" || current_user.role.name == "HOD" || current_user.role.name == "Admin" || current_user.role.name == "Supervisor" %>
 		<div id="form">
 			<%= render 'form' %>	
 		</div>

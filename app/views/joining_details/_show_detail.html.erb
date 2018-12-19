@@ -22,9 +22,16 @@
     </div>
   </div>
    <div class="box-tools pull-right">
+
+ <% if current_user.role.name == "GroupAdmin" || current_user.role.name == "Admin"%>
       <%= link_to 'Edit',  edit_joining_detail_path(@joining_detail,contract_month: @joining_detail.contract_month),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
       <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
-    </div>
+   
+    <%else%>
+
+      <%= link_to 'Back', employees_path,class: 'btn btn-default btn-xs fa fa-arrow-left' %>
+    <%end%>
+     </div>
      </div>
   <div class="box-body">
     <table id="example2" class="table table-bordered table-hover table-condensed">

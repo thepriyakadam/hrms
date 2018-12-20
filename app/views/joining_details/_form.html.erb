@@ -208,14 +208,14 @@
       </div> -->
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-         <% if current_user.role.name == 'GroupAdmin' %>
+         <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
           <%= f.check_box :c_off, label: 'Compensatory Off'%>
           <%end%>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-         <% if current_user.role.name == 'GroupAdmin' %>
+         <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
           <%= f.check_box :c_off_expire, label: 'COff Expire'%>
           <%end%>
         </div>
@@ -231,7 +231,7 @@
      <div class="row">
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-          <% if current_user.role.name == 'GroupAdmin' %>
+          <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
             <%= f.check_box :gps_track, label: 'Gps Track'%>
           <%end%>
         </div>
@@ -239,7 +239,7 @@
 
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-          <% if current_user.role.name == 'GroupAdmin' %>
+          <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
             <%= f.check_box :restricted_area, label: 'Restricted Area'%>
           <%end%>
         </div>
@@ -247,7 +247,7 @@
 
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-          <% if current_user.role.name == 'GroupAdmin' %>
+          <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
             <%= f.check_box :welfare, label: 'Welfare'%>
           <%end%>
         </div>
@@ -255,7 +255,7 @@
 
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-          <% if current_user.role.name == 'GroupAdmin' %>
+          <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
             <%= f.check_box :contact_library, label: 'Contact Library'%>
           <%end%>
         </div>
@@ -265,7 +265,7 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-          <% if current_user.role.name == 'GroupAdmin' %>
+          <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
             <%= f.check_box :is_regularization, label: 'Attendance Regularization'%>
           <%end%>
         </div>
@@ -273,7 +273,7 @@
 
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-          <% if current_user.role.name == 'GroupAdmin' %>
+          <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
             <%= f.check_box :chief_operating_officer, label: 'Chief Operating Officer'%>
           <%end%>
         </div>
@@ -281,7 +281,7 @@
 
       <div class="col-sm-3">
         <div class="field" style="padding: 10px">
-          <% if current_user.role.name == 'GroupAdmin' %>
+          <% if current_user.role.name == 'GroupAdmin' || current_user.role.name == 'Admin' %>
             <%= f.check_box :head_officer, label: 'Head Officer'%>
           <%end%>
         </div>

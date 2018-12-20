@@ -56,8 +56,6 @@
               <td><%= full_name(e.employee) %></td>
               <td><%= e.try(:in_time) %></td>
               <td><%= %></td>
-              <td><%= e.try(:out_time) %></td>
-              <td></td>
             </tr>
           <% end %> <!-- do -->
 
@@ -67,7 +65,7 @@
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.try(:in_time) %></td>
-              <td><%= %></td5
+              <td><%= %></td>
             </tr>
           <% end %> <!-- do -->
         </tbody>

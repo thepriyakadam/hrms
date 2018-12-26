@@ -31,12 +31,15 @@ class ShortLeaveRequestsController < ApplicationController
       if @short_leave_request.save
         #shrt_leave = @short_leave_request.save
         emp = Employee.find_by(id: @short_leave_request.employee_id)
-        total_hrs = @short_leave_request.out_time.to_time - @short_leave_request.in_time.to_time
+        total_hrs =  @short_leave_request.in_time.to_time - @short_leave_request.out_time.to_time
         working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
         @short_leave_request.update(count: working_hrs,status: "Pending",manager_id: emp.manager_id)
 
         ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: @short_leave_request.employee_id,
           status: "Pending")
+
+        ShortLeaveMailer.short_leave_request(@short_leave_request).deliver_now
+
         @short_leave_request = ShortLeaveRequest.new
         @short_leave_requests = ShortLeaveRequest.all
         @flag=true
@@ -50,6 +53,8 @@ class ShortLeaveRequestsController < ApplicationController
     ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: @short_leave_request.employee_id,
       status: "Approved")
     @short_leave_request.update(status: "Approved")
+    ShortLeaveMailer.short_leave_approval(@short_leave_request).deliver_now
+
     flash[:notice] = "Short Leave Approved Successfully!"
     redirect_to short_leave_approval_manager_self_services_path
   end
@@ -59,6 +64,8 @@ class ShortLeaveRequestsController < ApplicationController
     ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: @short_leave_request.employee_id,
       status: "Rejected")
     @short_leave_request.update(status: "Rejected")
+    ShortLeaveMailer.short_leave_reject(@short_leave_request).deliver_now
+
     flash[:alert] = "Short Leave Rejected Successfully!"
     redirect_to short_leave_approval_manager_self_services_path
   end
@@ -100,6 +107,6 @@ class ShortLeaveRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def short_leave_request_params
-      params.require(:short_leave_request).permit(:employee_id, :day, :in_time, :out_time, :description, :manager_id, :status)
+      params.require(:short_leave_request).permit(:leave_reason,:employee_id, :day, :in_time, :out_time, :description, :manager_id, :status)
     end
 end

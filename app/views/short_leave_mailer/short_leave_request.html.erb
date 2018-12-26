@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4></h4>
+    <p>    
+       This is to inform you that you have a new Short Leave Request. Details for request is given below.<br><br>
+       1 Employee :- <%= @employee.first_name.to_s %> <%= @employee.last_name.to_s %> <%= @employee.middle_name.to_s %><br><br>
+       has
+       2 Reason :-  <%= @short_leave_request.leave_reason %><br><br>
+       3 Day :- <%= @short_leave_request.day %><br><br>
+       4 Out Time :- <%= @short_leave_request.out_time %><br><br>
+       5 In Time :- <%= @short_leave_request.in_time %><br><br>
+       3 Count :- <%= @short_leave_request.count %><br><br>
+       3 Status :- <%= @short_leave_request.status %><br><br>
+       3 Description :- <%= @short_leave_request.description %>
+        With Regards,<br><br>
+         HR
+     </p>
+  </body>
+</html>

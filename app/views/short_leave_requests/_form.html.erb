@@ -1,11 +1,16 @@
 
 
-<%= bootstrap_form_for(@short_leave_request,remote: true) do |f| %>
+<%= bootstrap_form_for @short_leave_request,html: {id: "short_leave_request"},remote: true do |f| %>
  
     <% f.hidden_field :manager_id, value: @manager  %>
     <% f.hidden_field :status, value: 'Pending' %>
-      <%= f.hidden_field :employee_id, value: current_user.employee_id %>
-  <div class="row">  
+    <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+  <div class="row"> 
+    <div class="col-sm-3">
+      <div class="field">
+        <%= f.select :leave_reason ,['Leave','OD'] ,{label: 'Reason',include_blank: "Select Reason"} %>
+      </div>
+    </div> 
     <div class="col-sm-3">
       <div class="form-group required">
         <div class="input-group">
@@ -16,19 +21,6 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
-     <label>In Time</label>
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-            <%= f.text_field :in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker'%>
-          </div>
-        </div>
-      </div>
-    </div> 
 
     <div class="col-sm-3">
      <label>Out Time</label>
@@ -39,6 +31,20 @@
               <i class="fa fa-clock-o"></i>
             </div>
             <%= f.text_field :out_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker' %>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <div class="col-sm-3">
+     <label>In Time</label>
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+            <%= f.text_field :in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker'%>
           </div>
         </div>
       </div>
@@ -55,4 +61,42 @@
             <%= f.submit'Create Request', :class => class_name, data: { disable_with: data_info } %>
             </div>
           </div>
+      </div>
 <% end %>
+
+   
+<script type="text/javascript">
+  $(function(){
+    $('.request_from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-5:+10',
+    dateFormat: 'dd-mm-yy' });
+     });
+</script>
+
+<script>
+$("#short_leave_request").validate({
+    rules: {
+      "short_leave_request[leave_reason]":{
+        required: true,
+      },
+      "short_leave_request[day]":{
+        required: true,
+      }
+    },
+    messages: {
+      "short_leave_request[leave_reason]":{
+        required: "Please Select Leave Reason",
+      },
+      "short_leave_request[day]":{
+        required: "Please specify Day",
+      }
+      
+    },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

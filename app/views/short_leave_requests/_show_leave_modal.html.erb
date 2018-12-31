@@ -17,16 +17,16 @@
 			      <td> <%= @short_leave_request.try(:day) %></td>
 			    </tr>    
 			    <tr>
-			     <th><strong>In Time</strong></th>
+			     <th><strong>Out Time</strong></th>
 			      <td><%= @short_leave_request.try(:in_time) %></td>
 			    </tr>
 			    <tr>
-			     <th><strong>Out Time</strong></th>
+			     <th><strong>In Time</strong></th>
 			      <td><%= @short_leave_request.try(:out_time) %></td>
 			    </tr>
 			    <tr>
 			     <th><strong> Count</strong></th>
-			      <td><%= @short_leave_request.try(:count) %></td>
+			      <td><%= @short_leave_request.try(:count) %> hrs.</td>
 			    </tr>
 			    <tr>
 			      <th><strong>Description</strong></th>

@@ -14,26 +14,28 @@
 			      <td><%= full_name(@short_leave_request.employee) %></td>
 				  </tr>
 				  <tr>   
+			      <th>Reason</th>
+			      <td><%= @short_leave_request.leave_reason %></td>  
 			      <th>Day</th>
-			      <td><%= @short_leave_request.day %></td>
-			      <th>Count</th>
-		          <td><%= @short_leave_request.count %> hrs </td>
-			      </tr>
+			      <td><%= @short_leave_request.day %></td> 
+				  </tr>
 				  <tr> 
-				  <th>Out Time</th>
-			      <td><%= @short_leave_request.in_time %></td>  
-		          <th>In Time</th>
+		        <th>Out Time</th>
 		          <td><%= @short_leave_request.out_time %></td>
+			    <th>In Time</th>
+			      <td><%= @short_leave_request.in_time %></td> 
 				  </tr>
 				  <tr>   
+		        <th>Count(Hours)</th>
+		        <td><%= @short_leave_request.count %></td>
 		        <th>Manager</th>
 		        <td><%= full_name(@short_leave_request.manager) %></td>
-		        <th>Status</th>
-		        <td><%= @short_leave_request.status %></td>
 				  </tr>
 				  <tr>
+		        <th>Status</th>
+		        <td><%= @short_leave_request.status %></td>
 		        <th>Description</th>
-		        <td colspan="3"><%= @short_leave_request.description %></td>
+		        <td><%= @short_leave_request.description %></td>
 				  </tr>
 				  <tr>
 				  	<th colspan="4"><center>

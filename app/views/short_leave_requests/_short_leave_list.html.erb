@@ -2,9 +2,10 @@
   <thead>
     <tr>  
       <th>Sr. No</th>
+      <th>Reason</th>
       <th>Day</th>
-      <th>In time</th>
-      <th>Out time</th>
+      <th>Out Time</th>
+      <th>In Time</th>
       <!-- <th>Description</th>
       <th>Manager</th>
       <th>Status</th> -->
@@ -17,9 +18,10 @@
     <% @short_leave_requests.each do |short_leave_request| %>
       <tr>
         <td><%= i = i + 1 %></td>
+        <td><%= short_leave_request.leave_reason %></td>
         <td><%= short_leave_request.day %></td>
-        <td><%= short_leave_request.in_time %></td>
         <td><%= short_leave_request.out_time %></td>
+        <td><%= short_leave_request.in_time %></td>
         <!-- <td><%#= short_leave_request.description %></td>
         <td><%#= short_leave_request.manager %></td>
         <td><%#= short_leave_request.status %></td> -->

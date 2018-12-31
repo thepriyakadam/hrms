@@ -22,35 +22,47 @@ div.nobreak{ page-break-inside: avoid;
                 <strong><%=current_user.employee.company_location.company.try(:description)%></strong> <br> <%= current_user.employee.company_location.company.try(:address)%></center>
             </td>
           </tr>
-          <th colspan="5"><center> Date : <%= params[:date] %></center></th>
+          <tr>
+            <th colspan="7"><center> Date : <%= params[:date] %></center></th>
+          </tr>
           <tr>
             <th>Sr.No.</th>
             <th>Emp. No.</th>
             <th>Employee Name</th>
             <th>In Time</th>
             <th>Remark</th>
+            <th>Out Time</th>
+            <th>Remark</th>
           </tr>
         </thead>
         <tbody>
+          <%# binding.pry %>
           <% i = 0 %>
-          <th colspan="5"> CHIEF OPERATING OFFICER</th>
-          <% @chief_operating_officer.try(:each) do |e| %>
+          <th colspan="7"> CHIEF OPERATING OFFICER</th>
+          <% @chief_operating_officer_from.try(:each) do |e| %>
             <tr>
               <td><%= i = i + 1 %></td>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.try(:in_time) %></td>
               <td><%= %></td>
+              <% @chief_operating_officer_to.try(:each) do |e1| %>
+              <td><%= e1.try(:out_time) %></td>
+              <td><%= %></td>
+              <% end %>    
             </tr>
           <% end %> <!-- do -->
           <% j = 1 %>
-          <th colspan="5"> HEAD </th>
-          <% @head_officer.try(:each) do |e| %>
+          <th colspan="7"> HEAD </th>
+          <% @head_officer_from.try(:each) do |e| %>
+            <% out_t = @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: e.employee_id) %>
             <tr>
               <td><%= j = j + 1 %></td>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.try(:in_time) %></td>
+              <td><%= %></td>
+              <td><%= out_t.last.try(:out_time) %></td>
               <td><%= %></td>
             </tr>
           <% end %> <!-- do -->

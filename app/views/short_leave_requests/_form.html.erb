@@ -17,7 +17,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <%= f.text_field :day, label: 'Date', class: 'start_date'%>
+          <%= f.text_field :day, label:'Date', class: 'start_date'%>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@
    
 <script type="text/javascript">
   $(function(){
-    $('.request_from_date').datepicker({
+    $('.start_date').datepicker({
     changeYear:true,
     changeMonth: true,
     yearRange: '-5:+10',

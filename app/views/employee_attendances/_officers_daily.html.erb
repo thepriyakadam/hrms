@@ -23,17 +23,16 @@
           <% @chief_operating_officer_from.try(:each) do |e| %>
             <%# date = @to %> 
             <%# emp = e.employee_id %>
-            <%# emp_att = EmployeeAttendance.where(day: date, employee_id: emp) %>
+            <% e1 = @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: e.employee_id) %>
              <tr>
               <td><%= i = i + 1 %></td>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.try(:in_time) %></td>
               <td><%= %></td>
-              <% @chief_operating_officer_to.try(:each) do |e1| %>
-              <td><%= e1.try(:out_time) %></td>
+              <td><%= e1.last.try(:out_time) %></td>
               <td><%= %></td>
-              <% end %>    
+              <%# end %>    
             </tr>
           <% end %> <!-- do -->
           <% j = 1 %>

@@ -507,8 +507,8 @@ end
     if params[:format] == "pdf" || params[:format] == "xls"
       @from = params[:from]
       @to = params[:to]
-      binding.pry
-      @chief_operating_officer_from = EmployeeAttendance.where(day: @form, employee_id: emp1).order("employee_id ASC")
+     #binding.pry
+      @chief_operating_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp1).order("employee_id ASC")
       @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2).order("employee_code ASC")
       
       @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp1).order("employee_id ASC")

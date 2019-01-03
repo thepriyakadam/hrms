@@ -50,7 +50,7 @@ class ShortLeaveRequestsController < ApplicationController
 
   def approve
     @short_leave_request = ShortLeaveRequest.find(params[:format])
-    ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: @short_leave_request.employee_id,
+    ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: current_user.employee_id,
       status: "Approved")
     @short_leave_request.update(status: "Approved")
     ShortLeaveMailer.short_leave_approval(@short_leave_request).deliver_now
@@ -61,7 +61,7 @@ class ShortLeaveRequestsController < ApplicationController
 
   def reject
     @short_leave_request = ShortLeaveRequest.find(params[:format])
-    ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: @short_leave_request.employee_id,
+    ShortLeaveApproval.create(short_leave_request_id: @short_leave_request.id,employee_id: current_user.employee_id,
       status: "Rejected")
     @short_leave_request.update(status: "Rejected")
     ShortLeaveMailer.short_leave_reject(@short_leave_request).deliver_now

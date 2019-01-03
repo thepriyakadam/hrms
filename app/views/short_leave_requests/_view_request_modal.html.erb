@@ -17,7 +17,7 @@
 			      <th>Reason</th>
 			      <td><%= @short_leave_request.leave_reason %></td>  
 			      <th>Day</th>
-			      <td><%= @short_leave_request.day %></td> 
+			      <td><%= @short_leave_request.day %> -  <%= @short_leave_request.try(:day).strftime("%a") %></td> 
 				  </tr>
 				  <tr> 
 		        <th>Out Time</th>

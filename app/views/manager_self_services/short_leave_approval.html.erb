@@ -19,7 +19,7 @@
               <tr>
                 <td><%= short_leave_request.employee.try(:manual_employee_code) %></td>
                 <td><%= short_leave_request.employee.try(:first_name) %> <%= short_leave_request.employee.try(:middle_name) %> <%=short_leave_request.employee.try(:last_name) %></td>
-                <td><%= short_leave_request.try(:day) %></td>
+                <td><%= short_leave_request.try(:day) %> - <%=  @short_leave_request.try(:day).strftime("%a") %></td>
                 <td>
                   <%= link_to '', approve_short_leave_requests_path(short_leave_request), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
                   <%= link_to '', reject_short_leave_requests_path(short_leave_request), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>

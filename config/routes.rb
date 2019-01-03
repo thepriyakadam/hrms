@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       get :approve
       get :reject
       get :view_request
+      get :short_leave_process
+      post :show_list_for_process
+      post :process_short_leave
     end
   end
   resources :c_off_cash_masters

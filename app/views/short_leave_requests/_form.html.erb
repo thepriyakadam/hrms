@@ -2,67 +2,65 @@
 
 <%= bootstrap_form_for @short_leave_request,html: {id: "short_leave_request"},remote: true do |f| %>
  
-    <% f.hidden_field :manager_id, value: @manager  %>
-    <% f.hidden_field :status, value: 'Pending' %>
-    <%= f.hidden_field :employee_id, value: current_user.employee_id %>
-  <div class="row"> 
-    <div class="col-sm-3">
-      <div class="field">
-        <%= f.select :leave_reason ,['Leave','OD'] ,{label: 'Reason',include_blank: "Select Reason"} %>
-      </div>
-    </div> 
-    <div class="col-sm-3">
-      <div class="form-group required">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-calendar"></i>
+  <% f.hidden_field :manager_id, value: @manager  %>
+  <% f.hidden_field :status, value: 'Pending' %>
+  <%= f.hidden_field :employee_id, value: current_user.employee_id %>
+    <div class="row"> 
+      <div class="col-sm-3">
+        <div class="field">
+          <%= f.select :leave_reason ,['Leave','OD'] ,{label: 'Reason',include_blank: "Select Reason"} %>
+        </div>
+      </div> 
+      <div class="col-sm-3">
+        <div class="form-group required">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <%= f.text_field :day, label:'Date', class: 'start_date'%>
           </div>
-          <%= f.text_field :day, label:'Date', class: 'start_date'%>
+        </div>
+      </div>
+      <div class="col-sm-3">
+       <label>Out Time</label>
+        <div class="bootstrap-timepicker">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+              <%= f.text_field :out_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker' %>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="col-sm-3">
+       <label>In Time</label>
+        <div class="bootstrap-timepicker">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+              <%= f.text_field :in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker'%>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field">
+          <%= f.text_field :description %>
+        </div>
+      </div>
+      <div class="col-sm-3" style="padding-top: 20px">
+        <div class="actions">
+          <%= f.submit'Create Request', :class => class_name, data: { disable_with: data_info } %>
         </div>
       </div>
     </div>
-
-    <div class="col-sm-3">
-     <label>Out Time</label>
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-            <%= f.text_field :out_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker' %>
-          </div>
-        </div>
-      </div>
-    </div> 
-
-    <div class="col-sm-3">
-     <label>In Time</label>
-      <div class="bootstrap-timepicker">
-        <div class="form-group">
-          <div class="input-group">
-            <div class="input-group-addon">
-              <i class="fa fa-clock-o"></i>
-            </div>
-            <%= f.text_field :in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker'%>
-          </div>
-        </div>
-      </div>
-    </div> 
-  </div>
-  <div class="row">
-<div class="col-sm-6">
-  <div class="field">
-    <%= f.text_field :description %>
-  </div>
-</div>
-    <div class="col-sm-3" style="padding-top: 20px">
-          <div class="actions">
-            <%= f.submit'Create Request', :class => class_name, data: { disable_with: data_info } %>
-            </div>
-          </div>
-      </div>
-<% end %>
+  <% end %>
 
    
 <script type="text/javascript">

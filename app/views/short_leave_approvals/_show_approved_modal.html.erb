@@ -48,7 +48,7 @@
 			     		<th><strong>Rejected By</strong></th>
 			    		<td><%= short_leave_approval.employee.manual_employee_code %>  - <%= full_name(short_leave_approval.employee) %></td>
 			    	<% elsif short_leave_approval.status == "Pending" %>
-			     		<th><strong>Employee</strong></th>
+			     		<th><strong>Raised By</strong></th>
 			    		<td><%= short_leave_approval.employee.manual_employee_code %>  - <%= full_name(short_leave_approval.employee) %></td>
 			    	<% end %>
 			    </tr>

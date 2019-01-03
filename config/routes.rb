@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :short_leave_approvals do
     collection do
       get :approved_short_leave
+      get :show_approved_detail
     end
   end
   resources :short_leave_requests do

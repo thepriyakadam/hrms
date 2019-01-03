@@ -82,6 +82,44 @@
         </ul>
       </li><!-- /.messages-menu -->
 
+      <li class="dropdown messages-menu">
+        <!-- Menu toggle button -->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Short Leave Request">
+          <i class="fa fa-envelope-o" ></i>
+          <span class="label label-success">
+            <% if current_user.class == Group %>
+            <% else %>
+            <% @pending_employee_short_leav_requests = ShortLeaveRequest.where(status: "Pending",manager_id: current_user.employee_id) %>
+            <% count1 = 0 %>
+            <% @pending_employee_short_leav_requests.try(:each) do |short_leave_request| %>
+            <% count1 += 1 %>
+            <% count1 %>
+            <% end %>
+            <% count1 %>
+
+            <% count2 = 0 %>
+            
+            <% count = count1 + count2 %>
+
+            <%= count %>
+           <%end%>
+           </span>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="header"> <a href="/manager_self_services/short_leave_approval"> Short Leave Request</a></li>
+          <li>
+            <!-- inner menu: contains the messages -->
+            <ul class="products-list product-list-in-box">
+              <li class="item"><!-- start message -->
+                 <center> <small class="label label-success">  You Have <%= count %> Short Leave Request  </small></center>
+              </li><!-- end message -->
+            </ul><!-- /.menu -->
+          </li>
+          <li class="footer"><a href="/manager_self_services/short_leave_approval">See All Request</a></li>
+        </ul>
+      </li><!-- /.messages-menu -->
+
+
       <!-- Notifications Menu -->
       <li class="dropdown notifications-menu">
         <!-- Menu toggle button -->

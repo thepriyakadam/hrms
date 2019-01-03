@@ -14,8 +14,8 @@
           <th>Present</th>
           <th>In Time</th>
           <th>Out Time</th>
-          <th>Working Hrs.</th>
-          <th>Comment</th>
+          <!-- <th>Working Hrs.</th> -->
+        <!-- <th>Comment</th> -->
         </tr>
       </thead>
 
@@ -31,13 +31,13 @@
             <% else %>
               <td><%= employee_attendance.try(:out_time) %></td>
             <% end %>
-            <% if employee_attendance.try(:in_time) == employee_attendance.try(:out_time) %>
-              <td></td>
-            <% else %>
-              <td><%= employee_attendance.try(:working_hrs) %></td>
-            <% end %>
-            <td><%= employee_attendance.try(:comment) %></td>
-          </tr>
+            <%# if employee_attendance.try(:in_time) == employee_attendance.try(:out_time) %>
+              <!-- <td></td> -->
+            <%# else %>
+              <!-- <td><#%= employee_attendance.try(:working_hrs) %></td> -->
+            <%# end %>
+           <!--  <td><#%= employee_attendance.try(:comment) %></td>
+           --></tr>
         <% end %>
       </tbody>
     </table>

@@ -485,8 +485,8 @@ end
     emp1 = JoiningDetail.where(chief_operating_officer: true).pluck(:employee_id)
     emp2 = JoiningDetail.where(head_officer: true).pluck(:employee_id)
     @date = Time.now.to_date
-    @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1)
-    @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2)
+    @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1).order("id ASC")
+    @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2).order("id ASC")
     respond_to do |f|
       f.js
       f.html
@@ -505,9 +505,15 @@ end
     emp1 = JoiningDetail.where(chief_operating_officer: true).pluck(:employee_id)
     emp2 = JoiningDetail.where(head_officer: true).pluck(:employee_id)
     if params[:format] == "pdf" || params[:format] == "xls"
-      @date = params[:date]
-      @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1).order("employee_id ASC")
-      @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2).order("employee_id ASC")
+      @from = params[:from]
+      @to = params[:to]
+     #binding.pry
+      @chief_operating_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp1).order("employee_id ASC")
+      @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2).order("employee_code ASC")
+      
+      @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp1).order("employee_id ASC")
+      @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp2).order("employee_code ASC")
+      
       respond_to do |f|
         f.js
         f.html
@@ -521,9 +527,16 @@ end
         end
       end
     else
-      @date = params[:employee][:from]
-      @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1).order("employee_id ASC")
-      @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2)
+    
+      @from = params[:employee][:from]
+      @to = params[:employee][:to]
+    
+      @chief_operating_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp1).order("employee_id ASC")
+      @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2).order("employee_code ASC")
+      
+      @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp1).order("employee_id ASC")
+      @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp2).order("employee_code ASC")
+    #binding.pry
     end
   end
 

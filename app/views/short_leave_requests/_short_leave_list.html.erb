@@ -2,7 +2,8 @@
   <thead>
     <tr>  
       <th>Sr. No</th>
-      <th>Reason</th>
+      <th>Type</th>
+      <th>Date</th>
       <th>Day</th>
       <th>Out Time</th>
       <th>In Time</th>
@@ -20,6 +21,7 @@
         <td><%= i = i + 1 %></td>
         <td><%= short_leave_request.leave_reason %></td>
         <td><%= short_leave_request.day %></td>
+        <td><%= short_leave_request.try(:day).strftime("%a")%></td>
         <td><%= short_leave_request.out_time %></td>
         <td><%= short_leave_request.in_time %></td>
         <!-- <td><%#= short_leave_request.description %></td>

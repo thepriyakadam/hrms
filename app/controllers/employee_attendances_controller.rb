@@ -532,11 +532,10 @@ end
       @to = params[:employee][:to]
     
       @chief_operating_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp1).order("employee_id ASC")
-      @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2).order("employee_code ASC")
+      @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2)
       
       @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp1).order("employee_id ASC")
-      @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp2).order("employee_code ASC")
-    #binding.pry
+      @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp2)
     end
   end
 

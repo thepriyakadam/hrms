@@ -14,7 +14,7 @@ div.nobreak{ page-break-inside: avoid;
 <div>
       <table style="border-collapse: collapse; font-size:9pt;" border=1 width=1200 cellpadding="10">
         <thead>
-          <tr><td colspan="9"><center> 
+          <tr><td colspan="7"><center> 
               <% if current_user.employee.company_location.company.company_logo == nil %>
               <% else %>
                 <center> <%= wicked_pdf_image_tag current_user.employee.company_location.company.company_logo.url, :size => "200x40" %></center>
@@ -24,47 +24,29 @@ div.nobreak{ page-break-inside: avoid;
           </tr>
           
           <tr>
-            <th colspan="9"><center> Date : <%= params[:from] %></center></th>
+            <th colspan="7"><center> Date : <%= @from %></center></th>
           </tr>
           <tr>
             <th>Sr.No.</th>
             <th>Emp. No.</th>
             <th>Employee Name</th>
             <th>In Time</th>
-            <th colspan="2">Remark</th>
+            <th>Remark</th>
             <th>Out Time</th>
-            <th colspan="2">Remark</th>
+            <th>Remark</th>
           </tr>
         </thead>
         <tbody>
-         <% i = 0 %>
-          <th colspan="9"><center> CHIEF OPERATING OFFICER </center></th>
-          <% @chief_operating_officer_from.try(:each) do |e| %>
-            <%# date = @to %> 
-            <%# emp = e.employee_id %>
-            <% e1 = @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: e.employee_id) %>
+          <% @employee_attendances.try(:each) do |e| %>
+          <% emp_out = EmployeeAttendance.where(employee_id: e.employee_id,day: @to.to_date).take %>
              <tr>
-              <td><%= i = i + 1 %></td>
+              <td><%= e.employee.try(:sr_no) %></td>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.try(:in_time) %></td>
-              <td colspan="2"><%= %></td>
-              <td><%= e1.last.try(:out_time) %></td>
-              <td colspan="2"><%= %></td>    
-            </tr>
-          <% end %>  <!-- do -->
-          <% j = 1 %>
-          <th colspan="9"><center> HEAD </center></th>
-          <% @head_officer_from.try(:each) do |e| %>
-            <% out_t = @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: e.employee_id) %>
-            <tr>
-              <td><%= j = j + 1 %></td>
-              <td><%= e.employee.manual_employee_code %></td>
-              <td><%= full_name(e.employee) %></td>
-              <td><%= e.try(:in_time) %></td>
-              <td colspan="2"><%= %></td>
-              <td><%= out_t.last.try(:out_time) %></td>
-              <td colspan="2"><%= %></td>
+              <td><%= %></td>
+              <td><%= emp_out.try(:out_time) %></td>
+              <td><%= %></td> 
             </tr>
           <% end %> <!-- do -->
         </tbody>
@@ -82,4 +64,10 @@ div.nobreak{ page-break-inside: avoid;
         </tr>
       </table>
     </div>
-  
+  <script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

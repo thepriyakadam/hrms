@@ -25,16 +25,29 @@
 			    <th>In Time</th>
 			      <td><%= @short_leave_request.in_time %></td> 
 				  </tr>
-				  <tr>   
-		        <th>Count(Hours)</th>
+				 <tr>   
+		        <th>Leave/On-Duty(Hours)</th>
 		        <td><%= @short_leave_request.count %></td>
 		        <th>Manager</th>
 		        <td><%= full_name(@short_leave_request.manager) %></td>
-				  </tr>
+				 </tr>
 				  <tr>
 		        <th>Status</th>
-		        <td><%= @short_leave_request.status %></td>
-		        <th>Description</th>
+		       <td>
+                <% case @short_leave_request.status %>
+                  <% when "Pending" %>
+                    <small class="label label-default">Pending</small>
+                  <% when "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                  <% when "Rejected" %>
+                    <small class="label label-danger">Rejected</small>
+                  <% when "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
+                  <% else %>
+                    <small class="label label-info">Else</small>
+                <%end%>
+              </td>
+		        <th>Reason</th>
 		        <td><%= @short_leave_request.description %></td>
 				  </tr>
 				  <tr>

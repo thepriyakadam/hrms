@@ -9,32 +9,52 @@
 			<table class="table table-bordered table-hover table-condensed">
 			  <thead>
 			  	<tr>
+                  <th>Employee Id</th>
+			      <td><%= @short_leave_request.employee.try(:manual_employee_code) %></td>
+			    </tr>
+			    <tr>
                   <th>Employee</th>
 			      <td><%= full_name(@short_leave_request.employee) %></td>
 			    </tr>
 			    <tr>
-			      <th><strong>Day</strong></th>
+			      <th><strong>Date</strong></th>
 			      <td> <%= @short_leave_request.try(:day) %></td>
+			    </tr>
+			    <tr><th><strong>Day</strong></th>
+			      <td> <%= @short_leave_request.try(:day).strftime("%a") %></td>
 			    </tr>    
 			    <tr>
-			     <th><strong>Out Time</strong></th>
-			      <td><%= @short_leave_request.try(:in_time) %></td>
-			    </tr>
-			    <tr>
-			     <th><strong>In Time</strong></th>
+			      <th><strong>Out Time</strong></th>
 			      <td><%= @short_leave_request.try(:out_time) %></td>
 			    </tr>
 			    <tr>
-			     <th><strong> Count</strong></th>
+				  <th><strong>In Time</strong></th>
+			      <td><%= @short_leave_request.try(:in_time) %></td>		     
+			    </tr>
+			    <tr>
+			     <th><strong>Leave/On-Duty Hrs. </strong></th>
 			      <td><%= @short_leave_request.try(:count) %> hrs.</td>
 			    </tr>
 			    <tr>
-			      <th><strong>Description</strong></th>
+			      <th><strong>Reason</strong></th>
 			      <td> <%= @short_leave_request.try(:description) %></td>
 			    </tr>
 			    <tr>
 			      <th><strong>Status</strong></th>
-			      <td> <%= @short_leave_request.try(:status) %></td>
+			      <td>
+                <% case @short_leave_request.status %>
+                  <% when "Pending" %>
+                    <small class="label label-default">Pending</small>
+                  <% when "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                  <% when "Rejected" %>
+                    <small class="label label-danger">Rejected</small>
+                  <% when "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
+                  <% else %>
+                    <small class="label label-info">Else</small>
+                <%end%>
+              </td>
 			    </tr>
 			  </thead>
 			</table>

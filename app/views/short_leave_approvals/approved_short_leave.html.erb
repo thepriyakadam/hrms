@@ -3,13 +3,15 @@
     <h3 class="box-title">Short Leave List</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>  
           <th>Sr. No</th>
+          <th>ID</th>
           <th>Employee</th>
           <th>Day</th>
           <th>Status</th>
+          <th>Action</th>
           <!-- <th>Description</th>
           <th>Manager</th>
           <th>Status</th> -->
@@ -21,16 +23,40 @@
         <% @short_leave_approvals.each do |short_leave_approval| %>
           <tr>
             <td><%= i = i + 1 %></td>
-            <td><%= short_leave_approval.employee.manual_employee_code %>-<%= full_name(short_leave_approval.employee) %></td>
-            <td><%= short_leave_approval.try(:short_leave_request).try(:day) %></td>
-            <td><%= short_leave_approval.status %></td>
-            <!-- <td><%#= short_leave_request.description %></td>
-            <td><%#= short_leave_request.manager %></td>
-            <td><%#= short_leave_request.status %></td> -->
-            
+            <td><%= short_leave_approval.employee.manual_employee_code %></td>
+            <td><%= full_name(short_leave_approval.employee) %></td>
+            <td><%= short_leave_approval.try(:short_leave_request).try(:day) %> - <%= short_leave_approval.try(:short_leave_request).try(:day).strftime("%a") %></td>
+
+            <td>
+              <% short_leave_approval_all = ShortLeaveApproval.where(short_leave_request_id: short_leave_approval.short_leave_request_id) %>
+              <% short_leave_approval_all.try(:each) do |r| %>
+                <% case r.status %>
+                  <% when "Pending" %>
+                    <small class="label label-default">Pending</small>
+                  <% when "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                  <% when "Rejected" %>
+                    <small class="label label-danger">Rejected</small>
+                  <% when "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
+                  <% else %>
+                    <small class="label label-info">Else</small>
+                <%end%>
+              <%end%>
+            </td>
+            <td><%= link_to "", show_approved_detail_short_leave_approvals_path(short_leave_approval), class: "btn btn-default btn-xs fa fa-eye", remote:true %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 </div>
+
+<div id="myModal" class="modal fade"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

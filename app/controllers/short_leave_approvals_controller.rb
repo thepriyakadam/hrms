@@ -62,7 +62,12 @@ class ShortLeaveApprovalsController < ApplicationController
   end
 
   def approved_short_leave
-    @short_leave_approvals = ShortLeaveApproval.all
+    @short_leave_approvals = ShortLeaveApproval.all.group(:short_leave_request_id)
+  end
+
+  def show_approved_detail
+    @short_leave_approval = ShortLeaveApproval.find(params[:format])
+    @short_leave_approval_all = ShortLeaveApproval.where(short_leave_request_id: @short_leave_approval.short_leave_request_id)
   end
 
   private

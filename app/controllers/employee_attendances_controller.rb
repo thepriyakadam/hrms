@@ -371,8 +371,8 @@ end
           joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
           @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Employee'
-          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
-          @employees = Employee.where(status: "Active",id: current_user.employee_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          joining_detail = JoiningDetail.where("joining_date <= ? AND employee_id = ? ",@date,current_user.employee_id).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif
           joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
         @employees = Employee.where(status: "Active",id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
@@ -2345,12 +2345,12 @@ def update_attendance_for_show
   in_time = params[:employee_attendance][:in_time]
   out_time = params[:employee_attendance][:out_time]
   present = params[:employee_attendance][:present]
-  comment = params[:employee_attendance][:comment]
+  #comment = params[:employee_attendance][:comment]
 
   total_hrs = out_time.to_time - in_time.to_time
   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
-  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "Manually Update")
+  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,working_hrs: working_hrs,comment: "Manually Update")
   flash[:notice] = "Updated Successfully!"
   # redirect_to select_date_and_employee_employee_attendances_path
 

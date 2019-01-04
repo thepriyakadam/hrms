@@ -1,0 +1,83 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"> Short Leave Process </h3>
+ <div class="box-body">
+  <%= bootstrap_form_for(:short_leave_request, url: { action: 'show_list_for_process'},html: {id: "short_leave_request"},remote: true) do |f| %>
+     <div class="row">
+        <div class="col-sm-3">
+        <label>From Date</label>
+          <div class="form-group required">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :from_date,hide_label: true,class: 'request_from_date'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group required">
+          <label>To Date</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <%= f.text_field :to_date,hide_label: true,class: 'request_from_date'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3" style="padding-top:20px;">
+          <%= f.submit "Show List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %> 
+        </div>
+      </div>
+  <% end %>
+
+     <div class="ajax-progress"></div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="show_list_for_process"></div>    
+        </div>
+      </div>
+		</div>
+	</div>
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#short_leave_request").submit();
+  })
+  
+  $(function(){
+    $('.request_from_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+5',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+
+<script>
+$("#short_leave_request").validate({
+    rules: {
+      "short_leave_request[from]":{
+        required: true,
+      },
+      "short_leave_request[to]":{
+        required: true,
+      }
+       },
+    messages: {
+      "short_leave_request[from]":{
+        required: "Please Specify From Date",
+      },
+       "short_leave_request[to]":{
+        required: "Please Select To Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

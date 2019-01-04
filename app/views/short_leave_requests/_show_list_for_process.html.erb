@@ -1,0 +1,57 @@
+<%= bootstrap_form_for :short_leave_requests,url:{action:'process_short_leave',from_date: @from,to_date: @to} do |f| %> 
+
+		<table id="example6" class="table table-bordered table-hover table-condensed">
+		  <thead>
+		    <tr>  
+		      <!-- <th><input type="checkbox" id="selectAll" value="selectAll"></th> -->
+		      <th>Sr. No</th>
+		      <th>ID</th>
+		      <th>Employee</th>
+		      <th>Date</th>
+		      <th>Reason</th>
+		    </tr>
+		  </thead>
+
+		  <tbody>
+		    <% i = 0 %>
+		    <% @short_leave_requests.each do |short_leave_request| %>
+		      <tr>
+		        <!-- <td><%#= check_box_tag "short_leave_request_ids[]", short_leave_request.id %></td> -->
+		        <td><%= i = i + 1 %></td>
+		        <td><%= short_leave_request.employee.manual_employee_code %></td>
+		        <td><%= full_name(short_leave_request.employee) %></td>
+		        <td><%= short_leave_request.day %></td>
+		        <td><%= short_leave_request.leave_reason %></td>
+		      </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+	<% if @short_leave_requests.nil? %>
+	<% else %>
+		<%= f.submit "Process Short Leave" , class: 'btn btn-primary btn-sm' %>
+	<% end %>
+ <% end %>
+
+
+<script type="text/javascript">
+$('#selectAll').click(function() {
+  if (this.checked) {
+    $(':checkbox').each(function() {
+      this.checked = true;                       
+    });
+  } 
+  else {
+    $(':checkbox').each(function() {
+      this.checked = false;                        
+    });
+  } 
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

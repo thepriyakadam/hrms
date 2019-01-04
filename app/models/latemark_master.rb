@@ -1,4 +1,7 @@
 class LatemarkMaster < ActiveRecord::Base
+  belongs_to :shift_time
+
+  #validates :id, uniqueness: { scope: [:shift_time_id] }
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)

@@ -371,8 +371,8 @@ end
           joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
           @employees = Employee.where(status: "Active",company_location_id: current_user.company_location_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif current_user.role.name == 'Employee'
-          joining_detail = JoiningDetail.where("joining_date <= ? AND employee_id = ? ",@date,current_user.employee_id).pluck(:employee_id)
-          @employees = Employee.where(status: "Active",id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
+          joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
+          @employees = Employee.where(status: "Active",id: current_user.employee_id,id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
         elsif
           joining_detail = JoiningDetail.where("joining_date <= ?",@date).pluck(:employee_id)
         @employees = Employee.where(status: "Active",id: joining_detail).filter_by_date_and_costcenter(@date, @costcenter, current_user)
@@ -481,65 +481,100 @@ end
     end
   end
 
+  # def officers_attendance
+  #   emp1 = JoiningDetail.where(chief_operating_officer: true).pluck(:employee_id)
+  #   emp2 = JoiningDetail.where(head_officer: true).pluck(:employee_id)
+  #   @date = Time.now.to_date
+  #   @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1).order("id ASC")
+  #   @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2).order("id ASC")
+  #   respond_to do |f|
+  #     f.js
+  #     f.html
+  #     f.xls {render template: 'employee_attendances/officers_attendance.xls.erb'}
+  #     f.pdf do
+  #       render pdf: 'employee_attendances',
+  #       layout: 'pdf.html',
+  #       orientation: 'Landscape',
+  #       template: 'employee_attendances/officers_attendance.pdf.erb',
+  #       show_as_html: params[:debug].present?
+  #     end
+  #   end
+  # end
+
+  # def officers_daily
+  #   emp1 = JoiningDetail.where(chief_operating_officer: true).pluck(:employee_id)
+  #   emp2 = JoiningDetail.where(head_officer: true).pluck(:employee_id)
+  #   if params[:format] == "pdf" || params[:format] == "xls"
+  #     @from = params[:from]
+  #     @to = params[:to]
+  #    #binding.pry
+  #     @chief_operating_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp1).order("employee_id ASC")
+  #     @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2).order("employee_code ASC")
+      
+  #     @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp1).order("employee_id ASC")
+  #     @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp2).order("employee_code ASC")
+      
+  #     respond_to do |f|
+  #       f.js
+  #       f.html
+  #       f.xls {render template: 'employee_attendances/officers_daily.xls.erb'}
+  #       f.pdf do
+  #         render pdf: 'employee_attendances',
+  #         layout: 'pdf.html',
+  #         orientation: 'Landscape',
+  #         template: 'employee_attendances/officers_daily.pdf.erb',
+  #         show_as_html: params[:debug].present?
+  #       end
+  #     end
+  #   else
+    
+  #     @from = params[:employee][:from]
+  #     @to = params[:employee][:to]   
+
+  #     @a = Employee.where(sr_no: 1..9).order("sr_no ASC")
+  #     @b = @a.pluck(:id)
+  #     #@employee_squence = EmployeeAttendance.where(day: @from, employee_id: @a)
+  #     #binding.pry
+        
+  #     #@a = Employee.where(sr_no: @x).pluck(:id)
+  #     #@employee_squence = EmployeeAttendance.where(day: @from, employee_id: @a)
+  #     #@a = EmployeeAttendance.where()
+  #     #binding.pry
+      
+  #     @chief_operating_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp1)
+  #     @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2)
+      
+  #     @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp1)
+  #     @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp2)
+      
+  #   end
+  # end
+
   def officers_attendance
-    emp1 = JoiningDetail.where(chief_operating_officer: true).pluck(:employee_id)
-    emp2 = JoiningDetail.where(head_officer: true).pluck(:employee_id)
-    @date = Time.now.to_date
-    @chief_operating_officer = EmployeeAttendance.where(day: @date, employee_id: emp1).order("id ASC")
-    @head_officer = EmployeeAttendance.where(day: @date, employee_id: emp2).order("id ASC")
+  end
+
+  def officers_daily
+    @from = params[:employee] ? params[:employee][:from] : params[:from]
+    @to = params[:employee][:to] ? params[:employee][:to] : params[:to]
+    @emp = Employee.where(sr_no: 1..9).pluck(:id)
+    #@emp = Employee.where(id: emp).pluck(:id)
+    @employee_attendances = EmployeeAttendance.where(employee_id: @emp,day: @to..@from).group(:employee_id).order("emp_srno ASC")
+
     respond_to do |f|
       f.js
       f.html
-      f.xls {render template: 'employee_attendances/officers_attendance.xls.erb'}
+      f.xls {render template: 'employee_attendances/officers_daily.xls.erb'}
       f.pdf do
         render pdf: 'employee_attendances',
         layout: 'pdf.html',
         orientation: 'Landscape',
-        template: 'employee_attendances/officers_attendance.pdf.erb',
+        template: 'employee_attendances/officers_daily.pdf.erb',
         show_as_html: params[:debug].present?
       end
     end
   end
 
-  def officers_daily
-    emp1 = JoiningDetail.where(chief_operating_officer: true).pluck(:employee_id)
-    emp2 = JoiningDetail.where(head_officer: true).pluck(:employee_id)
-    if params[:format] == "pdf" || params[:format] == "xls"
-      @from = params[:from]
-      @to = params[:to]
-     #binding.pry
-      @chief_operating_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp1).order("employee_id ASC")
-      @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2).order("employee_code ASC")
-      
-      @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp1).order("employee_id ASC")
-      @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp2).order("employee_code ASC")
-      
-      respond_to do |f|
-        f.js
-        f.html
-        f.xls {render template: 'employee_attendances/officers_daily.xls.erb'}
-        f.pdf do
-          render pdf: 'employee_attendances',
-          layout: 'pdf.html',
-          orientation: 'Landscape',
-          template: 'employee_attendances/officers_daily.pdf.erb',
-          show_as_html: params[:debug].present?
-        end
-      end
-    else
-    
-      @from = params[:employee][:from]
-      @to = params[:employee][:to]
-    
-      @chief_operating_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp1).order("employee_id ASC")
-      @head_officer_from = EmployeeAttendance.where(day: @from, employee_id: emp2).order("employee_code ASC")
-      
-      @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp1).order("employee_id ASC")
-      @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: emp2).order("employee_code ASC")
-    #binding.pry
-    end
-  end
-
+  def 
   def department_wise_emp
     @year = params[:year]
     @month = params[:month]
@@ -2345,12 +2380,12 @@ def update_attendance_for_show
   in_time = params[:employee_attendance][:in_time]
   out_time = params[:employee_attendance][:out_time]
   present = params[:employee_attendance][:present]
-  #comment = params[:employee_attendance][:comment]
+  comment = params[:employee_attendance][:comment]
 
   total_hrs = out_time.to_time - in_time.to_time
   working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
-  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,working_hrs: working_hrs,comment: "Manually Update")
+  @employee_attendance.update(in_time: in_time,out_time: out_time,present: present,comment: comment,working_hrs: working_hrs,comment: "Manually Update")
   flash[:notice] = "Updated Successfully!"
   # redirect_to select_date_and_employee_employee_attendances_path
 
@@ -3196,6 +3231,19 @@ end
     end
   end
 
+############METHOD FOR SCHEDULER
+
+#   def create_emp_attendance
+#   emp = Employee.where(status: "Active")
+#   emp.each do |e|
+#     #emp_nil = EmployeeAttendance.where(employee_id: e.id,day: Date.today,present: nil)
+#     if EmployeeAttendance.exists?(employee_id: e.id,day: Date.today,present: nil)
+#       EmployeeAttendance.create(employee_id: e.id,present: 'A',day: Date.today)
+#     end
+#   end
+# end
+######################
+
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]
@@ -3225,6 +3273,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:shift_time_id,:holiday_id,:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:emp_srno,:shift_time_id,:holiday_id,:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

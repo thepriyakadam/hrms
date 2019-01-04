@@ -40,6 +40,10 @@ every 2.hours do
   rake 'atte_task:fetch_att'
 end
 
+every :day, :at => '08:00pm' do
+  runner "DailyAttendance.create_emp_attendance"
+end  
+
 ################ Calculate Attendance ####################
 
 every :day, :at => '10:10am' do

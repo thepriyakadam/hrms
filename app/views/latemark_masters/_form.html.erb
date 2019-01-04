@@ -2,6 +2,12 @@
   <%= bootstrap_form_for(@latemark_master,html: {id: 'latemark_master'}) do |f| %>
     <div class="row">
       <div class="col-sm-3">
+        <div class="form-group required">
+          <%= f.select :shift_time_id, all_shift_time, {label: 'Shift ',include_blank: " Select Shift"},{:class=>"select2 select2-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
         <div class="bootstrap-timepicker">
           <div class="form-group required">
             <label>Time From</label>
@@ -34,15 +40,15 @@
           <%= f.text_field :allow_latemark,label:'Late Mark' %>
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :amount,label:'Amount' %>
         </div>
       </div>
-    </div>
 
-    <div class="row">
       <div class="col-sm-3">
         <div class="field">
         <%= f.check_box :halfday_allow, label: 'Allow Halfday'%>

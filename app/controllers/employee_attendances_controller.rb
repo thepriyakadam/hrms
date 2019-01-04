@@ -3196,6 +3196,19 @@ end
     end
   end
 
+############METHOD FOR SCHEDULER
+
+#   def create_emp_attendance
+#   emp = Employee.where(status: "Active")
+#   emp.each do |e|
+#     #emp_nil = EmployeeAttendance.where(employee_id: e.id,day: Date.today,present: nil)
+#     if EmployeeAttendance.exists?(employee_id: e.id,day: Date.today,present: nil)
+#       EmployeeAttendance.create(employee_id: e.id,present: 'A',day: Date.today)
+#     end
+#   end
+# end
+######################
+
   # def create_self_attendance
   #   @employee_attendance = EmployeeAttendance.new(employee_attendance_params)
   #   employee_id = params[:salary][:employee_id]
@@ -3225,6 +3238,6 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_attendance_params
-    params.require(:employee_attendance).permit(:shift_time_id,:holiday_id,:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
+    params.require(:employee_attendance).permit(:emp_srno,:shift_time_id,:holiday_id,:employee_week_off_id,:employee_code,:employee_name,:employee_id, :day, :present, :in_time, :out_time)
   end
 end

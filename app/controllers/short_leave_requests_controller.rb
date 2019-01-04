@@ -127,7 +127,6 @@ class ShortLeaveRequestsController < ApplicationController
       end#do
       count
 
-      
       short_count = count.to_f/60
       short_count_hr = short_count.to_f/8
       #if short_count.to_f < employee_leav_balance.no_of_leave.to_f

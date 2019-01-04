@@ -1,6 +1,7 @@
 <table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th>Shift</th>
       <th>Time From</th>
       <th>Time To</th>
       <th>Allow latemark</th>
@@ -16,6 +17,7 @@
  <tbody>
     <% @latemark_masters.each do |latemark_master| %>
       <tr>
+        <td><%= latemark_master.shift_time.try(:shift) %></td>
         <td><%= latemark_master.company_time %></td>
         <td><%= latemark_master.late_limit %></td>
         <td><%= latemark_master.allow_latemark %></td>

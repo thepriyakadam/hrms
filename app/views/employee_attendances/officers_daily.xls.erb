@@ -1,7 +1,7 @@
-<table id="example1" class="table table-bordered table-hover table-condensed">
-    
-            <th colspan="7"><center> Date : <%= params[:from] %></center></th>
-        
+<table id="example6" class="table table-bordered table-hover table-condensed">
+           <tr>
+            <th colspan="7"><center> Date : <%= @from %></center></th>
+          </tr>
           <tr>
             <th>Sr.No.</th>
             <th>Emp. No.</th>
@@ -13,38 +13,24 @@
           </tr>
         </thead>
         <tbody>
-          <%# binding.pry %>
-          <% i = 0 %>
-           <th colspan="7"> CHIEF OPERATING OFFICER</th>
-          <% @chief_operating_officer_from.try(:each) do |e| %>
-            <%# date = @to %> 
-            <%# emp = e.employee_id %>
-            <% e1 = @chief_operating_officer_to = EmployeeAttendance.where(day: @to, employee_id: e.employee_id) %>
+          <% @employee_attendances.try(:each) do |e| %>
+          <% emp_out = EmployeeAttendance.where(employee_id: e.employee_id,day: @to.to_date).take %>
              <tr>
-              <td><%= i = i + 1 %></td>
+              <td><%= e.employee.try(:sr_no) %></td>
               <td><%= e.employee.manual_employee_code %></td>
               <td><%= full_name(e.employee) %></td>
               <td><%= e.try(:in_time) %></td>
               <td><%= %></td>
-              <td><%= e1.last.try(:out_time) %></td>
-              <td><%= %></td>
-              <%# end %>    
-            </tr>
-          <% end %> <!-- do -->
-          <% j = 1 %>
-          <th colspan="7"> HEAD </th>
-          <% @head_officer_from.try(:each) do |e| %>
-            <% out_t = @head_officer_to = EmployeeAttendance.where(day: @to, employee_id: e.employee_id) %>
-            <tr>
-              <td><%= j = j + 1 %></td>
-              <td><%= e.employee.manual_employee_code %></td>
-              <td><%= full_name(e.employee) %></td>
-              <td><%= e.try(:in_time) %></td>
-              <td><%= %></td>
-              <td><%= out_t.last.try(:out_time) %></td>
-              <td><%= %></td>
+              <td><%= emp_out.try(:out_time) %></td>
+              <td><%= %></td> 
             </tr>
           <% end %> <!-- do -->
         </tbody>
       </table>
-      
+      <script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

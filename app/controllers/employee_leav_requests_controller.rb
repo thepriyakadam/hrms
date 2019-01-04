@@ -971,6 +971,6 @@ class EmployeeLeavRequestsController < ApplicationController
 
 # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_request_params
-    params.require(:employee_leav_request).permit(:present_status,:first_half,:last_half,:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
+    params.require(:employee_leav_request).permit(:lta,:present_status,:first_half,:last_half,:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end
 end

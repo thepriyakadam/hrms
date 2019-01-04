@@ -40,7 +40,7 @@
               <% @total_leaves.where(is_active: true).each do |l| %>
               <tr>
                 <td><%= l.leav_category.try(:name) %></td>
-                <td><%= l.no_of_leave %></td>
+                <td><%= l.no_of_leave.to_f.round(3) %></td>
               </tr>
             <% end %>
           </table>
@@ -115,7 +115,9 @@
         </tr>
         <tr>
           <th>Reason</th>
-          <td colspan="3"><%= @current_request.try(:reason) %></td>
+          <td><%= @current_request.try(:reason) %></td>
+          <th>LTA</th>
+          <td><%= @current_request.lta ? "Yes" : "No" %></td>
         </tr>
         <tr>
             <% if @current_request.current_status == "Pending" %>

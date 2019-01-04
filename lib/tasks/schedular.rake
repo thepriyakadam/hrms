@@ -32,7 +32,7 @@ namespace :atte_task do
   end
 
    desc 'check absent data'
-  task :check_att => :environment do
+  task :check_absent => :environment do
     DailyAttendance.create_emp_attendance
   end
 

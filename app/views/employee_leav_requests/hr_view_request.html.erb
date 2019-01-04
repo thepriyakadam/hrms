@@ -46,7 +46,7 @@
           <% @total_leaves.where(is_active: true).each do |l| %>
             <tr>
               <td><%= l.leav_category.try(:name) %></td>
-              <td><%= l.no_of_leave %></td>
+              <td><%= l.no_of_leave.to_f.round(3) %></td>
             </tr>
           <% end %>
           </table>

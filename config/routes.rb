@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resources :c_off_cash_masters
   resources :shift_schedules do
     collection do
+      get :import_shift_emp
+      post :import_shift_employee
       get :all_shift_schedule
       get :import_xl
       post :import

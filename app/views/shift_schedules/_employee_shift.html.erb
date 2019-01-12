@@ -54,13 +54,9 @@
     <table id="example7" class="table table-bordered table-hover table-condensed">
       <thead>
           <tr>
-            <th colspan="4"><font color='#0077b3'><center> <%= @shift_schedule.shift_time.try(:shift) %> - <%= @shift_schedule.shift_time.try(:name) %></center>
+            <th colspan="5"><font color='#0077b3'><center> <%= @shift_schedule.shift_time.try(:shift) %> - <%= @shift_schedule.shift_time.try(:name) %></center>
             <center><%= @shift_schedule.from.strftime("%d-%B") %> to <%= @shift_schedule.to.strftime("%d-%B") %></center></font></th>
           </tr>
-        <tr>
-          <th colspan="5"><font color='#0077b3'><center> <%= @shift_schedule.shift_time.try(:shift) %> - <%= @shift_schedule.shift_time.try(:name) %></center>
-          <center><%= @shift_schedule.from.strftime("%d-%B") %> to <%= @shift_schedule.to.strftime("%d-%B") %></center></font></th>
-        </tr>
         <tr>
           <th>Sr. No</th>
           <th>ID</th>

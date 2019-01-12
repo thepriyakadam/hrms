@@ -268,6 +268,21 @@ class ShiftSchedulesController < ApplicationController
       redirect_to new_shift_schedule_path, notice: "File imported."
     end
   end
+  
+  def import_shift_emp
+  end
+
+  def import_shift_employee
+    file = params[:file]
+    if file.nil?
+      flash[:alert] = "Please Select File!"
+      redirect_to import_shift_emp_shift_schedules_path
+    else
+      ShiftSchedule.import_shift_employee(params[:file])
+      redirect_to new_shift_schedule_path, notice: "File imported."
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_shift_schedule

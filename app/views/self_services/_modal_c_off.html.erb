@@ -13,12 +13,16 @@
       <td> <%= @leave_c_off.c_off_date %></td>
     </tr>  
     <tr>
-     <th><strong>Compensatory Off</strong></th>
-      <td><%= @leave_c_off.leave_count %></td>
+     <th><strong>In Time</strong></th>
+      <td><%= @leave_c_off.in_time %></td>
     </tr>
     <tr>
-      <th><strong>Expiry Date</strong></th>
-      <td> <%= @leave_c_off.expiry_date %></td>
+      <th><strong>Out Time</strong></th>
+      <td><%= @leave_c_off.out_time %></td>
+    </tr>
+    <tr>
+      <th><strong>Working Hrs</strong></th>
+      <td><%= @leave_c_off.total_working_hrs %></td>
     </tr>
     <tr>
      <th><strong>Expired</strong></th>

@@ -73,6 +73,32 @@ class EmployeeLeavBalancesController < ApplicationController
   def show
   end
 
+  def leave_balance_report
+  end
+
+  def show_leave_balance
+    @from_date = params[:employee] ? params[:employee][:from_date] : params[:from_date]
+    @to_date = params[:employee] ? params[:employee][:to_date] : params[:to_date]
+    @employee_id = params[:employee] ? params[:employee][:employee_id] : params[:employee_id]
+
+    @employee = Employee.find(@employee_id)
+    @leave_records = LeaveRecord.where(employee_id: @employee_id,day: @from_date.to_date..@to_date.to_date).group(:employee_leav_request_id)
+    
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_balances/leave_balance.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'status_wise_request',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_balances/leave_balance.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
   def all_balance
     employee_id = Employee.where(status: "Active")
     leav_category = LeavCategory.find_by(code: "C.Off")
@@ -878,6 +904,6 @@ def create
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_balance_params
-    params.require(:employee_leav_balance).permit(:carry_forward,:leave_count,:collapse_value,:working_day,:from_date,:to_date,:is_confirm,:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
+    params.require(:employee_leav_balance).permit(:c_off_hrs,:carry_forward,:leave_count,:collapse_value,:working_day,:from_date,:to_date,:is_confirm,:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
   end
 end

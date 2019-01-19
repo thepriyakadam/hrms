@@ -14,9 +14,37 @@
           </div>
         </div>
       </div>
+        <% f.select :c_off_type,['Full Day'],{label: 'C.Off Type',include_blank: " Select C.Off Type"} %>
+      
+      <div class="col-sm-3">
+       <label>In Time</label>
+        <div class="bootstrap-timepicker">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+              <%= f.text_field :in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker' %>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="col-sm-3">
+       <label>Out Time</label>
+        <div class="bootstrap-timepicker">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+              <%= f.text_field :out_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker'%>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
 
-          <% f.select :c_off_type,['Full Day'],{label: 'C.Off Type',include_blank: " Select C.Off Type"} %>
-          
+    <div class="row">
       <div class="col-sm-6">
         <div class="form-group required">
           <%= f.text_field :comment,label: 'Comment' %>

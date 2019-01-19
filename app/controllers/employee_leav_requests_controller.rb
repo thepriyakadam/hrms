@@ -130,11 +130,8 @@ class EmployeeLeavRequestsController < ApplicationController
 
     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
     #c_off
-    
     if @leav_category.id == leav_category.id
-
       end_date = params['employee_leav_request']['start_date']
-      
         @leave_c_off_id = params[:common][:c_off_date]
 
   #nil fields

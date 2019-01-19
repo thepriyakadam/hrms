@@ -2997,6 +2997,9 @@ end
 
   resources :employee_leav_balances do
     collection do
+      get :leave_balance_report
+      post :show_leave_balance
+      get :show_leave_balance
       get :show_balance
       get :all_balance
       get :collect_employee_for_leave

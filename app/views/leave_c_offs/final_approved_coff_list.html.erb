@@ -11,6 +11,7 @@
 			      <th>ID</th>
 			      <th>Employee</th>
 			    	<th>Date</th>
+			    	<th>Working Hrs</th>
 			    	<th colspan="3">Action </th>
 			   </tr>
 			  </thead>
@@ -22,6 +23,7 @@
 			        <td><%= leave_c_off.employee.try(:manual_employee_code) %></td>
 			        <td><%= leave_c_off.employee.try(:first_name) %> <%= leave_c_off.employee.try(:middle_name) %> <%= leave_c_off.employee.try(:last_name) %></td>
 			        <td><%= leave_c_off.c_off_date %></td>
+			        <td><%= leave_c_off.total_working_hrs %></td>
 			        <td>
 			        	<%= submit_tag("COff Leave",name: 'coff', id: "buttonCtc", :class => "btn btn-xs btn-primary",:title => "COff Leave" ) %>
 			          <%= submit_tag("COff Pay", name: 'encashment', id: "buttonCtc",:class => "btn btn-xs btn-info",:title => "COff Pay" ) %>

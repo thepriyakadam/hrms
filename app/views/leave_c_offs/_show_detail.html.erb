@@ -15,14 +15,22 @@
       <th>Employee Name</th>
       <td><%= full_name(@leave_c_off.employee) %></td>
     </tr>
-    <tr>
-      <th>Compensatory Off</th>
-      <td><%= @leave_c_off.leave_count %></td>
-    </tr>
     <tr>   
       <th>Date</th>
       <td><%= @leave_c_off.c_off_date %></td>
     </tr>
+    <tr>
+      <th>In Time</th>
+      <td><%= @leave_c_off.in_time %></td>
+    </tr>
+    <tr>
+      <th>Out Time</th>
+      <td><%= @leave_c_off.out_time %></td>
+    </tr>
+    <tr>
+      <th>Working Hrs</th>
+      <td><%= @leave_c_off.total_working_hrs %></td>
+    </tr>  
     <tr>
       <th>Comment</th>
       <td><%= @leave_c_off.comment %></td>

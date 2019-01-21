@@ -58,12 +58,12 @@ class AttendanceRegularizationsController < ApplicationController
       if @emp_is_confirm.present?
         flash[:alert] = 'Attendance already Confirmed,Please contact to admin.'
       else
-        @emp_atte.update_all(is_regularization: true, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularized")
+        @emp_atte.update_all(is_regularization: true, working_hrs: @att_approve.total_working_hrs, present: "P", comment: "Attendance Regularized")
         @att_approve.update(status: "Approved")
         flash[:notice] = 'Approved !'
       end
     else
-      EmployeeAttendance.create(employee_id: @employee_id, day: @date, working_hrs: "09:00".to_i, present: "P", comment: "Attendance Regularized", is_regularization: true)
+      EmployeeAttendance.create(employee_id: @employee_id, day: @date, working_hrs: @att_approve.total_working_hrs, present: "P", comment: "Attendance Regularized", is_regularization: true)
     end
     @employee = Employee.find_by(id: @employee_id)
     if @employee.manager_id == current_user.employee_id
@@ -119,7 +119,12 @@ class AttendanceRegularizationsController < ApplicationController
           if @emp_att.present?
             if @emp_leav_request == true && @emp_on_duty_request == true && @emp_holiday == true && @emp_week_off == true && @emp_is_confirm == true
               @attendance_regularization = AttendanceRegularization.new(attendance_regularization_params)
+              total_hrs = @attendance_regularization.out_time.to_time - @attendance_regularization.in_time.to_time
+              #working_hrs = total_hrs/60
+              working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+
               if @attendance_regularization.save
+                @attendance_regularization.update(total_working_hrs: working_hrs)
                 attendance_regularization = AttendanceRegularization.new 
                 @attendance_regularizations = AttendanceRegularization.where(employee_id: current_user.employee_id)
                 @flag = true
@@ -249,6 +254,6 @@ class AttendanceRegularizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attendance_regularization_params
-      params.require(:attendance_regularization).permit(:employee_id, :date, :status, :regularization_reason_id, :justification, :manager_id)
+      params.require(:attendance_regularization).permit(:in_time,:out_time,:total_working_hrs,:employee_id, :date, :status, :regularization_reason_id, :justification, :manager_id)
     end
 end

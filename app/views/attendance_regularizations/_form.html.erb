@@ -16,23 +16,49 @@
     </div>
 
     <div class="col-sm-3">
+    <label>In Time</label>
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div> 
+            <%= text_field :attendance_regularization,:in_time,hide_label: true, placeholder: 'In Time',class: 'form-control timepicker',value: @attendance_regularization.in_time %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+     <label>Out Time</label>
+      <div class="bootstrap-timepicker">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+            </div>
+            <%= text_field :attendance_regularization,:out_time,hide_label: true, placeholder: 'Out Time',class: 'form-control timepicker',value: @attendance_regularization.out_time %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
       <div class="form-group required">
         <label> Regularization Reason </label>
         <%= f.select :regularization_reason_id,all_regularization_reason,{hide_label: true,include_blank: "Select Regularization Reason"} %>
-      </div>
-    </div>
-    
-    <div class="col-sm-6">
-      <div class="form-group required">
-        <label> Justification </label>
-        <%= f.text_field :justification, hide_label: true, placeholder: "Justification"%>
       </div>
     </div>
   </div>
   <br />
 
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-6">
+      <div class="form-group required">
+        <label> Justification </label>
+        <%= f.text_field :justification, hide_label: true, placeholder: "Justification"%>
+      </div>
+    </div>
+    <div class="col-sm-3" style="padding-top: 20px;">
       <div class="actions">
         <%= f.submit "Attendance Regularization Request ", class: "btn btn-primary btn-sm" %>
       </div>

@@ -50,6 +50,20 @@
       </div>
 
       <div class="col-sm-3">
+        <div class="bootstrap-timepicker">
+          <div class="form-group required">
+            <label>Early Limit</label>
+            <div class="input-group">
+              <%= f.text_field :early_limit,hide_label:true, class: 'form-control timepicker' %>
+              <div class="input-group-addon">
+              <i class="fa fa-clock-o"></i>
+              </div>
+            </div><!-- /.input group -->
+          </div><!-- /.form group -->
+        </div>
+      </div>
+
+      <div class="col-sm-3">
         <div class="field">
         <%= f.check_box :halfday_allow, label: 'Allow Halfday'%>
         </div>
@@ -60,7 +74,9 @@
           <%= f.text_field :fullday_working_hrs,label:'Fullday Working Hrs.' %>
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col-sm-3">
         <div class="field">
           <%= f.text_field :halfday_working_hrs,label:'Halflday Working Hrs.' %>

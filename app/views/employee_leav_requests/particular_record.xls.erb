@@ -1,0 +1,25 @@
+<table id="example1" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Employee</th>
+      <th>Leave Category</th>
+      <th>Date</th>
+      <th>Is Cancel After Approved</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @particular_leave_records.each do |particular_leave_record| %>
+      <tr>
+        <td><%= particular_leave_record.employee.try(:manual_employee_code) %></td>
+        <td><%= full_name(particular_leave_record.employee) %></td>
+        <td><%= particular_leave_record.leav_category.try(:name) %></td>
+        <td><%= particular_leave_record.leave_date.to_date %></td>
+        <td><%= particular_leave_record.is_cancel_after_approve ? "Yes" : "No" %></td>
+        <td><%= particular_leave_record.employee_leav_request.current_status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

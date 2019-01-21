@@ -16,7 +16,7 @@
         <td><%= regularization_reason.code %></td>
         <td><%= regularization_reason.name %></td>
         <td><%= regularization_reason.description %></td>
-        <td><%= regularization_reason.status %></td>
+        <td><%= regularization_reason.status ? "Active" : "Inactive" %></td>
         <td>
            <%= link_to '', edit_regularization_reason_path(regularization_reason),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
             <%= link_to '',  regularization_reason, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close' %>

@@ -44,7 +44,6 @@ class EmployeeAttendancesController < ApplicationController
     end
   end
 
-
   # def calculate
   #   day = params[:daily_attendance][:day].to_i
   #   if day.present?
@@ -142,7 +141,7 @@ def not_found
 #operation
 
           employee_attendance = EmployeeAttendance.where(employee_id: employee.id,day: previous_date.to_date).take
-        #byebug
+       
             if employee_attendance.nil?
             else
               if last_record.nil?
@@ -556,10 +555,10 @@ end
   def officers_daily
     @from = params[:employee] ? params[:employee][:from] : params[:from]
     @to = params[:employee][:to] ? params[:employee][:to] : params[:to]
-    @emp = Employee.where(sr_no: 1..9).pluck(:id)
+    #@emp = Employee.where(sr_no: 1..9).pluck(:id)
     #@emp = Employee.where(id: emp).pluck(:id)
-    @employee_attendances = EmployeeAttendance.where(employee_id: @emp,day: @to..@from).group(:employee_id).order("emp_srno ASC")
-
+    #@employee_attendances = EmployeeAttendance.where(employee_id: @emp,day: @to..@from).group(:employee_id).order("emp_srno ASC")
+    @employee_attendances = EmployeeAttendance.where(day: @to..@from).group(:employee_id).order("emp_srno ASC")
     respond_to do |f|
       f.js
       f.html

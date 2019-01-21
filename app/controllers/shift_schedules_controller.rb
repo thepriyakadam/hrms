@@ -94,7 +94,8 @@ class ShiftSchedulesController < ApplicationController
 
   def employee_shift
     cost_center = ShiftSchedule.find(params[:format]).shift_time.cost_center
-    @employee = JoiningDetail.where(cost_center_id: cost_center.id).pluck(:employee_id)
+    #@employee = JoiningDetail.where(cost_center_id: cost_center.id).pluck(:employee_id)
+    @employee = Employee.where(status: "Active").pluck(:id)
 
     @shift_schedule = ShiftSchedule.find(params[:format])
     current_login = Employee.find(current_user.employee_id)

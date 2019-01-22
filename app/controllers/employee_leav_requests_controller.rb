@@ -32,6 +32,69 @@ class EmployeeLeavRequestsController < ApplicationController
   def edit
   end
 
+  def particular_leave_record
+  end
+
+  def show_particular_record
+    @from_date = params[:employee] ? params[:employee][:from_date] : params[:from_date]
+    @to_date = params[:employee] ? params[:employee][:to_date] : params[:to_date]
+    @employee_id = params[:employee] ? params[:employee][:employee_id] : params[:employee_id]
+    @company_id = params[:employee] ? params[:employee][:company_id] : params[:company_id]
+    @location = params[:family] ? params[:family][:company_location_id] : params[:company_location_id]
+    @department = params[:family] ? params[:family][:department_id] : params[:department_id]
+
+    if @employee_id.nil? || @employee_id == ""
+      employee = Employee.where(status: "Active").pluck(:id)
+    else
+      employee = @employee_id
+    end
+    
+     if current_user.class == Group
+      if @company_id == ""
+        @employees = Employee.where(id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      elsif @location == ""
+        @employees = Employee.where(company_id: @company_id.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @location.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      else
+        @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      end
+    elsif current_user.class == Member
+      if @company_id == ""
+        @employees = Employee.where(id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      elsif @location == ""
+        @employees = Employee.where(company_id: @company_id.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @location.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      else
+        @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      end
+    end
+    
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_requests/particular_record.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'particular_record',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_requests/particular_record.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+
+  end
+
   def from_hr
     @employee = Employee.find(params[:format])
     @employee_leav_request = EmployeeLeavRequest.new

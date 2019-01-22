@@ -303,6 +303,6 @@ class LatemarkMastersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def latemark_master_params
-      params.require(:latemark_master).permit(:shift_time_id,:halfday_working_hrs,:fullday_working_hrs,:halfday_allow,:late_limit,:company_time, :allow_latemark, :amount)
+      params.require(:latemark_master).permit(:early_limit,:shift_time_id,:halfday_working_hrs,:fullday_working_hrs,:halfday_allow,:late_limit,:company_time, :allow_latemark, :amount)
     end
 end

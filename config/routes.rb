@@ -3030,6 +3030,9 @@ end
   resources :leav_approveds
   resources :employee_leav_requests do
     collection do
+      post :show_particular_record
+      get :particular_leave_record
+      get :show_particular_record
       get :approved_or_rejected_leave_request
       get :employee_list
       get :from_hr

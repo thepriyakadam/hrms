@@ -708,6 +708,8 @@
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       elsif current_user.role.name == 'Supervisor'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'Employee'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       end
     end
     @form = params[:form]

@@ -142,11 +142,17 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @latemark_master = LatemarkMaster.last
-    @latemark_master_time = @latemark_master.company_time
-    @company_time = @latemark_master_time.strftime("%I:%M")
-    @company_late_limit_time = @latemark_master.late_limit
-    @company_late_time = @company_late_limit_time.strftime("%I:%M")
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
+    if @latemark_master.nil?
+      flash[:alert] = "Latemark Master not set"
+       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
+    else
+      @latemark_master_time = @latemark_master.company_time
+      @company_time = @latemark_master_time.strftime("%I:%M")
+      @company_late_limit_time = @latemark_master.late_limit
+      @company_late_time = @company_late_limit_time.strftime("%I:%M")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
+    end
+    
   end
 
   def investment_declaration

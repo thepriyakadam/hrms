@@ -176,7 +176,6 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    libv8 (3.16.14.19)
     local-subdomain (1.0.2)
     loofah (2.2.2)
       crass (~> 1.0.2)
@@ -265,7 +264,6 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rdoc (4.3.0)
-    ref (2.0.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -274,7 +272,6 @@ GEM
       rubyzip
       spreadsheet (> 0.6.4)
     ruby-graphviz (1.2.3)
-    ruby-odbc (0.99999)
     ruby-ole (1.2.12.1)
     rubyzip (1.0.0)
     sass (3.5.7)
@@ -304,9 +301,6 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     table_print (1.5.6)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -316,7 +310,6 @@ GEM
     tilt (2.0.8)
     time_difference (0.5.0)
       activesupport
-    tiny_tds (2.1.2)
     ttfunk (1.4.0)
     turbolinks (5.1.1)
       turbolinks-source (~> 5.1)
@@ -410,15 +403,12 @@ DEPENDENCIES
   rake (~> 12.0)
   roo
   ruby-graphviz (~> 1.2, >= 1.2.2)
-  ruby-odbc
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 3.0, >= 3.0.5)
   table_print
-  therubyracer
   thin (~> 1.6, >= 1.6.4)
   time_difference
-  tiny_tds
   turbolinks
   twilio-ruby (~> 4.11, >= 4.11.1)
   tzinfo-data (~> 1.2016, >= 1.2016.10)

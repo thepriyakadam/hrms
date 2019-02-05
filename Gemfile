@@ -11,9 +11,9 @@ gem 'mysql2', '~> 0.3.18'
 
 gem 'numbers_in_words'
 
-gem 'tiny_tds'
+# gem 'tiny_tds'
 gem 'activerecord-sqlserver-adapter'
-gem 'ruby-odbc'
+# gem 'ruby-odbc'
  gem 'dbi'
 gem 'activerecord-session_store'
 
@@ -32,7 +32,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'coffee-rails', '~> 4.0.0'
 gem 'whenever', '~> 0.9.7', :require => false
 gem 'geocoder'
-gem 'therubyracer', platforms: :ruby
+# gem 'therubyracer', platforms: :ruby
 # gem 'query_report'
 gem 'kaminari', '~> 0.16.3'
 gem 'coderay'
@@ -107,7 +107,7 @@ gem 'bcrypt'
 # gem 'capistrano-rails', group: :development
 
 # ADFS
-gem 'omniauth'  
+gem 'omniauth'
 gem 'omniauth-wsfed', '0.3.2.pre.beta'
 
 

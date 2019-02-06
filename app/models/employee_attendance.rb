@@ -181,6 +181,20 @@ class EmployeeAttendance < ActiveRecord::Base
     end
   end
 
+  def status
+    expected_in_time = shift_time.from
+    expected_out_time = shift_time.to
+    if in_time.present? and out_time.nil?
+      "Out punch missing"
+    elsif in_time.present? and in_time.to_time > expected_in_time
+      "Late coming"
+    elsif in_time.present? and out_time.present? and out_time.to_time < expected_out_time
+      "Early going"
+    else
+      present
+    end
+  end
+
   private
 
   def self.filter_by_date_costcenter_and_department(date, costcenter, department, current_user)

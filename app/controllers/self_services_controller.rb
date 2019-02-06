@@ -152,7 +152,8 @@ class SelfServicesController < ApplicationController
       @company_late_time = @company_late_limit_time.strftime("%I:%M")
       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
     end
-    
+    names = @employee_attendances.map {|e| e.status }
+    @numbers = names.group_by(&:itself).transform_values(&:count)
   end
 
   def investment_declaration

@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  employee_plan_id: 
-  minutes: MyText
-
-two:
-  employee_plan_id: 
-  minutes: MyText

@@ -5,7 +5,7 @@
     <table id="example6" class="table table-bordered table-hover table-condensed">
     <% i = 0%>
       <thead>
-        <tr><th colspan="7"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
+        <tr><th colspan="8"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
       <tr>
         <td>ID : <%= current_user.employee.manual_employee_code %></td>
         <td colspan="4">Employee : <%= full_name(current_user.employee) %></td>
@@ -20,6 +20,7 @@
           <!-- <th>Working Hrs.</th> -->
           <th>Present</th>
           <th>Comment</th>
+          <th>Shift</th>
         </tr>
       </thead>
       <tbody>
@@ -39,8 +40,9 @@
             <%# else %>
               <!-- <td><%#= employee_attendance.try(:working_hrs) %></td> -->
             <%# end %>
+            <td><%= employee_attendance.present %></td>
             <td><%= employee_attendance.status %></td>
-            <td><%= employee_attendance.try(:comment) %></td>
+            <td><%= employee_attendance.shift_time.try(:name) %></td>
           </tr>
         <% end %>
       </tbody>

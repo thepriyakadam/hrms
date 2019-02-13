@@ -23,7 +23,7 @@ class EmployeeAttendance < ActiveRecord::Base
       flag = EmployeeAttendance.exists?(day: day,employee_id: emp)
     flag
   end
-  
+
 
   def self.collect_rolewise(current_user)
     if current_user.class == Group
@@ -42,7 +42,7 @@ class EmployeeAttendance < ActiveRecord::Base
       end
     end
   end
-  
+
   def self.filter_by_date_and_costcenter(date, costcenter, current_user)
     month = date.strftime("%B")
     year = date.strftime("%Y")
@@ -78,7 +78,7 @@ class EmployeeAttendance < ActiveRecord::Base
     def self.import(file)
      spreadsheet = open_spreadsheet(file)
       (2..spreadsheet.last_row).each do |i|
-        
+
         employee_code = spreadsheet.cell(i,'A').to_i
          if employee_code == 0
            employee_code = spreadsheet.cell(i,'A')
@@ -126,7 +126,7 @@ class EmployeeAttendance < ActiveRecord::Base
         else
         employee_atten = EmployeeAttendance.where(employee_id: employee.id,day: day.to_date).take
           if employee_atten.nil?
-            employee_attendance = EmployeeAttendance.create(employee_name: employee_name,day: day.to_date,working_hrs: working_hrs,present: present,in_time: in_time,out_time: out_time) 
+            employee_attendance = EmployeeAttendance.create(employee_name: employee_name,day: day.to_date,working_hrs: working_hrs,present: present,in_time: in_time,out_time: out_time)
             employee_attendance.save
             employee_attendance.update(in_time: in_time,out_time: out_time)
           else
@@ -143,7 +143,7 @@ class EmployeeAttendance < ActiveRecord::Base
             employee = Employee.find_by(manual_employee_code: employee_code)
             @employee_attendance.update(employee_id: employee.id)
         end
-        
+
         EmployeeAttendance.where(employee_id: nil).destroy_all
       end#do
 
@@ -159,7 +159,7 @@ class EmployeeAttendance < ActiveRecord::Base
         #   employee = Employee.find_by_manual_employee_code(@employee_attendance.employee_code)
         #   @employee_attendance.update(employee_id: employee.id)
         # EmployeeAttendance.where(employee_id: nil).destroy_all
-        # end 
+        # end
       #    @employee_attendance = EmployeeAttendance.last
       # @employees = Employee.where(status: "Active")
       #   @employees.each do |e|
@@ -182,16 +182,24 @@ class EmployeeAttendance < ActiveRecord::Base
   end
 
   def status
-    expected_in_time = shift_time.from
-    expected_out_time = shift_time.to
-    if in_time.present? and out_time.nil?
-      "Out punch missing"
-    elsif in_time.present? and in_time.to_time > expected_in_time
-      "Late coming"
-    elsif in_time.present? and out_time.present? and out_time.to_time < expected_out_time
-      "Early going"
+    if shift_time.nil?
+      "Shift not assigned"
     else
-      present
+      expected_in_time = shift_time.latemark_masters.order("created_at desc").first.late_limit
+      expected_out_time = shift_time.to
+      if in_time.nil?
+        "In punch missing"
+      elsif in_time == out_time
+        "Out punch missing"
+      elsif in_time.present? and out_time.nil?
+        "Out punch missing"
+      elsif in_time.present? and in_time.strftime("%H:%M") > expected_in_time.strftime("%H:%M")
+        "Late"
+      elsif in_time.present? and out_time.present? and out_time.strftime("%H:%M") < expected_in_time.strftime("%H:%M")
+        "Early going"
+      else
+        comment
+      end
     end
   end
 

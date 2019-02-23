@@ -28,6 +28,10 @@ class ShortLeaveRequestsController < ApplicationController
   # POST /short_leave_requests.json
   def create
     @short_leave_request = ShortLeaveRequest.new(short_leave_request_params)
+    date_string = params[:short_leave_request][:day] + " " + params[:short_leave_request][:out_time] + " " + "+0530"
+    if DateTime.parse(date_string) < DateTime.now
+      @flag=false
+    else
       if @short_leave_request.save
         #shrt_leave = @short_leave_request.save
         emp = Employee.find_by(id: @short_leave_request.employee_id)
@@ -47,6 +51,7 @@ class ShortLeaveRequestsController < ApplicationController
       else
         @flag=false
       end
+    end
   end
 
   def approve

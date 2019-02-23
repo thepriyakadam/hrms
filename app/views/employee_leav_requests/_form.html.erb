@@ -59,7 +59,12 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group required">
-            <%= f.select :leav_category_id,options_for_select(all_leav_category),{label: 'Leave Category',include_blank: "Select Leave" },{onchange:"var a={leav_category_id:$(this).val()}; $.get('/employee_leav_requests/select_form',a,function(response){});",class: 'form-control'} %>
+            <% if current_user.employee.gender == "Male" %>
+              <% leave = male_leave_category %>
+            <%else%>
+              <% leave = female_leave_category %>
+            <%end%>
+            <%= f.select :leav_category_id,options_for_select(leave),{label: 'Leave Category',include_blank: "Select Leave" },{onchange:"var a={leav_category_id:$(this).val()}; $.get('/employee_leav_requests/select_form',a,function(response){});",class: 'form-control'} %>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-<%= bootstrap_form_for @short_leave_request,html: {id: "short_leave_request"} do |f| %>
+<%= bootstrap_form_for @short_leave_request,html: {id: "short_leave_request"}, remote: true do |f| %>
  
   <% f.hidden_field :manager_id, value: @manager  %>
   <% f.hidden_field :status, value: 'Pending' %>

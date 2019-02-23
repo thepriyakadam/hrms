@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get :approve
       get :reject
       get :view_request
+      get :input_for
+      get :collect
       get :short_leave_process
       post :show_list_for_process
       post :process_short_leave
@@ -99,7 +101,7 @@ Rails.application.routes.draw do
       post :import
     end
   end
-  resources :attendance_regularizations do 
+  resources :attendance_regularizations do
     collection do
       get :admin_level_approval
       get :show_attendance_regularization
@@ -131,7 +133,7 @@ Rails.application.routes.draw do
     end
   end
   resources :compliance_types
-  resources :galleries 
+  resources :galleries
   resources :pictures
   resources :monthly_income_taxes
   resources :quarter_income_taxes
@@ -172,14 +174,14 @@ Rails.application.routes.draw do
       get :view_meeting_follow_up
     end
   end
-  
+
   resources :meeting_minutes do
     collection do
       get :view_minutes
       get :minutes_form
     end
   end
-  
+
   resources :listed_companies do
     collection do
       get :view_company
@@ -197,8 +199,9 @@ Rails.application.routes.draw do
   resources :resource_pool_masters
   resources :service_masters
 
-  resources :daily_attendances do 
+  resources :daily_attendances do
     collection do
+      get :collect
       get :third_attendance_uttam
       get :attendance
       get :calculate
@@ -214,7 +217,7 @@ Rails.application.routes.draw do
       get :view_resaon
     end
   end
-  
+
   resources :policy_details do
     collection do
       get :policy_details_modal
@@ -225,32 +228,32 @@ Rails.application.routes.draw do
     collection do
       get :medicle_reimbursements_modal
     end
-  end  
+  end
 
   resources :income_loss_house_properties do
     collection do
       get :income_loss_house_property_modal
     end
   end
-  
+
   resources :interest_on_housing_loans do
     collection do
       get :houseloan_interest_modal
     end
-  end     
+  end
 
   resources :housing_rents do
     collection do
       get :housing_rent_modal
-    end  
-  end  
+    end
+  end
 
   resources :leave_travel_assistances do
     collection do
       get :leave_travel_assistance_modal
     end
-  end    
-  
+  end
+
   resources :employee_plans do
     collection do
       post :meeting_follow_up_record
@@ -264,7 +267,7 @@ Rails.application.routes.draw do
       get :meeting_minutes_history_report
       post :meeting_minutes_history_report
       post :plan_meeting_minutes
-      get :plan_meeting_minutes 
+      get :plan_meeting_minutes
       get :gps_tracking
       get :employee_gps_tracking
       post :employee_gps_tracking
@@ -329,8 +332,8 @@ Rails.application.routes.draw do
       post :import
     end
    end
-    
-  resources :daily_attendances do 
+
+  resources :daily_attendances do
     collection do
       get :attendance
       get :calculate
@@ -412,7 +415,7 @@ Rails.application.routes.draw do
   end
   resources :candidate_interview_schedules
   resources :interview_type_masters
-  # resources :interview_types 
+  # resources :interview_types
   resources :candidate_forms
   resources :vacancy_request_statuses
   # resources :interview_types
@@ -435,8 +438,8 @@ Rails.application.routes.draw do
       post :final_approve
     end
   end
-  resources :policy_types do 
-    collection do 
+  resources :policy_types do
+    collection do
       get :policy_type_master
       post :policy_type_master
       get :import_xl
@@ -840,7 +843,7 @@ Rails.application.routes.draw do
       get :collect_issues
        get :is_confirm
        get :modal
-       
+
     end
   end
   resources :issue_types do
@@ -2289,13 +2292,13 @@ end
   match 'investment_declarations/:id/investment_document/:id' => 'investment_declarations#investment_document', :via => [:get], :as => :investment_document
 
   match 'self_services/:id/investment_document2/:id' => 'self_services#investment_document2', :via => [:get], :as => :investment_document2
- 
+
   match 'due_templates/:id/download_due_tempalte_documents/:id' => 'due_templates#download_due_tempalte_documents', :via => [:get], :as => :download_due_tempalte_documents
 
   match 'issue_requests/:id/download_screenshot_image/:id' => 'issue_requests#download_screenshot_image', :via => [:get], :as => :download_screenshot_image
   match 'issue_requests/:id/download_screenshot/:id' => 'issue_requests#download_screenshot', :via => [:get], :as => :download_screenshot
   match 'companies/:id/download_company_logo/:id' => 'companies#download_company_logo', :via => [:get], :as => :download_company_logo
-  
+
   match 'candidate_forms/:id/document_1/:id' => 'candidate_forms#document_1', :via => [:get], :as => :document_1
   match 'candidate_forms/:id/document_2/:id' => 'candidate_forms#document_2', :via => [:get], :as => :document_2
 
@@ -2469,7 +2472,7 @@ end
       get :employee_salaryslip_details
       post :employee_salaryslip_details
       get :daterangewise_salaryslip_xls
-      
+
       post :activate
       get :template_list
       get :fresh_template
@@ -3146,7 +3149,7 @@ end
       post :import
       get :modal
       post :update_qualification
-      get :qualification_modal 
+      get :qualification_modal
       get :import_qualification
       post :qualification_detail_report
      end
@@ -3449,7 +3452,7 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-    
+
   namespace :api do
     resources :user_auths,:only => [:create], defaults: {format: 'json'}
     post 'user_auths/user_sign_in' => 'user_auths#user_sign_in', defaults: {format: 'json'}
@@ -3461,7 +3464,7 @@ end
     get 'user_auths/cancel_leave_request' => 'user_auths#cancel_leave_request', defaults:{format: 'json'}
     get 'user_auths/leave_approval_list' => 'user_auths#leave_approval_list', defaults:{format: 'json'}
     get 'user_auths/first_approved_employee_leave_requests' => 'user_auths#first_approved_employee_leave_requests', defaults:{format: 'json'}
-    get 'user_auths/approve_leave_request' => 'user_auths#approve_leave_request', defaults:{format: 'json'} 
+    get 'user_auths/approve_leave_request' => 'user_auths#approve_leave_request', defaults:{format: 'json'}
     get 'user_auths/reject_leave_request' => 'user_auths#reject_leave_request', defaults:{format: 'json'}
     post 'user_auths/employee_plan' => 'user_auths#employee_plan', defaults:{format: 'json'}
     get 'user_auths/employee_plan_list' => 'user_auths#employee_plan_list', defaults:{format: 'json'}

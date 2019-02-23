@@ -1,39 +1,28 @@
 <table id="example2" class="table table-bordered table-hover table-condensed">
   <thead>
-    <tr>  
+    <tr>
       <th>Sr. No</th>
-      <th>Type</th>
-      <th>Date</th>
-      <th>Day</th>
-      <th>Out Time</th>
-      <th>In Time</th>
-      <!-- <th>Description</th>
-      <th>Manager</th>
-      <th>Status</th> -->
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Percentage</th>
       <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
-    <% i = 0 %>
-    <% @short_leave_requests.each do |short_leave_request| %>
-      <tr>
-        <td><%= i = i + 1 %></td>
-        <td><%= short_leave_request.leave_reason %></td>
-        <td><%= short_leave_request.day %></td>
-        <td><%= short_leave_request.try(:day).strftime("%a")%></td>
-        <td><%= short_leave_request.out_time %></td>
-        <td><%= short_leave_request.in_time %></td>
-        <!-- <td><%#= short_leave_request.description %></td>
-        <td><%#= short_leave_request.manager %></td>
-        <td><%#= short_leave_request.status %></td> -->
-        <td>
-            <%#= link_to '', edit_short_leave_request_path(short_leave_request),class: 'btn btn-success btn-xs fa fa-edit',remote:true %>
-            <%#= link_to '',  short_leave_request, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-danger btn-xs fa fa-close' %>
-            <%= link_to "", show_leave_short_leave_requests_path(short_leave_request), class: "btn btn-default btn-xs fa fa-eye", remote:true %>
-
-        </td>
-      </tr>
+    <% if @flag == true %>
+      <% i = 0 %>
+      <% @short_leave_requests.each do |short_leave_request| %>
+        <tr>
+          <td><%= i = i + 1 %></td>
+          <td><%= short_leave_request[:start_time] %></td>
+          <td><%= short_leave_request[:end_time] %></td>
+          <td><%= short_leave_request[:percentage]%></td>
+          <td></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td colspan="5"><%= @error %></td></tr>
     <% end %>
   </tbody>
 </table>

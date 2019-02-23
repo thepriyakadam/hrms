@@ -1,4 +1,3 @@
-
 class DailyAttendance < ActiveRecord::Base
   # validates :employee_code, uniqueness: { scope: [:date, :time, :controller] }
 
@@ -6,10 +5,13 @@ class DailyAttendance < ActiveRecord::Base
   #validates_uniqueness_of :employee_code, :scope => :time
   #validates_uniqueness_of :employee_code, scope: [:date, :time]
 
+
   def self.fetch
     punches = Access.where("Raw_Date > ?", Date.today - 1.days)
-    punches.each do |punch| 
-    	puts punch.inspect
+    punches.each do |punch|
+    	punch_date = punch.Raw_Date
+      punch_time = punch.Raw_Time
+      punch_card_id = punch.Raw_Cardid
     end
   end
 
@@ -22,12 +24,12 @@ class DailyAttendance < ActiveRecord::Base
         time = spreadsheet.cell(i,'C')
         #@employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
         employee_code = spreadsheet.cell(i,'D') #@employee.id
-        card_no = spreadsheet.cell(i,'E') 
+        card_no = spreadsheet.cell(i,'E')
         employee_name = spreadsheet.cell(i,'F')
         controller = spreadsheet.cell(i,'G')
         reader_name = spreadsheet.cell(i,'H')
         access_status = spreadsheet.cell(i,'I')
-        @daily_attendace = DailyAttendance.create(sr_no: sr_no,date: date,time: time,employee_code: employee_code,card_no: card_no,employee_name: employee_name,controller: controller,reader_name: reader_name,access_status: access_status) 
+        @daily_attendace = DailyAttendance.create(sr_no: sr_no,date: date,time: time,employee_code: employee_code,card_no: card_no,employee_name: employee_name,controller: controller,reader_name: reader_name,access_status: access_status)
     end
   end
 
@@ -39,7 +41,7 @@ class DailyAttendance < ActiveRecord::Base
     else raise "Unknown file type: #{file.original_filename}"
     end
   end
-  
+
 
   #=============================================== NEW =============================================================
 
@@ -48,7 +50,7 @@ class DailyAttendance < ActiveRecord::Base
      punch = Access.where("Raw_Date > ? ", Date.today - day.days)
       punch.each do |mat|
       punch_date = mat.Raw_Date
-      punch_time = mat.Raw_Time 
+      punch_time = mat.Raw_Time
       #punch_date = punch_date_time.to_date
       #punch_time = punch_date_time.to_time
       punch_month = punch_date.strftime("%B")
@@ -113,7 +115,7 @@ class DailyAttendance < ActiveRecord::Base
         employee_first_name = @employee1.first_name
         employee_last_name = @employee1.last_name
         space = " "
-        
+
           @shift_employee = ShiftEmployee.where(employee_id: employee_id,date: punch_date).take
           if @shift_employee == nil
             shift_employee_id = nil
@@ -186,7 +188,7 @@ class DailyAttendance < ActiveRecord::Base
         @employee_out_time = cal_att.out_time
         @att_day = cal_att.day
         employee_in_time_att = EmployeeAttendance.where(employee_id: @employee_id, in_time: @employee_in_time)
-       
+
         if employee_in_time_att.last.working_hrs.present? # Start Working Hrs Present
           emp_in_time = @employee_in_time.to_time
           emp_out_time = @employee_out_time.to_time
@@ -194,9 +196,9 @@ class DailyAttendance < ActiveRecord::Base
           working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
           if working_hrs > @company_fullday_working_hrs # Start full Day Attendance
-            if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present? 
+            if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present?
               employee_in_time_att.update_all(working_hrs: working_hrs)
-            elsif cal_att.holiday_id.present? 
+            elsif cal_att.holiday_id.present?
                employee_in_time_att.update_all(working_hrs: working_hrs, present: "HP", comment: "Holiday Present")
             elsif cal_att.employee_week_off_id.present?
                employee_in_time_att.update_all(working_hrs: working_hrs, present: "WOP", comment: "Weekoff Present")
@@ -206,9 +208,9 @@ class DailyAttendance < ActiveRecord::Base
 
           else # Else Full Day Attendance
 
-            if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present? 
+            if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present?
               employee_in_time_att.update_all(working_hrs: working_hrs)
-            elsif cal_att.holiday_id.present? 
+            elsif cal_att.holiday_id.present?
                employee_in_time_att.update_all(working_hrs: working_hrs, present: "HHDP", comment: "Holiday Half Day Present")
             elsif cal_att.employee_week_off_id.present?
                employee_in_time_att.update_all(working_hrs: working_hrs, present: "WOHDP", comment: "Weekoff Half Day Present")
@@ -226,9 +228,9 @@ class DailyAttendance < ActiveRecord::Base
             working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
 
             if working_hrs > @company_fullday_working_hrs
-              if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present? 
+              if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present?
                 employee_in_time_att.update_all(working_hrs: working_hrs)
-              elsif cal_att.holiday_id.present? 
+              elsif cal_att.holiday_id.present?
                  employee_in_time_att.update_all(working_hrs: working_hrs, present: "HP", comment: "Holiday Present")
               elsif cal_att.employee_week_off_id.present?
                  employee_in_time_att.update_all(working_hrs: working_hrs, present: "WOP", comment: "Weekoff Present")
@@ -236,9 +238,9 @@ class DailyAttendance < ActiveRecord::Base
                 employee_in_time_att.update_all(working_hrs: working_hrs, present: "P", comment: "Full Day Working")
               end
             else
-              if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present? 
+              if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present?
                 employee_in_time_att.update_all(working_hrs: working_hrs)
-              elsif cal_att.holiday_id.present? 
+              elsif cal_att.holiday_id.present?
                  employee_in_time_att.update_all(working_hrs: working_hrs, present: "HHDP", comment: "Holiday Half Day Present")
               elsif cal_att.employee_week_off_id.present?
                  employee_in_time_att.update_all(working_hrs: working_hrs, present: "WOHDP", comment: "Weekoff Half Day Present")
@@ -248,9 +250,9 @@ class DailyAttendance < ActiveRecord::Base
             end
 
           else # Else Working Hrs First Time Calaculation
-            if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present? 
+            if cal_att.on_duty_request_id.present? || cal_att.employee_leav_request_id.present?
                 employee_in_time_att.update_all(working_hrs: working_hrs)
-              elsif cal_att.holiday_id.present? 
+              elsif cal_att.holiday_id.present?
                  employee_in_time_att.update_all(working_hrs: working_hrs, present: "HHDP", comment: "Holiday Out Time Not Available")
               elsif cal_att.employee_week_off_id.present?
                  employee_in_time_att.update_all(working_hrs: working_hrs, present: "WOHDP", comment: "Weekoff Out Time Not Available")
@@ -363,5 +365,14 @@ class DailyAttendance < ActiveRecord::Base
     end
   end
  end
- 
+
+
+  def punch
+    Time.parse(date.to_s + " " + time.strftime("%H:%M"))
+  end
+
+  def time_to_hm
+    time.strftime("%H:%M")
+  end
+
 end

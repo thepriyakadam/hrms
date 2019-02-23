@@ -14,10 +14,31 @@ class ShortLeaveRequestsController < ApplicationController
 
   # GET /short_leave_requests/new
   def new
-    @employee = Employee.find_by(id: current_user.employee_id)
+    if params[:employee_id]
+      @employee = Employee.find_by(id: params[:employee_id])
+    else
+      @employee = Employee.find_by(id: current_user.employee_id)
+    end
+
     @manager = @employee.manager_id
     @short_leave_request = ShortLeaveRequest.new
     @short_leave_requests = ShortLeaveRequest.where(employee_id: current_user.employee_id)
+  end
+
+  def input_for
+    # @employee = Employee.find_by(id: params[:employee_id])
+  end
+
+  def collect
+    employee = Employee.find_by_id(params[:collect][:employee_id])
+    slr, err = employee.collect_shortlist_leave params[:collect][:day]
+    if err.nil?
+      @short_leave_requests = slr
+      @flag = true
+    else
+      @flag = false
+      @error = err
+    end
   end
 
   # GET /short_leave_requests/1/edit
@@ -141,7 +162,7 @@ class ShortLeaveRequestsController < ApplicationController
         flash[:notice] = "Processed successfully"
       # else
       #   flash[:alert] = "Leave Balance is less then Total hours"
-      # end#count.to_f < 
+      # end#count.to_f <
     end
     redirect_to short_leave_process_short_leave_requests_path
   end

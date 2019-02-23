@@ -26,9 +26,4 @@ capybara-*.html
 pickle-email-*.html
 rerun.txt
 
-app/mailers/application_mailer.rb
-app/models/daily_attendance.rb
-app/views/salaryslips/salary_slip_xls.xls.erb
-config/database.yml
-config/environments/development.rb
 db/schema.rb

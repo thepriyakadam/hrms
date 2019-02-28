@@ -98,6 +98,11 @@ class ShiftSchedule < ActiveRecord::Base
     mapping[old_id.to_s]
   end
 
+  def self.opposite_mapping new_id
+    mapping = {107 => "1", 106 => "4", 108 => "24", 109 => "3"}
+    mapping[new_id]
+  end
+
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
       when ".csv" then Roo::CSV.new(file.path, file_warning: :ignore)

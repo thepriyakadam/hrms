@@ -1,0 +1,2 @@
+module PremierReportsHelper
+end

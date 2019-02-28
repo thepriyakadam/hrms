@@ -361,6 +361,10 @@ class Employee < ActiveRecord::Base
     end
   end
 
+  def attendance_by_date date
+    DailyAttendance.where(employee_code: manual_employee_code, date: date).order("id ASC")
+  end
+
   def collect_shortlist_leave date
     slr = []
     daily_attendances = DailyAttendance.where(employee_code: manual_employee_code, date: date).order("id ASC")

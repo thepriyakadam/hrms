@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :premier_reports do
+    collection do
+      get :attendances
+    end
+
+    member do
+    end
+  end
   resources :short_leave_approvals do
     collection do
       get :approved_short_leave

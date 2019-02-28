@@ -30,8 +30,8 @@ class ShortLeaveRequestsController < ApplicationController
   end
 
   def collect
-    employee = Employee.find_by_id(params[:collect][:employee_id])
-    slr, err = employee.collect_shortlist_leave params[:collect][:day]
+    @employee = Employee.find_by_id(params[:collect][:employee_id])
+    slr, err = @employee.collect_shortlist_leave params[:collect][:day]
     if err.nil?
       @short_leave_requests = slr
       @flag = true

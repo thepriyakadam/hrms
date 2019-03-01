@@ -1,0 +1,32 @@
+<h6><%= full_name(@employee) + " " + params[:collect][:day]%></h6>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr. No</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @daily_attendances.present? %>
+      <% i = 0 %>
+      <% @daily_attendances.each do |attendance| %>
+        <tr>
+          <td><%= i = i + 1 %></td>
+          <td><%= attendance.date %></td>
+          <td><%= attendance.punch %></td>
+          <td>
+            <%= link_to '', "" ,class: 'btn btn-success btn-xs fa fa-edit' %>
+            <%= link_to '', "" ,class: 'btn btn-danger btn-xs fa fa-close' %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td colspan="5">Not found</td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="myModal" class="modal fade"></div>

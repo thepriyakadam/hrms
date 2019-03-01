@@ -10,7 +10,7 @@
         @employees = Employee.all
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-      elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Branch' || current_user.role.name == 'Costomize'
         @employees = Employee.where(company_location_id: current_user.company_location_id,status: "Active")
       elsif current_user.role.name == 'HOD'
           @emp = Employee.find(current_user.employee_id)
@@ -70,7 +70,7 @@
         end
       elsif current_user.role.name == 'Admin'
         @employees = Employee.where(company_id: current_user.company_location.company_id)
-      elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Branch' || current_user.role.name == 'Costomize'
         @employees = Employee.where(company_location_id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
         @employees = Employee.where(department_id: current_user.department_id)
@@ -155,6 +155,11 @@
     # @joining_detail = JoiningDetail.find_by_employee_id(@employee.id)
   end
   
+  def personal_detail
+    @employee = Employee.find_by(id: current_user.employee_id)
+    authorize! :show,@employee
+  end
+
   def display_emp_code_master
     @emp1= params[:employee_code_master_id]
     @emp_master_code = EmployeeCodeMaster.where(id: @emp1,is_active: true).take
@@ -277,9 +282,9 @@
     @employee = Employee.new(employee_params)
 
     if @employee_option == "Rehire"
-      @employee_id = params[:common][:employee_id]
-      @emp = Employee.find_by(id: @employee_id)
-      @emp.update(employee_params)
+      # @employee_id = params[:common][:employee_id]
+      # @emp = Employee.find_by(id: @employee_id)
+      # @emp.update(employee_params)
       @employee.save
       flash[:notice] = "Updated Successfully !"
       #EmployeeMailer.employee_create(@employee).deliver_now   
@@ -545,6 +550,7 @@
 
   def ajax_employee_document_detail
     @employee_document = EmployeeDocument.new
+    #@employee = Employee.find(params[:id])
     #@employee_documents = EmployeeDocument.all
   end
 
@@ -555,6 +561,15 @@
 
   def joining_checklist
      @employee = Employee.find(params[:id])
+
+     @joining_checklist_masters = JoiningChecklistMaster.where(status: true)
+      @joining_checklist_masters.each do |jc|
+        if EmployeeJcList.exists?(joining_checklist_master_id: jc.id,employee_id: @employee.id)
+        else
+          EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: @employee.id,status: false)
+        end
+      end#do |jc|
+
     # @employee = Employee.find(params[:id])
      # @employee1 = Employee.where(employee_id: current_user.employee_id)
   end
@@ -640,12 +655,12 @@
       redirect_to all_emp_list_employees_path
     else
       @employee_ids.each do |eid|
-      @employee = Employee.find(eid)
-      @employee.update(status: @status) 
-      flash[:notice] = "Status Updated Successfully"
-    end 
-     redirect_to all_emp_list_employees_path
-  end
+        @employee = Employee.find(eid)
+        @employee.update(status: @status) 
+        flash[:notice] = "Status Updated Successfully"
+      end 
+        redirect_to all_emp_list_employees_path
+    end
   end
 
   def update_password
@@ -687,11 +702,13 @@
         @company_locations = CompanyLocation.where(company_id: @company.id)
       elsif current_user.role.name == 'Admin'
         @company_locations = CompanyLocation.where(company_id: current_user.company_location.company_id)
-      elsif current_user.role.name == 'Branch'
+      elsif current_user.role.name == 'Costomize' || current_user.role.name == 'Branch'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       elsif current_user.role.name == 'HOD'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       elsif current_user.role.name == 'Supervisor'
+        @company_locations = CompanyLocation.where(id: current_user.company_location_id)
+      elsif current_user.role.name == 'Employee'
         @company_locations = CompanyLocation.where(id: current_user.company_location_id)
       end
     end

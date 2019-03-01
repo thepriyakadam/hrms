@@ -35,7 +35,13 @@ class DailyAttendancesController < ApplicationController
 
   # GET /daily_attendances/new
   def new
-    @daily_attendance = DailyAttendance.new
+  end
+
+  def collect
+    attendance = params[:collect]
+    @employee = Employee.find_by_id(attendance[:employee_id])
+    @daily_attendances = DailyAttendance.where(employee_code: @employee.manual_employee_code, date: attendance[:day])
+    # @daily_attendances = DailyAttendance.where(employee_code:5110, date: "2019-02-18")
   end
 
   # GET /daily_attendances/1/edit

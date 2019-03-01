@@ -1,0 +1,4 @@
+<label class="control-label required" for="company_state" aria-required="true"> Expense Option </label>
+
+<%= select :expenses_master,:expence_opestion_id,(@expence_opestion.present? ? (@expence_opestion.collect {|b| [b.name,b.id]}) : {}),{hide_label:true, include_blank: "Select Expence_Option"},{onchange:"var a={expence_opestion_id:$(this).val(), form : 'expenses_master'}; $.get('/expenses_masters/collect_mode',a,function(response){});", class: "form-control"} %>
+

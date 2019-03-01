@@ -1,0 +1,65 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Short Leave Details </center></h4>
+    </div>
+    <div class="modal-body">
+    
+			<table class="table table-bordered table-hover table-condensed">
+			  <thead>
+			  	<tr>
+                  <th>Employee ID</th>
+			      <td><%= @short_leave_request.employee.try(:manual_employee_code) %></td>
+			    </tr>
+			    <tr>
+                  <th>Employee</th>
+			      <td><%= full_name(@short_leave_request.employee) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>Date</strong></th>
+			      <td> <%= @short_leave_request.try(:day) %></td>
+			    </tr>
+			    <tr><th><strong>Day</strong></th>
+			      <td> <%= @short_leave_request.try(:day).strftime("%a") %></td>
+			    </tr>    
+			    <tr>
+			      <th><strong>Out Time</strong></th>
+			      <td><%= @short_leave_request.try(:out_time) %></td>
+			    </tr>
+			    <tr>
+				  <th><strong>In Time</strong></th>
+			      <td><%= @short_leave_request.try(:in_time) %></td>		     
+			    </tr>
+			    <tr>
+			     <th><strong>Leave/On-Duty Min. </strong></th>
+			      <td><%= @short_leave_request.try(:count) %> min.</td>
+			    </tr>
+			    <tr>
+			      <th><strong>Reason</strong></th>
+			      <td> <%= @short_leave_request.try(:description) %></td>
+			    </tr>
+			    <tr>
+			      <th><strong>Status</strong></th>
+			      <td>
+                <% case @short_leave_request.status %>
+                  <% when "Pending" %>
+                    <small class="label label-default">Pending</small>
+                  <% when "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                  <% when "Rejected" %>
+                    <small class="label label-danger">Rejected</small>
+                  <% when "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
+                  <% else %>
+                    <small class="label label-info">Else</small>
+                <%end%>
+              </td>
+			    </tr>
+			  </thead>
+			</table>
+
+		</div>
+		<div class="modal-footer"></div>
+	</div>
+</div>  

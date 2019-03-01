@@ -11,28 +11,38 @@
 			    <tr> 
 			      <th>Compliance Type</th>
 			      <td><%= @transaction_record.try(:compliance_type).try(:name) %></td>
-
+			    </tr>
+			    <tr>
 			      <th>Frequency</th>
 			      <td><%= @transaction_record.transaction_type %></td>
 			    </tr>
 			    <tr>
 			      <th>Submission Date</th>
-			        <td><%= @transaction_record.submission_date %></td>
+			      <td><%= @transaction_record.submission_date %></td>
+			    </tr>
+			    <tr>
 			      <th>Reminder From</th>
-			        <td><%= @transaction_record.reminder_Date %></td>
+			      <td><%= @transaction_record.reminder_Date %></td>
 			    </tr>
 			    <tr>
-			    <th>Reminder To</th>
-			        <td><%= @transaction_record.reminder_to %></td>
+			   	  <th>Reminder To</th>
+			      <td><%= @transaction_record.reminder_to %></td>
+			    </tr>
+			    <tr>
 			      <th>Email</th>
-			        <td><%= @transaction_record.email_1 %></td>
+			      <td><%= @transaction_record.email_1 %></td>
 			    </tr>
 			    <tr>
-			      
 			      <th>Official Email</th>
-			        <td><%= @transaction_record.email_2 %></td>
+			      <td><%= @transaction_record.email_2 %></td>
+			    </tr>
+			    <tr>
 			      <th>Status</th>
-			        <td><%= @transaction_record.status %></td>
+			      <td><%= @transaction_record.status %></td>
+			    </tr>
+			    <tr>
+			      <th>Message</th>
+			      <td><%= @transaction_record.email_msg %></td>
 			    </tr>
 			  </thead>
 			</table>

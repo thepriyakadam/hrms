@@ -22,6 +22,8 @@ class CreateEmployeeAttendances < ActiveRecord::Migration
       t.integer :employee_code
       t.string :employee_name
       t.string :comment
+      t.integer :holiday_id
+      t.integer :employee_week_off_id
       t.timestamps null: false
     end
   end

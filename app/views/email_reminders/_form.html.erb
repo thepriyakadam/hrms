@@ -1,0 +1,88 @@
+<%= bootstrap_form_for(@email_reminder,htlm: {id: 'email_reminder'},remote: true) do |f| %>
+
+  <div class="row">
+
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <%= link_to "", tasks_path,class: "fa fa-plus fa-success",:target => "_blank" %>
+          </div>
+          <%= f.select :task_id,all_task,{hide_label: true,include_blank: " Select Task"},{:class=>"select2 select2-hidden-accessible",:style=>"width: 100%;",:tabindex=>"-1"} %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.select :frequency,['Monthly','Yearly','Particular'],{hide_label: true,include_blank: "Select Frequency"}%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <%= f.text_field :task_date, hide_label: true,placeholder: "Task Date", class: 'submission'%>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+          <%= f.text_field :reminder_from, hide_label: true,placeholder: "Reminder From" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group required">
+          <%= f.text_field :reminder_to, hide_label: true,placeholder: "Reminder To" %>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :email_to, hide_label: true,placeholder: 'To: abc@gmail.com'%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :email_cc, hide_label: true,placeholder: "CC: xyz@gmail.com"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.text_field :email_bcc, hide_label: true,placeholder: "BCC: pqr@gmail.com"%>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="form-group required">
+        <%= f.text_area :email_text, hide_label: true,placeholder: "Email Text"%>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group required">
+        <%= f.check_box :status, label: "Active" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="actions">
+        <%= f.submit "Create Reminder",class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $('.submission').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-2:+8',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>

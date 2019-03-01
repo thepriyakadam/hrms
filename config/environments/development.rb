@@ -48,16 +48,31 @@
    config.action_mailer.raise_delivery_errors = true
    config.action_mailer.perform_deliveries = true
 
+    
+  ### NetCore ###
+  # config.action_mailer.default_url_options = { host: 'sm2.netcore.in', port: 993 }
+  # # config.domain = 'lvh.me'
+  # # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: 'sm2.netcore.in',
+  # port: 587,
+  # domain: 'sm2.netcore.in',
+  # user_name: 'hrmsadmin',
+  # password: 'Admin@2wsx',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  # # openssl_verify_mode: 'none'
+  # }
+
+  #config.action_mailer.raise_delivery_errors = true 
 
 
-   #config.action_mailer.raise_delivery_errors = true 
-
-
-   #config.action_mailer.perform_deliveries = true
-  
+  #config.action_mailer.perform_deliveries = true
+ 
   # Root url
-   # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
-  
+  # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
   
    # # config.domain = 'lvh.me'
    # # config.action_mailer.perform_deliveries = true,
@@ -143,38 +158,55 @@
    # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # # openssl_verify_mode: 'none'
    # }
-
-  ################## working #########################
-  config.action_mailer.default_url_options = { host: 'http://182.71.216.30/webmail', port: 443 }
+  config.action_mailer.default_url_options = { host: 'http://smtp.gmail.com', port: 465 }
   # config.domain = 'lvh.me'
   # config.action_mailer.perform_deliveries = true,
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-  address: '182.71.216.30',
-  port:  587,
-  domain: '182.71.216.30',
-  user_name: 'hrms@sparkline.co.in',
-  password: 'HRMS@2018',
+
+  address: 'smtp.gmail.com',
+  port:  25,
+  domain: 'smtp.gmail.com',
+  user_name: 'hrms@uttamenergy.in',
+  password: 'Spool*@#!791',
   authentication: :plain,
   enable_starttls_auto: true,
   openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
    # openssl_verify_mode: 'none'
   }
+  
+  #config.action_mailer.default_url_options = { host: 'https://sm2.netcore.in/webmail', port: 993 }
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
+  #ActionMailer::Base.delivery_method = :smtp
+  #ActionMailer::Base.smtp_settings = {
+  #address: 'sm2.netcore.in',
+  #port: 587,
+  #domain: 'sm2.netcore.in',
+  #user_name: 'hrmsadmin',
+  #password: 'Admin@2wsx',
+  #authentication: :plain,
+  #enable_starttls_auto: true,
+  #openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  # openssl_verify_mode: 'none'
+  #}
 
-  # config.action_mailer.default_url_options = { host: 'https://gmail.com', port: 3000}
-  # # config.domain = 'lvh.me'
-  # # config.action_mailer.perform_deliveries = true,
+
+  ################## working #########################
+  #config.action_mailer.default_url_options = { host: 'sm2.netcore.in',port:443 }
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
   # ActionMailer::Base.delivery_method = :smtp
   # ActionMailer::Base.smtp_settings = {
-  # address: 'mail.indibasolutions.com',
-  # port: 465,
-  # domain: 'mail.indibasolutions.com',
-  # user_name: 'hcmzone@indibasolutions.com',
-  # password: 'Indiba04',
+  # address: 'sm2.netcore.in',
+  # port:  587,
+  # domain: 'sm2.netcore.in',
+  # user_name: 'hrmsadmin@netcore.co.in',
+  # password: 'Admin@2wsx',
   # authentication: :plain,
   # enable_starttls_auto: true,
   # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-  # # openssl_verify_mode: 'none'
+    # openssl_verify_mode: 'none'
   # }
 
   # config.action_mailer.default_url_options = { host: 'http://amaazia.co.in', port: 2095 }
@@ -281,18 +313,40 @@
   #  openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
   #  # openssl_verify_mode: 'none'
   # }
+  
+  # config.action_mailer.default_url_options = { host: 'http://182.71.216.30/webmail', port: 443 }
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # address: '182.71.216.30',
+  # port:  587,
+  # domain: '182.71.216.30',
+  # user_name: 'hrms@sparkline.co.in',
+  # password: 'HRMS@2018',
+  # authentication: :plain,
+  # enable_starttls_auto: true,
+  # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  #  # openssl_verify_mode: 'none'
+  # }
 
-# config.action_mailer.delivery_method = :smtp
-
-#   config.action_mailer.smtp_settings = {
-#        :address => "smtp.gmail.com",
-#        :port => 25,
-#        :domain => "gmail.com",
-#        :user_name => "vish.hake04@gmail.com",
-#        :password => "vish9604331394"
-#        :authentication => "plain",
-#        :enable_starttls_auto => true
-#   }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  # config.action_mailer.default_url_options = { host: 'smtp.gmail.com', port:  465 }
+  # config.domain = 'lvh.me'
+  # config.action_mailer.perform_deliveries = true,
+  # ActionMailer::Base.delivery_method = :smtp
+  # ActionMailer::Base.smtp_settings = {
+  # :address => "smtp.gmail.com",
+  # :port => 25,
+  # :domain => "gmail.com",
+  # :user_name => "hrms.netcore@gmail.com",
+  # :password => "netcore@123",
+  # :authentication => "plain",
+  # :enable_starttls_auto => true,
+  # openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  # }
+  
 # # Root url
   # config.action_mailer.default_url_options = { host: '192.168.0.62', port: 3000 }
   # ActionMailer::Base.smtp_settings = {
@@ -439,4 +493,4 @@
    # Paperclip setup
    # Paperclip.options[:command_path] = "/usr/local/bin/convert"
    # Paperclip.options[:command_path] = "/home/rk/.rvm/gems/ruby-2.2.2/bin/convert"
-  end
+end

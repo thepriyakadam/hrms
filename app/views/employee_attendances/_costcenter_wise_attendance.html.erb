@@ -1,118 +1,105 @@
 <br>
-<div class="box">  
+<div class="box">
   <div class="box-body">
-    <table id="example5" class="table table-bordered table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Employee</th>
-          <th>Cost Center</th>
-            <% for i in @from_date.to_date..@to_date.to_date %>
-              <th colspan="4"><%= i %> - <%= i.strftime("%A") %></th>
-            <%end%>
-          <th colspan="9"></th>
-        </tr>
-        <tr>
-          <th colspan="3"></th>
-            <%  for i in @from_date.to_date..@to_date.to_date %>
-              <th>Present</th>
-              <th>In Time</th>
-              <th>Out Time</th>
-              <th>Working Hrs.</th> 
-            <%end%>             
-              <th>P</th>
-              <th>A</th>
-              <th>OD</th>
-              <th>H</th>
-              <th>WO</th>
-              <th>Payable Leave</th>
-              <th>Non Payable Leave</th>
-              <th>Payable Day</th>
-              <th>Non Payable Day</th>            
-        </tr>
-      </thead>
-      <tbody>
-        <% exist = {} %>
-        <% @employees.each do |e| %>
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
           <tr>
-            <td><%= e.employee.manual_employee_code %></td>
-            <td><%= full_name(e.employee) %></td>
+            <th>ID</th>
+            <th>Employee</th>
+          <th>Cost Center</th>
+              <% @from_date.step(@to_date).each do |l| %>
+                <th colspan="4"><%= l %> - <%= l.strftime("%A") %></th>
+              <%end%>
+            <th colspan="9"></th>
+            </tr>
+            <tr> 
+              <th colspan="3"></th>
+              <% @from_date.step(@to_date).each do |l| %>
+                <th>Present</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+                <th>Working Hrs.</th> 
+              <%end%>             
+                <th>P</th>
+                <th>A</th>
+                <th>OD</th>
+                <th>H</th>
+                <th>WO</th>
+                <th>Payable Leave</th>
+                <th>Non Payable Leave</th>
+                <th>Payable Day</th>
+                <th>Non Payable Day</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% exist = {} %>
+          <% @employees.each do |e| %>
+            <tr>
+              <td><%= e.employee.try(:manual_employee_code) %></td>
+              <td><%= full_name(e.employee) %></td>
             <td><%= e.employee.joining_detail.try(:cost_center).try(:name) %></td>
-            <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
+              <% sorted_exists = calculate_attendance_datewise(@from_date,@to_date, exist, e)%>
+              <% sorted_exists.each do |k,v|%>
+                <% @a = v %>
+                <% @b = k %>
+                <% emp_att = EmployeeAttendance.where(employee_id: e.employee_id,day: @b.to_date,present: @a).take %>
+                <td><%= v %></td>
+                <td><%= emp_att.try(:in_time).try(:utc) %></td>
+                <td><%= emp_att.try(:out_time).try(:utc) %></td>
+                <td><%= emp_att.try(:working_hrs) %></td>
+              <%end%>
 
-            <% sorted_exists.each do |k,v|%>
-              <td><%= v %></td>
-              <td><%= e.try(:in_time )%></td>
-              <td><%= e.try(:out_time )%></td>
-              <td><%= e.try(:working_hrs )%></td>
-            <%end%>
-         
-          <% holiday_in_month = holiday_count(exist) %>
-          <% week_off_day = weekoff_count(exist) %>
-          <% od_day = on_duty_count(exist) %>
-          <% present_count = present_count(exist) %>
-          <% absent_count = absent_count(exist) %>
-          <% payable_leave_count = half_pay_leave_count(exist).to_f + paybale_leave_count(exist).to_f %>
-          <% nonpayable_leave_count = non_paybale_leave_count(exist).to_f + half_non_paybale_leave_count(exist).to_f %>
+              <% holiday_count = holiday_count(exist) %>
+              <% weekoff_count = weekoff_count(exist) %>
+              <% on_duty_count = on_duty_count(exist) %>
+              <% present_count = present_count(exist) %>
+              <% absent_count = absent_count(exist) %>
+              <% payable_leave_count = half_pay_leave_count(exist).to_f + paybale_leave_count(exist).to_f %>
+              <% nonpayable_leave_count = non_paybale_leave_count(exist).to_f + half_non_paybale_leave_count(exist).to_f %>
 
-          <% workingday = [] %>
-          <% workingday = create_leave_datewise(@from,@to, e) %>
+              <% workingday = [] %>
+              <% workingday = create_leave_datewise(@from,@to, e) %>
 
-            <td><%= present_count.to_f %></td>
-            <td><%= absent_count.to_f %></td>
-            <td><%= od_day %></td>
-            <td><%= holiday_in_month.to_f %></td>
-            <td><%= week_off_day %></td>
-            <td><%= payable_leave_count %></td>
-            <td><%= nonpayable_leave_count %></td>
+              <td><%= present_count.to_f %></td>
+              <td><%= absent_count.to_f %></td>
+              <td><%= on_duty_count %></td>
+              <td><%= holiday_count.to_f %></td>
+              <td><%= weekoff_count %></td>
+              <td><%= payable_leave_count %></td>
+              <td><%= nonpayable_leave_count %></td>
 
-              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                <% payable_day = present_count.to_f + od_day.to_f + workingday[0] + workingday[2] +holiday_in_month.to_f  %>
-              <% else %>
-                <% payable_day = present_count.to_f + od_day.to_f + workingday[0] + workingday[2] + holiday_in_month.to_f + week_off_day.to_f %>
-              <% end %>
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <% payable_day = present_count.to_f + on_duty_count.to_f + workingday[0] + workingday[2] +holiday_count.to_f  %>
+                <% else %>
+                  <% payable_day = present_count.to_f + on_duty_count.to_f + workingday[0] + workingday[2] + holiday_count.to_f + weekoff_count.to_f %>
+                <% end %>
 
-              <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
-                <% nonpayable_day = absent_count.to_f + week_off_day.to_f + workingday[1] + workingday[3] %>
-              <% else %>
-                <% nonpayable_day = absent_count.to_f + workingday[1] + workingday[3] %>
-              <% end %>
+                <% if e.employee.try(:joining_detail).try(:employee_category).try(:name) == 'Worker' %>
+                  <% nonpayable_day = absent_count.to_f + weekoff_count.to_f + workingday[1] + workingday[3] %>
+                <% else %>
+                  <% nonpayable_day = absent_count.to_f + workingday[1] + workingday[3] %>
+                <% end %>
 
-            <td><%= payable_day %></td>
-            <td><%= nonpayable_day %></td>
-          </tr>          
-          <% exist.clear %>
+              <td><%= payable_day %></td>
+              <td><%= nonpayable_day %></td>
+            </tr>          
+            <% exist.clear %>
 
-        <%end%>
-      </tbody>
-    </table>
-    <%= link_to "Detail Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from], :to  => params[:salary][:to],:costcenter => params[:salary][:costcenter], :status => params[:salary][:status],:code => 1}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-     <%= link_to "Status Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from], :to  => params[:salary][:to],:costcenter => params[:salary][:costcenter], :status => params[:salary][:status],:code => 2}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
-    <%= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from],:costcenter => params[:salary][:costcenter], :to => params[:salary][:to], :status => params[:salary][:status]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+          <%end%>
+        </tbody>
+      </table>
+        <%= link_to "Detail Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from], :to  => params[:salary][:to],:costcenter => params[:salary][:costcenter], :status => params[:salary][:status],:code => 1}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+        <%= link_to "Status Excel Report ",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from], :to  => params[:salary][:to],:costcenter => params[:salary][:costcenter], :status => params[:salary][:status],:code => 2}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+        <%= link_to " PDF Report",show_costcenter_wise_attendance_employee_attendances_path(:salary => {:from => params[:salary][:from],:costcenter => params[:salary][:costcenter], :to => params[:salary][:to], :status => params[:salary][:status]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
   </div>
 </div>
 
 <script type="text/javascript">
-  $('#selectAll').click(function() {
-    if (this.checked) {
-      $(':checkbox').each(function() {
-        this.checked = true;
-      });
-    }
-    else {
-      $(':checkbox').each(function() {
-        this.checked = false;
-      });
-    }
-  });
-</script>
-
-<script type="text/javascript">
 $(document).ready(function() {
-    $('#example5').DataTable( {
+    $('#example6').DataTable( {
         "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]],
         "scrollX": true,
-        "scrollY": 400
+        "scrollY": 500
     } );
 } );
 </script>

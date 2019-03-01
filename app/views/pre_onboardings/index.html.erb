@@ -4,7 +4,7 @@
     
   </div><!-- /.box-header -->
   <div class="box-body">
-    <table id="example1" class="table table-bordered table-hover table-condensed">
+    <table id="example6" class="table table-bordered table-hover table-condensed">
       <thead>
         <tr>
           <th>Selected resume</th>
@@ -41,3 +41,11 @@
 </div>
 
 <!-- <= link_to 'New Pre onboarding', new_pre_onboarding_path %> -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

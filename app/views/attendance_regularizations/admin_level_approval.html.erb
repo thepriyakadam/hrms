@@ -1,0 +1,60 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Attendance Approval List</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+<table id="example6" class="table table-bordered table-hover table-condensed'">
+  <thead>
+    <tr>  
+      <th>Sr.No.</th>
+      <th>ID</th>
+      <th>Employee Name</th>
+      <th>Date</th>
+      <th>Regularization Reason</th>      
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 0 %>
+    <% @admin_approve_list.each do |attendance_regularization| %>
+      <tr>
+        <td><%= i = i+1 %></td>
+        <td><%= attendance_regularization.employee.try(:manual_employee_code)%>
+        <% @employee = Employee.find(attendance_regularization.employee_id) %>
+        <td><%= full_name(@employee) %></td>
+        <td><%= attendance_regularization.date %></td>
+        <td><%= attendance_regularization.regularization_reason.try(:name) %></td>
+        <td>
+          <% if attendance_regularization.status == "Pending" %>
+            <small class="label label-default">Pending</small>
+          <% elsif attendance_regularization.status == "Approved" %>
+            <small class="label label-success">Approved</small>
+          <% elsif attendance_regularization.status == "Rejected" %>
+            <small class="label label-danger">Rejected</small>
+          <% else %>
+            <small class="label label-info">Else</small>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to 'Approve', approve_attendance_attendance_regularizations_path(attendance_regularization), class: 'btn btn-xs btn-success '%>
+          <%= link_to 'Reject ', rejected_attendance_attendance_regularizations_path(attendance_regularization), data: { confirm: 'Are you sure to rejecte this request?' }, class: 'btn btn-xs btn-danger '%>
+          <% link_to '', attendance_regularization, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-close' %>
+          <%= link_to ' ', emp_attendance_details_attendance_regularizations_path(attendance_regularization), remote: true, class: 'btn btn-xs btn-default fa fa-eye' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ </div><!-- /.box-body -->
+</div><!-- /.box -->
+<div id="emp_attendance_details" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

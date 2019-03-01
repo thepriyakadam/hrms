@@ -1,10 +1,12 @@
-<table id="example2" class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed">
   <thead>
     <tr>
+      <th>Shift</th>
       <th>Time From</th>
       <th>Time To</th>
       <th>Allow latemark</th>
       <th>Amount</th>
+      <th>Early Limit</th>
       <th>Allow Halfday</th>
       <th>Fullday Working Time</th>
       <th>Halfday Working Time</th>
@@ -16,10 +18,12 @@
  <tbody>
     <% @latemark_masters.each do |latemark_master| %>
       <tr>
+        <td><%= latemark_master.shift_time.try(:shift) %></td>
         <td><%= latemark_master.company_time %></td>
         <td><%= latemark_master.late_limit %></td>
         <td><%= latemark_master.allow_latemark %></td>
         <td><%= latemark_master.amount %></td>
+        <td><%= latemark_master.early_limit %></td>
         <td><%= latemark_master.halfday_allow ? "Yes" : "No" %></td>
         <td><%= latemark_master.fullday_working_hrs %></td>
         <td><%= latemark_master.halfday_working_hrs %></td>
@@ -31,3 +35,11 @@
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

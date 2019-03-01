@@ -40,7 +40,7 @@
               <% @total_leaves.where(is_active: true).each do |l| %>
               <tr>
                 <td><%= l.leav_category.try(:name) %></td>
-                <td><%= l.no_of_leave %></td>
+                <td><%= l.no_of_leave.to_f.round(3) %></td>
               </tr>
             <% end %>
           </table>
@@ -115,14 +115,16 @@
         </tr>
         <tr>
           <th>Reason</th>
-          <td colspan="3"><%= @current_request.try(:reason) %></td>
+          <td><%= @current_request.try(:reason) %></td>
+          <th>LTA</th>
+          <td><%= @current_request.lta ? "Yes" : "No" %></td>
         </tr>
         <tr>
             <% if @current_request.current_status == "Pending" %>
             
               <th colspan="4"><center>
-               <%= link_to 'Approve', second_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
-               <%= link_to 'Reject', second_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
+               <%= link_to 'Approve', first_approve_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-primary fa fa-check' %> 
+               <%= link_to 'Reject', second_reject_leave_status_record_path(@current_request.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger fa fa-trash' %>
                <%= link_to 'Back', approved_or_rejected_leave_request_employee_leav_requests_path,class: 'btn btn-default btn-sm fa fa-arrow-left' %></center>
             
             <% elsif @current_request.current_status == "FirstApproved" %>

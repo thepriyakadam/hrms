@@ -1,0 +1,132 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title"> Officers Date Attendance</h3>
+    <div class="box-body">
+      <%= bootstrap_form_for(:employee, url: { action: 'officers_daily'},html: {id: "employee"},remote: true) do |f| %>
+        <div class="row">
+          <div class="col-sm-3">
+          <label>Date For In Time*</label>
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :employee,:from,hide_label: true,class: 'request_date form-control'%>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+          <label>Date For Out Time*</label>
+            <div class="form-group required">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <%= text_field :employee,:to,hide_label: true,class: 'request_date form-control'%>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3" style="padding-top:20px;">
+            <%= f.submit "Show Employee List",class: "btn btn-xl btn-primary fa fa-print",id: "buttonCtc" %> 
+          </div>
+        </div>
+      <% end %>
+
+       <div class="ajax-progress"></div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div id="officers_daily"></div>    
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<br><!--
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th colspan="7"><center> Date : <%#= Time.now.to_date %></center></th>
+          </tr>
+          <tr>
+            <th>Sr.No.</th>
+            <th>Emp. No.</th>
+            <th>Employee Name</th>
+            <th>In Time</th>
+            <th>Remark</th>
+            <th>Out Time</th>
+            <th>Remark</th>
+          </tr>
+        </thead>
+         <tbody>
+          <%# i = 0 %>
+          <th colspan="7"> CHIEF OPERATING OFFICER</th>
+          <%# @chief_operating_officer.try(:each) do |e| %>
+            <%# date = e.day - 1.day %>
+            <%# emp = e.employee_id %>
+            <%# emp_att = EmployeeAttendance.where(day: date, employee_id: emp) %>
+            <tr>
+              <td><%#= i = i + 1 %></td>
+              <td><%#= e.employee.manual_employee_code %></td>
+              <td><%#= full_name(e.employee) %></td>
+              <td><%#= e.try(:in_time) %></td>
+              <td><%#= %></td>
+              <td><%#= emp_att.first.out_time %></td>
+              <td><%#= %></td>
+            </tr>
+          <%# end %> --> <!-- do -->
+         <!--  <%# j = 1 %>
+          <th colspan="7"> HEAD </th>
+          <%# @head_officer.try(:each) do |e| %>
+            <%# date = e.day - 1.day %>
+            <%# emp = e.employee_id %>
+            <%# emp_att = EmployeeAttendance.where(day: date, employee_id: emp) %>
+            <tr>
+              <td><%#= j = j + 1 %></td>
+              <td><%#= e.employee.manual_employee_code %></td>
+              <td><%#= full_name(e.employee) %></td>
+              <td><%#= e.try(:in_time) %></td>
+              <td><%#= %></td>
+              <td><%#= emp_att.first.out_time %></td>
+              <td><%#= %></td>
+            </tr>
+          <%# end %> --> <!-- do -->
+        <!-- </tbody>
+      </table>
+      <br>
+      <%#= link_to " PDF Report ",officers_attendance_employee_attendances_path(format: "pdf"), class: "btn btn-xl btn-info fa fa-print", target: "_blank" %>
+      <%#= link_to " Excel Report ",officers_attendance_employee_attendances_path(format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    </div>
+  </div> 
+</div> -->
+<script type="text/javascript">
+  $("#buttonCtc").click(function(){
+    $('.ajax-progress').show();
+    $("#advance_salary").submit();
+  })
+  
+  $(function(){
+    $('.request_date').datepicker({
+    changeYear:true,
+    changeMonth: true,
+    yearRange: '-200:+1',
+    dateFormat: 'dd-mm-yy' });
+  }); 
+</script>
+<script>
+$("#employee").validate({
+    rules: {
+      "employee[from]":{
+        required: true,
+      {
+      required: "Please Select Date",
+      }
+       },
+    errorPlacement: function(error, element) {
+     error.css({"color": "red", "font-size": "12px","font-weight" : "normal"})
+     error.insertAfter(element.parent(element));
+    }
+   });
+</script>

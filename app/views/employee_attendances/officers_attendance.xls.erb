@@ -1,0 +1,36 @@
+<table id="example1" class="table table-bordered table-hover table-condensed">
+      <th colspan="5"><center> Date : <%= Time.now.to_date %></center></th>
+      <table>
+          <tr>
+            <th>Sr.No.</th>
+            <th>Emp. No.</th>
+            <th>Employee Name</th>
+            <th>In Time</th>
+            <th>Remark</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% i = 0 %>
+          <th colspan="5"> CHIEF OPERATING OFFICER</th>
+          <% @chief_operating_officer.try(:each) do |e| %>
+            <tr>
+              <td><%= i = i + 1 %></td>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.try(:in_time) %></td>
+              <td><%= %></td>
+            </tr>
+          <% end %> <!-- do -->
+          <% j = 1 %>
+          <th colspan="5"> HEAD </th>
+          <% @head_officer.try(:each) do |e| %>
+            <tr>
+              <td><%= j = j + 1 %></td>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.try(:in_time) %></td>
+              <td><%= %></td>
+            </tr>
+          <% end %> <!-- do -->
+        </tbody>
+      </table>

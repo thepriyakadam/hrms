@@ -37,7 +37,11 @@
      <th><strong>No. of Days</strong></th>
       <td><%= @employee_leav_request.leave_count %></td>
       </tr>
- 
+  <tr>  
+      <th><strong>LTA</strong></th>
+      <td><%= @employee_leav_request.lta ? "Yes" : "No" %></td>
+
+    </tr>
  <tr>  
       <th><strong>Leave Reason</strong></th>
       <td><%= @employee_leav_request.reason %></td>

@@ -15,9 +15,14 @@ end
 #   # rake 'task_namespace:birthday_invitation_mail' , :environment => 'development',   :output => 'log/birthday_invitation_mail.log'
 # end
 
-##################  Transaction Record ####################
 
-every :day, :at => '02:50pm' do
+every :day, :at => '01:00am' do
+  rake 'atte_task:reminder_msg', :environment => 'development',   :output => 'log/cron.log'
+end
+
+##################  Transaction Record ##################20
+
+every :day, :at => '01:00am' do
   rake 'atte_task:transaction_att', :environment => 'development',   :output => 'log/cron.log'
 end
 
@@ -34,6 +39,22 @@ end
 every 2.hours do 
   rake 'atte_task:fetch_att'
 end
+
+every :day, :at => '05:05pm' do
+  rake 'atte_task:check_absent'
+end
+
+every :day, :at => '12:00pm' do
+  rake 'atte_task:check_absent'
+end
+
+# every :day, :at => '04:20pm' do
+#   runner "DailyAttendance.create_emp_attendance"
+# end
+
+# every :day, :at => '12:00pm' do
+#   runner "DailyAttendance.create_emp_attendance"
+# end
 
 ################ Calculate Attendance ####################
 

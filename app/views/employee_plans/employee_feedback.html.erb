@@ -17,20 +17,12 @@
               </td>
             </tr>
             <tr>
-              <th>From Date</th>
-              <td><%= @employee_plan.from_date%></td>
+              <th>From Date / From Time</th>
+              <td><%= @employee_plan.from_date%> - <%= @employee_plan.from_time %></td>
             </tr>
             <tr>
-              <th>To Date</th>
-              <td><%= @employee_plan.to_date %></td>
-            </tr>
-            <tr>
-              <th>From Time</th>
-              <td><%= @employee_plan.from_time %></td>
-            </tr>
-            <tr>
-              <th>To Time</th>
-              <td><%= @employee_plan.to_time %></td>
+              <th>To Date / To Time</th>
+              <td><%= @employee_plan.to_date %> - <%= @employee_plan.to_time %></td>
             </tr>
             <tr>
               <th>Meeting With</th>
@@ -48,18 +40,20 @@
           </thead>
         </table>
         <br />
-        <table class="table table-bordered table-hover table-condensed">
+
+        <table id="example6" class="table table-bordered table-hover table-condensed">
           <thead>
-            <tr>  
+            <tr> 
+              <th>Sr. No</th>
               <th text-align="center">Minutes </th>
             </tr>
           </thead>
           <tbody>
-          <% i = 0%>
+            <% i = 0%>
             <% @emp_minutes.each do |m| %>
             <tr>
               <td>
-                <%= i=i+1 %>
+                <%= i=i+1 %></td><td>
                   <%= m.minutes %>
                   <hr style="margin-top:00px;margin-bottom:00px;">
                 <% end %>
@@ -92,4 +86,12 @@
      error.insertAfter(element.parent(element));
     }
   });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
 </script>

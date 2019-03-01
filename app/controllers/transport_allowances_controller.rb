@@ -31,11 +31,11 @@ class TransportAllowancesController < ApplicationController
 
     respond_to do |format|
       if @transport_allowance.save
-        format.html { redirect_to @transport_allowance, notice: 'Transport allowance was successfully created.' }
+        format.html { redirect_to transport_allowances_path, notice: 'Transport allowance was successfully created.' }
         format.json { render :show, status: :created, location: @transport_allowance }
       else
         format.html { render :new }
-        format.json { render json: @transport_allowance.errors, status: :unprocessable_entity }
+        format.json { render json: transport_allowances_path.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -45,11 +45,11 @@ class TransportAllowancesController < ApplicationController
   def update
     respond_to do |format|
       if @transport_allowance.update(transport_allowance_params)
-        format.html { redirect_to @transport_allowance, notice: 'Transport allowance was successfully updated.' }
+        format.html { redirect_to transport_allowances_path, notice: 'Transport allowance was successfully updated.' }
         format.json { render :show, status: :ok, location: @transport_allowance }
       else
         format.html { render :edit }
-        format.json { render json: @transport_allowance.errors, status: :unprocessable_entity }
+        format.json { render json: transport_allowances_path.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,6 +62,10 @@ class TransportAllowancesController < ApplicationController
       format.html { redirect_to transport_allowances_url, notice: 'Transport allowance was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def show_allowance
+    @transport_allowance = TransportAllowance.find(params[:transport_allowance_id])
   end
 
   private

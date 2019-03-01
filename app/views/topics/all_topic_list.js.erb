@@ -1,0 +1,6 @@
+<% if @flag %>
+	$("#form").html("<%= render template: 'topics/all_topic_list' %>")
+	// $("#topic_list").html("<%= j render 'topic_list' %>")
+<% else %>
+	$("#form").html("<%= render template: 'topics/all_topic_list' %>")
+<% end %>

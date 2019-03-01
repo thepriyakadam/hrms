@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Options</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Expense Option</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @billing_options.each do |billing_option| %>
+      <tr>
+        <td><%= billing_option.expence_opestion.name %></td>
+        <td><%= billing_option.code %></td>
+        <td><%= billing_option.name %></td>
+        <td><%= billing_option.description %></td>
+        <td><%= billing_option.status %></td>
+        <td><%= link_to 'Show', billing_option %></td>
+        <td><%= link_to 'Edit', edit_billing_option_path(billing_option) %></td>
+        <td><%= link_to 'Destroy', billing_option, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Billing option', new_billing_option_path %>

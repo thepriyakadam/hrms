@@ -1,20 +1,21 @@
-<table id="example2" class="table table-bordered table-hover table-condensed'">
+<table id="example6" class="table table-bordered table-hover table-condensed'">
   <thead>
     <tr> 
-      <th>Id </th> 
+      <th>Sr. No</th> 
       <th>Code</th>
       <th>Name</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
+    <% i = 0 %>
     <% @countries.each do |country| %>
       <tr>
-      <td><%= country.id %></td>
+        <td><%= i = i + 1 %></td>
         <td><%= country.code %></td>
         <td><%= country.name %></td>
         <td> <!-- link_to '', country,class: 'btn btn-xs btn-default fa fa-eye',remote:true %> -->
-        <%= link_to 'Edit', edit_country_path(country),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
+        <%= link_to '', edit_country_path(country),class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
          <!-- link_to '', country, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %> -->
          </td>
       </tr>
@@ -22,3 +23,11 @@
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

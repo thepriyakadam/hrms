@@ -142,11 +142,18 @@ class SelfServicesController < ApplicationController
     @to = params[:employee][:to]
     @employee_id = params[:employee][:employee_id]
     @latemark_master = LatemarkMaster.last
-    @latemark_master_time = @latemark_master.company_time
-    @company_time = @latemark_master_time.strftime("%I:%M")
-    @company_late_limit_time = @latemark_master.late_limit
-    @company_late_time = @company_late_limit_time.strftime("%I:%M")
-    @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
+    if @latemark_master.nil?
+      flash[:alert] = "Latemark Master not set"
+       @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
+    else
+      @latemark_master_time = @latemark_master.company_time
+      @company_time = @latemark_master_time.strftime("%I:%M")
+      @company_late_limit_time = @latemark_master.late_limit
+      @company_late_time = @company_late_limit_time.strftime("%I:%M")
+      @employee_attendances = EmployeeAttendance.where(day: @from.to_date..@to.to_date,employee_id: @employee_id).order("day DESC")
+    end
+    names = @employee_attendances.map {|e| e.status }
+    @numbers = names.group_by(&:itself).transform_values(&:count)
   end
 
   def investment_declaration
@@ -185,7 +192,6 @@ class SelfServicesController < ApplicationController
 
 
   def holiday_setup
-    # byebug
     @day = params[:day]
     # @employee_attendances = EmployeeAttendance.where(present: 'H',employee_id: current_user.employee_id).order("day ASC")
     @employee_attendances = EmployeeAttendance.where(employee_id: current_user.employee_id).where.not(holiday_id: nil).order("day ASC")
@@ -208,6 +214,8 @@ class SelfServicesController < ApplicationController
     @employee_id = params[:employee_id]
     @c_off_date = params[:leave_c_off][:c_off_date]
     @c_off_type = params[:leave_c_off][:c_off_type]
+    @in_time = params[:leave_c_off][:in_time]
+    @out_time = params[:leave_c_off][:out_time]
     @comment = params[:leave_c_off][:comment]
     leav_category = LeavCategory.find_by(code: 'C.Off')
 
@@ -229,7 +237,7 @@ class SelfServicesController < ApplicationController
           @expiry_date = @c_off_date.to_date + c_off_expire_day.to_f
           @expiry_status = true
         else
-          c_off_expire_day = nil
+          c_off_expire_day = 0
           @expiry_date = nil
           @expiry_status = @joining_detail.c_off_expire
         end
@@ -239,6 +247,11 @@ class SelfServicesController < ApplicationController
 
 
         @emp_attendance = EmployeeAttendance.where(employee_id: @employee_id,day: @c_off_date.to_date).take
+        total = @out_time.to_time - @in_time.to_time
+        min = total.to_f/60
+        hr = min.to_f/60
+        #@total_working_hrs = Time.at(total_hrs).utc.strftime("%H:%M")
+        @total_working_hrs = hr
         
           if leav_category.nil?
           else
@@ -249,16 +262,20 @@ class SelfServicesController < ApplicationController
                   @on_duty_request = OnDutyRequest.find_by(id: @emp_attendance.on_duty_request_id)
                   if @on_duty_request.leave_type == "Half Day"
                     @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",c_off_expire_day: @c_off_expire_day,
-                      expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
-                    StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                      expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",
+                      comment: @comment,in_time: @in_time,out_time: @out_time,total_working_hrs: @total_working_hrs)
+                    StatusCOff.create(comment_coff: "COff Request By Employee",leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                     flash[:notice] = "Your COff Created Successfully!"
-                    COffMailer.pending(@leave_c_off).deliver_now
+                    #COffMailer.pending(@leave_c_off).deliver_now
+
                   else#@on_duty_request.leave_type == "Full Day"
                     @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: @c_off_expire_day,
-                      expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
-                    StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                      expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 1,status: false,current_status: "Pending",
+                      comment: @comment,in_time: @in_time,out_time: @out_time,total_working_hrs: @total_working_hrs)
+                    StatusCOff.create(comment_coff: "COff Request By Employee",leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                     flash[:notice] = "Your COff Created Successfully!"
-                    COffMailer.pending(@leave_c_off).deliver_now
+                    #COffMailer.pending(@leave_c_off).deliver_now
+
                   end#@on_duty_request.leave_type == "Half Day"
                 else#emp_attendance.on_duty_request_id != nil
                   if @emp_attendance.working_hrs.to_s < "07:00"
@@ -266,17 +283,22 @@ class SelfServicesController < ApplicationController
                       flash[:alert] = "Working hours less then 4"
                     else#working_hrs.to_s < "4:00"
                       @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Half Day",
-                        c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 0.5,status: false,current_status: "Pending",comment: @comment)
-                      StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                        c_off_expire_day: @c_off_expire_day,expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 0.5,
+                        status: false,current_status: "Pending",comment: @comment,in_time: @in_time,out_time: @out_time,total_working_hrs: @total_working_hrs)
+                      StatusCOff.create(comment_coff: "COff Request By Employee",leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                       flash[:notice] = "Your COff Created Successfully!"
-                      COffMailer.pending(@leave_c_off).deliver_now
+                      #COffMailer.pending(@leave_c_off).deliver_now
+
                     end#working_hrs.to_s < "4:00"
                   else#@emp_attendance.working_hrs.to_s < "7:00"
+
                     @leave_c_off = LeaveCOff.create(employee_id: @employee_id,c_off_date: @c_off_date,c_off_type: "Full Day",c_off_expire_day: @c_off_expire_day,
-                      expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 1,status: false,current_status: "Pending",comment: @comment)
-                    StatusCOff.create(leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
+                      expiry_status: @expiry_status,expiry_date: @expiry_date,is_expire: false,leave_count: 1,status: false,current_status: "Pending",
+                      comment: @comment,in_time: @in_time,out_time: @out_time,total_working_hrs: @total_working_hrs)
+                    StatusCOff.create(comment_coff: "COff Request By Employee",leave_c_off_id: @leave_c_off.id,employee_id: @employee_id,status: "Pending")
                     flash[:notice] = "Your COff Created Successfully!"
-                    COffMailer.pending(@leave_c_off).deliver_now
+                    #COffMailer.pending(@leave_c_off).deliver_now
+
                   end#@emp_attendance.working_hrs.to_s < "7:00"
                 end#@emp_attendance.on_duty_request_id != nil
               else#@emp_attendance.holiday_id != nil
@@ -434,3 +456,5 @@ class SelfServicesController < ApplicationController
     params.require(:leave_c_off).permit(:is_expire,:employee_id, :c_off_date, :c_off_type, :c_off_expire_day, :expiry_status, :expiry_date, :leave_count)
   end
 end
+
+

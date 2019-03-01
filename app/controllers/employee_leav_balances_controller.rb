@@ -25,15 +25,84 @@ class EmployeeLeavBalancesController < ApplicationController
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
       elsif current_user.role.name == 'Employee'
         @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      elsif current_user.role.name == 'Costomize'
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
       end
     end
     session[:active_tab] ="LeaveManagement"
     session[:active_tab1] ="leaveadministration"
   end
 
+  def show_balance
+    if current_user.class == Group
+      @employee_leav_balances = EmployeeLeavBalance.all
+    else
+      if current_user.role.name == 'GroupAdmin'
+        @employee_leav_balances = EmployeeLeavBalance.all
+      elsif current_user.role.name == 'Admin'
+        @employees = Employee.where(status: 'Active',company_id: current_user.company_location.company_id)
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == 'Branch'
+        @employees = Employee.where(status: 'Active',company_location_id: current_user.company_location_id)
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == 'HOD'
+        @employees = Employee.where(status: 'Active',department_id: current_user.department_id)
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: @employees)
+      elsif current_user.role.name == 'Employee'
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      elsif current_user.role.name == 'Costomize'
+        @employee_leav_balances = EmployeeLeavBalance.where(employee_id: current_user.employee_id)
+      end
+    end
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_balances/show_balance.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'show_balance',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_balances/show_balance.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
   # GET /employee_leav_balances/1
   # GET /employee_leav_balances/1.json
   def show
+  end
+
+  def leave_balance_report
+  end
+
+  def show_leave_balance
+    @from_date = params[:employee] ? params[:employee][:from_date] : params[:from_date]
+    @to_date = params[:employee] ? params[:employee][:to_date] : params[:to_date]
+    @employee_id = params[:employee] ? params[:employee][:employee_id] : params[:employee_id]
+
+    @employee = Employee.find(@employee_id)
+    @leave_records = LeaveRecord.where(employee_id: @employee_id,day: @from_date.to_date..@to_date.to_date).group(:employee_leav_request_id)
+    
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_balances/leave_balance.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'status_wise_request',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_balances/leave_balance.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+  end
+
+  def all_balance
+    employee_id = Employee.where(status: "Active")
+    leav_category = LeavCategory.find_by(code: "C.Off")
+    @employee_leav_balances = EmployeeLeavBalance.where(employee_id: employee_id,leav_category_id: leav_category.id,is_active: true)
   end
 
   # GET /employee_leav_balances/new
@@ -380,12 +449,13 @@ def create
 
   def leave
 
-    @leav_category_id = params[:salary][:leav_category_id]
-    @employee_leav_balance = EmployeeLeavBalance.where(params[:leav_category_id])
-    leave_category = LeavCategory.find(params[:salary][:leav_category_id])
+    # @leav_category_id = params[:salary][:leav_category_id]
+    # @employee_leav_balance = EmployeeLeavBalance.where(params[:leav_category_id])
+    # leave_category = LeavCategory.find(params[:salary][:leav_category_id])
 
         @employee_actual_workingday = 0
-        @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today,true)
+        @emp =  Employee.where(status: "Active").pluck(:id)
+        @employee_leav_bal = EmployeeLeavBalance.where("to_date <= ? AND is_active = ?", Date.today,true).where(employee_id: @emp)
         @employee_leav_bal.each do |e|
           from_date = e.from_date
           to_date = e.to_date
@@ -393,7 +463,7 @@ def create
           @from_month = from_date.strftime('%B')
           @to_month = to_date.strftime('%B')
 
-          if @employee_leav_balance.is_present(e)
+          if LeaveMaster.exists?(leav_category_id: e.leav_category_id)
              @leave_master = LeaveMaster.find_by(leav_category_id: e.leav_category_id)
           
               date_monthly = e.to_date + 30
@@ -535,7 +605,7 @@ def create
 
 
 
-                elsif e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Half-yearly"
+              elsif e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Half-yearly"
                 if @leave_master.working_day == nil
                   if @leave_master.is_carry_forward == true
                     @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
@@ -592,26 +662,26 @@ def create
                 end #working_day nil
 
                 elsif e.leav_category_id == @leave_master.leav_category_id && @leave_master.period == "Yearly"
-                if @leave_master.working_day == nil
-                  if @leave_master.is_carry_forward == true
-                    @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
-                    if @leave <= @leave_master.limit.to_f
+                  if @leave_master.working_day == nil
+                    if @leave_master.is_carry_forward == true
+                      @leave = @leave_master.no_of_leave.to_f + e.no_of_leave.to_f
+                      if @leave <= @leave_master.limit.to_f
 
-                      EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave.round(2),from_date: e.to_date,to_date: date_yearly,expiry_date: date_yearly,is_active: true,total_leave: @leave,carry_forward: e.no_of_leave,leave_count: @leave_master.no_of_leave,collapse_value: 0,working_day: payable_day)
-                      e.update(is_active: false)
+                        EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave.round(2),from_date: e.to_date,to_date: date_yearly,expiry_date: date_yearly,is_active: true,total_leave: @leave,carry_forward: e.no_of_leave,leave_count: @leave_master.no_of_leave,collapse_value: 0,working_day: payable_day)
+                        e.update(is_active: false)
+                      else
+                          carry_forward = @leave_master.limit.to_f - @leave_master.no_of_leave.to_f
+                        collapse_value = @leave.to_f - @leave_master.limit.to_f
+                        EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_yearly,expiry_date: date_yearly,is_active: true,total_leave: @leave_master.limit,carry_forward: carry_forward.round(2),leave_count: @leave_master.no_of_leave,collapse_value: collapse_value.round(2),working_day: payable_day)
+                        e.update(is_active: false)
+                      end #limit
                     else
-                        carry_forward = @leave_master.limit.to_f - @leave_master.no_of_leave.to_f
-                      collapse_value = @leave.to_f - @leave_master.limit.to_f
-                      EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.limit,from_date: e.to_date,to_date: date_yearly,expiry_date: date_yearly,is_active: true,total_leave: @leave_master.limit,carry_forward: carry_forward.round(2),leave_count: @leave_master.no_of_leave,collapse_value: collapse_value.round(2),working_day: payable_day)
+                      EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_yearly,expiry_date: date_yearly,is_active: true,total_leave: @leave_master.no_of_leave,carry_forward: 0,leave_count: @leave_master.no_of_leave,collapse_value: e.no_of_leave,working_day: payable_day)
                       e.update(is_active: false)
-                    end #limit
-                  else
-                    EmployeeLeavBalance.create(employee_id: e.employee_id,leav_category_id: e.leav_category_id,no_of_leave: @leave_master.no_of_leave,from_date: e.to_date,to_date: date_yearly,expiry_date: date_yearly,is_active: true,total_leave: @leave_master.no_of_leave,carry_forward: 0,leave_count: @leave_master.no_of_leave,collapse_value: e.no_of_leave,working_day: payable_day)
-                    e.update(is_active: false)
-                  end #is_carry_forward
-                else #working_day = nil
+                    end #is_carry_forward
+                  else #working_day = nil
                   @calculated_no_of_leave = 0
-                  if @employee_leav_balance.emp_available(e)
+                    if @employee_leav_balance.emp_available(e)
 
                       if payable_day.to_f < @leave_master.working_day.to_f
                         if @leave_master.is_carry_forward == true
@@ -642,24 +712,21 @@ def create
                         end
                       end # @day
                     #end  #for i in
-                  else #emp_available()
-                    flash[:alert] = "Workingday not available"
-                  end #emp_available()
-                end #working_day nil
+                    else #emp_available()
+                      flash[:alert] = "Workingday not available"
+                    end #emp_available()
+                  end #working_day nil
+                    flash[:notice] = 'Leave assigned successfully.'
 
-
-              end #if_else_monthly
+                end #if_else_monthly
           else #status_Inactive
+            flash[:alert] = "Employee is not Active"
           end
-
-          else #is_present
-           
-          end
-        end #do
-
-
-      flash[:notice] = 'Leave assigned successfully.'
-      redirect_to root_url
+        else #is_present
+         flash[:alert] = "#{e.leav_category.code} is not Present is Leave Master!"
+        end
+      end #do
+      redirect_to employee_leav_balances_path
     end #employee_ids = nil
 
   # PATCH/PUT /employee_leav_balances/1
@@ -837,6 +904,6 @@ def create
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_balance_params
-    params.require(:employee_leav_balance).permit(:carry_forward,:leave_count,:collapse_value,:working_day,:from_date,:to_date,:is_confirm,:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
+    params.require(:employee_leav_balance).permit(:c_off_hrs,:carry_forward,:leave_count,:collapse_value,:working_day,:from_date,:to_date,:is_confirm,:employee_id, :leav_category_id, :no_of_leave, :total_leave, :expiry_date)
   end
 end

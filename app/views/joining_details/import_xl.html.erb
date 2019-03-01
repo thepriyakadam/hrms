@@ -5,6 +5,6 @@
 <label> File </label>
   <%= file_field_tag :file,label: 'File(.xls,.csv,.xlsx only)' %>
   <br>
-  <%= submit_tag "Import", data: { confirm: 'Are you sure?' } %>
+  <%= submit_tag "Import", data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-primary' %>
 <% end %>
 </div>

@@ -33,6 +33,7 @@ class Employee < ActiveRecord::Base
   has_many :awards
   has_many :certifications
   has_many :interview_schedules
+  has_many :short_leave_approvals
   #has_many :vacancy_masters
   has_many :interview_reschedules
   has_many :qualifications
@@ -46,7 +47,7 @@ class Employee < ActiveRecord::Base
 
   #has_many :vacancy_masters,class_name: 'Employee',foreign_key: 'recruiter_id'
   has_many :reporting_masters, class_name: 'ReportingMaster', foreign_key: 'reporting_master_id'
-  
+
   # has_many :first_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :first_reporter_id
   # has_many :second_reporters, :class_name => "EmployeeLeavRequest", :foreign_key => :second_reporter_id
   has_many :reporting_masters, class_name: 'Employee', foreign_key: 'reporting_master_id'
@@ -88,6 +89,7 @@ class Employee < ActiveRecord::Base
   has_many :issue_tracker_members
   has_many :issue_tracker_accesses
   has_many :daily_bill_details
+  has_many :daily_attendances, class_name: "Employee", foreign_key: "manual_employee_code"
   has_many :travel_requests
   has_many :issue_requests
   has_many :issue_lockers
@@ -104,6 +106,9 @@ class Employee < ActiveRecord::Base
   has_many :rembursments
   has_many :status_c_offs
   has_many :leave_transfers
+  has_many :short_leave_requests
+  has_many :short_leave_requests, class_name: "Employee",
+                          foreign_key: "manager_id"
 
   has_many :leave_transfers, class_name: "Employee",
                           foreign_key: "transfer_to_id"
@@ -139,7 +144,9 @@ class Employee < ActiveRecord::Base
 
   has_many :reimbursement_requests, class_name: "Employee",
                           foreign_key: "approval_id"
-                          
+
+
+
   belongs_to :user, class_name: 'Employee'
 
   has_many :second_reporters, class_name: 'EmployeeResignation', foreign_key: 'second_reporter_id'
@@ -158,7 +165,9 @@ class Employee < ActiveRecord::Base
   has_many :change_designations, class_name: "Employee", foreign_key: "change_by_id"
   has_many :frequest_questions
   has_many :contact_details
+  has_many :shift_employees,class_name: "Employee", foreign_key: "created_by_id"
 
+  has_many :shift_schudule_excels
 
   # has_many :reporting_masters, class_name: "Employee",
   #                         foreign_key: "manager_id"
@@ -174,6 +183,7 @@ class Employee < ActiveRecord::Base
   validates :email, presence: true
   validates :adhar_no, presence: true
   validates :pan_no, presence: true
+  validates :department_id, presence: true
 
   has_attached_file :passport_photo, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :passport_photo,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
@@ -183,10 +193,10 @@ class Employee < ActiveRecord::Base
   has_attached_file :employee_signature, styles: { medium: '300x300>', thumb: '100x100>' }, default_url: 'Profile11.jpg'
   validates_attachment_content_type :employee_signature,  :content_type => /\Aimage\/.*\Z/,:message => 'only (png/gif/jpeg) images'
   validates_attachment_size :employee_signature, :less_than => 5.megabytes
-  
+
   # validates :permanent_address, presence: true
   # validates :department_id,presence: true
-  
+
   # validate :adhar_no_regex
   # validate :pan_no_regex
 
@@ -251,6 +261,17 @@ class Employee < ActiveRecord::Base
     end
   end
 
+
+  def self.filter_by_date(date)
+    month = date.strftime("%B")
+    year = date.strftime("%Y")
+    @workingday = Workingday.where(month_name: month,year: year).pluck(:employee_id)
+    @attendances = EmployeeAttendance.where(day: date).pluck(:employee_id)
+    finals = (@attendances - @workingday)
+    Employee.where.not(id: finals)
+  end
+
+
   def self.filter_by_date_and_costcenter(date, costcenter, current_user)
     month = date.strftime("%B")
     year = date.strftime("%Y")
@@ -261,7 +282,7 @@ class Employee < ActiveRecord::Base
     finals = (@joining_details - @attendances - @workingday) & @roles
     Employee.where(id: finals)
   end
-  
+
   def employee_role_wise(company,company_location,department,current_user)
     if current_user.class == Group
       if company == ""
@@ -299,7 +320,7 @@ class Employee < ActiveRecord::Base
           @employees = Employee.where(company_location_id: current_user.company_location_id,status: 'Active')
         elsif department == ""
           @employees = Employee.where(company_location_id: company_location.to_i,status: 'Active')
-        else 
+        else
           @employees = Employee.where(company_id: company.to_i,company_location_id: company_location.to_i,department_id: department.to_i,status: 'Active')
         end
       end
@@ -310,26 +331,26 @@ class Employee < ActiveRecord::Base
     if current_user.class == Group
       if location == ""
         @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
-      else 
+      else
         @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
       end
     elsif current_user.class == Member
       if current_user.role.name == 'GroupAdmin'
         if location == ""
           @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
-        else 
+        else
           @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
         end
        elsif current_user.role.name == 'Admin'
         if location == ""
           @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
-        else 
+        else
           @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
         end
         elsif current_user.role.name == 'Branch'
         if location == ""
           @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i)
-        else 
+        else
           @employees = Employee.where(employee_type_id: employee_type,company_id: company.to_i,company_location_id: location.to_i)
         end
       elsif current_user.role.name == 'HOD'
@@ -338,6 +359,97 @@ class Employee < ActiveRecord::Base
       elsif current_user.role.name == 'Employee'
       end
     end
+  end
+
+  def attendance_by_date date
+    DailyAttendance.where(employee_code: manual_employee_code, date: date).order("id ASC")
+  end
+
+  def collect_shortlist_leave date
+    slr = []
+    daily_attendances = DailyAttendance.where(employee_code: manual_employee_code, date: date).order("id ASC")
+    if daily_attendances.empty?
+      return nil, "No punches found on #{date}"
+    else
+      if daily_attendances.count > 6
+        return nil, "Greater than 6 punch in one day"
+      elsif daily_attendances.count.odd?
+        return nil, "Punch missing - Total count of punch is #{daily_attendances.count}"
+      else
+        shift = get_shift_by_date(date)
+        shift_time = shift.shift_time
+
+        if daily_attendances.count == 2
+          first_attendance = daily_attendances.first
+          second_attendance = daily_attendances.second
+
+          if first_attendance.punch > shift_time.start_time(first_attendance.date)
+            leave_count = first_attendance.punch.to_i - shift_time.start_time(first_attendance.date).to_i
+            percentage = (leave_count * 100 / shift_time.total_time)
+            slr << {start_time: shift_time.start_time_to_hm, end_time: first_attendance.time_to_hm, percentage: percentage}
+          end
+
+          if second_attendance.punch < shift_time.end_time(second_attendance.date)
+            leave_count = shift_time.start_time(second_attendance.date).to_i - second_attendance.punch.to_i
+            percentage = (leave_count * 100 / shift_time.total_time)
+            slr << {start_time: second_attendance.time_to_hm, end_time: shift_time.end_time_to_hm, percentage: percentage}
+          end
+        elsif daily_attendances.count == 4
+          first_attendance = daily_attendances.first
+          second_attendance = daily_attendances.second
+          third_attendance = daily_attendances.third
+          fourth_attendance = daily_attendances.fourth
+
+          if first_attendance.punch > shift_time.start_time(first_attendance.date)
+            leave_count = first_attendance.punch.to_i - shift_time.start_time(first_attendance.date).to_i
+            percentage = (leave_count * 100 / shift_time.total_time)
+            slr << {start_time: shift_time.start_time_to_hm, end_time: first_attendance.time_to_hm, percentage: percentage}
+          end
+
+          leave_count = third_attendance.punch.to_i - second_attendance.punch.to_i
+          percentage = (leave_count * 100 / shift_time.total_time)
+          slr << {start_time: second_attendance.time_to_hm, end_time: third_attendance.time_to_hm, percentage: percentage}
+
+          if fourth_attendance.punch < shift_time.end_time(fourth_attendance.date)
+            leave_count = shift_time.end_time(fourth_attendance.date).to_i - fourth_attendance.punch.to_i
+            percentage = (leave_count * 100 / shift_time.total_time)
+            slr << {start_time: fourth_attendance.time_to_hm, end_time: shift_time.end_time_to_hm, percentage: percentage}
+          end
+        elsif daily_attendances.count = 6
+          first_attendance = daily_attendances.first
+          second_attendance = daily_attendances.second
+          third_attendance = daily_attendances.third
+          fourth_attendance = daily_attendances.fourth
+          fifth_attendance = daily_attendances.fifth
+          sixth_attendance = daily_attendances.last
+
+          if first_attendance.punch > shift_time.start_time(first_attendance.date)
+            leave_count = first_attendance.punch.to_i - shift_time.start_time(first_attendance.date).to_i
+            percentage = (leave_count * 100 / shift_time.total_time)
+            slr << {start_time: shift_time.start_time_to_hm, end_time: first_attendance.time_to_hm, percentage: percentage}
+          end
+
+          leave_count = third_attendance.punch.to_i - second_attendance.punch.to_i
+          percentage = (leave_count * 100 / shift_time.total_time)
+          slr << {start_time: second_attendance.time_to_hm, end_time: third_attendance.time_to_hm, percentage: percentage}
+
+          leave_count = fifth_attendance.punch.to_i - fourth_attendance.punch.to_i
+          percentage = (leave_count * 100 / shift_time.total_time)
+          slr << {start_time: fourth_attendance.time_to_hm, end_time: fifth_attendance.time_to_hm, percentage: percentage}
+
+          if sixth_attendance.punch < shift_time.end_time(sixth_attendance.date)
+            leave_count = shift_time.end_time(sixth_attendance.date).to_i - sixth_attendance.punch.to_i
+            percentage = (leave_count * 100 / shift_time.total_time)
+            slr << {start_time: sixth_attendance.time_to_hm, end_time: shift_time.end_time_to_hm, percentage: percentage}
+          end
+        end
+        return slr, nil
+      end
+    end
+  end
+
+  def get_shift_by_date date
+    ShiftSchuduleExcel.where(employee_id: id, attendance_date: date).take
   end
 
   private
@@ -395,7 +507,7 @@ class Employee < ActiveRecord::Base
         daily_att = DailyAttendance.where(employee_code: user_id, time: etime)
         if daily_att.empty?
           daily_att_updated = DailyAttendance.create(employee_code: user_id, date: edate_time.to_date, time: etime)
-        else 
+        else
         end
         emp_att = EmployeeAttendance.where(employee_id: emp_id, day: edate)
         if emp_att.present?
@@ -421,9 +533,9 @@ class Employee < ActiveRecord::Base
       if emp_att.last.working_hrs.present?
           in_time = in_t.to_time
           out_time = out_t.to_time
-          total_hrms = out_time - in_time 
+          total_hrms = out_time - in_time
           working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
-          if working_hrs > "07:00" 
+          if working_hrs > "07:00"
             emp_att.update_all(working_hrs: working_hrs)
           else
             emp_att.update_all(present: "HD")
@@ -432,9 +544,9 @@ class Employee < ActiveRecord::Base
         if emp_att.last.out_time.present?
           in_time = in_t.to_time
           out_time = out_t.to_time
-          total_hrms = out_time - in_time 
+          total_hrms = out_time - in_time
           working_hrs = Time.at(total_hrms).utc.strftime("%H:%M")
-          if working_hrs > "07:00" 
+          if working_hrs > "07:00"
             emp_att.update_all(working_hrs: working_hrs)
           else
             emp_att.update_all(present: "HD")
@@ -468,6 +580,7 @@ class Employee < ActiveRecord::Base
         else
            manual_employee_code = spreadsheet.cell(i,'B').to_i
         end
+
         prefix = spreadsheet.cell(i,'C')
         first_name = spreadsheet.cell(i,'D')
         middle_name = spreadsheet.cell(i,'E')
@@ -605,14 +718,20 @@ class Employee < ActiveRecord::Base
   end
 end
 
-       
+
 
   def self.import_create_new_user(file)
 
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-       manual_member_code = spreadsheet.cell(i,'B').to_i
-       @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      manual_member_code = spreadsheet.cell(i,'B').to_i
+      if manual_member_code == 0
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+         manual_member_code = spreadsheet.cell(i,'B')
+      else
+        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+         manual_member_code = spreadsheet.cell(i,'B').to_i
+      end
         if @employee.nil?
         else
         employee_id = @employee.id
@@ -634,31 +753,42 @@ end
         else
         role_id = @role.id
         end
-        @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
+        manager1 = spreadsheet.cell(i,'D').to_i
+        if manager1 == 0
+          @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D'))
+        else
+          @manager = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'D').to_i)
+        end
         manager_id = @manager.id
 
-        @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E').to_i)
+        manager2 = spreadsheet.cell(i,'E').to_i
+        if manager2 == 0
+          @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E'))
+        else
+          @manager_2 = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'E').to_i)
+        end
+
         if @manager_2.nil?
         else
         manager_2_id = @manager_2.id
         end
-        @employee.update(manager_id: manager_id,manager_2_id: manager_2_id)
+          @employee.update(manager_id: manager_id,manager_2_id: manager_2_id)
 
-         @employee_prsent = Member.find_by(manual_member_code: manual_member_code)
+          @employee_prsent = Member.find_by(manual_member_code: manual_member_code)
 
         if @employee_prsent.nil?
-
-        @member = Member.create(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
-       else
-       end
+          @member = Member.create(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
+        else
+          @employee_prsent.update(manual_member_code: manual_member_code,employee_id: employee_id,email: email,password: password,role_id: role_id,company_id: company_id,company_location_id: company_location_id)
+        end
+      end
     end
   end
-end
 
 #   spreadsheet = open_spreadsheet(file)
 #     (2..spreadsheet.last_row).each do |i|
 #        manual_member_code = spreadsheet.cell(i,'B')
-      
+
 #           @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
 #         if @employee.nil?
 #         else
@@ -668,7 +798,7 @@ end
 #         if @member.nil?
 #           email = @employee.email
 #         else
-#         email = "#{@employee.manual_employee_code}@xyz.com" 
+#         email = "#{@employee.manual_employee_code}@xyz.com"
 #         end
 #         company_id = @employee.company_id
 #         company_location_id = @employee.company_location_id
@@ -710,5 +840,5 @@ end
       when ".xlsx" then Roo::Excelx.new(file.path, file_warning: :ignore)
       else raise "Unknown file type: #{file.original_filename}"
     end
-  end  
+  end
 end

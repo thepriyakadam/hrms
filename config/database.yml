@@ -2,7 +2,7 @@ development:
   adapter: mysql2
   encoding: utf8
   pool: 5
-  socket: /var/run/mysqld/mysqld.sock
+  # socket: /var/run/mysqld/mysqld.sock
   reconnect: true
   database: hrms_development
   username: root
@@ -25,27 +25,29 @@ test:
   password: root
   database: hrms_development
 
-#   development_sec:
-#   adapter: sqlserver
-#   encoding: utf8
-#   host: 123.201.35.198
-#   database: ZKA
-#   username: sa
-#   password: pass
 
-# production_sec:
-#   adapter: sqlserver
-#   encoding: utf8
-#   host: 123.201.35.198
-#   database: ZKA
-#   username: sa
-#   password: pass
+development_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 49.248.220.11
+  database: myAttendance_web
+  username: sa
+  password: administrator@123
 
-# test_sec:
-#   adapter: sqlserver
-#   encoding: utf8
-#   host: 123.201.35.198
-#   database: ZKA
-#   username: sa
-#   password: pass
+production_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 49.248.220.11
+  database: myAttendance_web
+  username: sa
+  password: administrator@123
+
+test_sec:
+  adapter: sqlserver
+  encoding: utf8
+  host: 49.248.220.11
+  database: myAttendance_web
+  username: sa
+  password: administrator@123
+
 

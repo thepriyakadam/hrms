@@ -53,7 +53,8 @@ class JoiningDetailsController < ApplicationController
       if @joining_detail.save
         EmployeePromotion.create(employee_id: @joining_detail.employee_id,department_id: @joining_detail.employee.department.id,employee_designation_id: @joining_detail.employee_designation_id,employee_grade_id: @joining_detail.employee_grade_id,employee_category_id: @joining_detail.employee_category_id,effective_from: @joining_detail.joining_date)
         #ChangeDesignation.create(employee_id: @joining_detail.employee_id,employee_designation_id: @joining_detail.employee_designation_id,effective_from: @joining_detail.joining_date,status: true, change_by_id: current_user.employee_id)
-        @joining_detail.update(contract_month: @joining_detail.contract_month)
+        joining_date = @joining_detail.joining_date.to_date + 6.months
+        @joining_detail.update(contract_month: @joining_detail.contract_month,confirmation_date: joining_date.to_date)
         #retirement_date
         employee = Employee.find_by(id: @joining_detail.employee_id)
         date_of_birth = employee.date_of_birth
@@ -252,6 +253,6 @@ class JoiningDetailsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def joining_detail_params
-    params.require(:joining_detail).permit(:is_regularization, :welfare,:contact_library,:c_off_applicable_day,:c_off_expire,:contract_month,:contract_end_date,:c_off,:company_rfid,:gate_rfid,:leaving_date,:employee_id, :ot_rate, :ot_option, :is_new,:replacement_id,:joining_date, :basis_of_time, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da,:is_employeer_pf,:is_employeer_esic,:is_insurance,:have_passport, :is_family_pension, :is_bonus, :gps_track, :restricted_area)
+    params.require(:joining_detail).permit(:chief_operating_officer, :head_officer, :is_regularization, :welfare,:contact_library,:c_off_applicable_day,:c_off_expire,:contract_month,:contract_end_date,:c_off,:company_rfid,:gate_rfid,:leaving_date,:employee_id, :ot_rate, :ot_option, :is_new,:replacement_id,:joining_date, :basis_of_time, :employee_grade_id, :confirmation_date, :employee_uan_no, :employee_pf_no, :employee_efic_no, :probation_period, :notice_period, :medical_schem, :employee_designation_id, :passport_no, :passport_issue_date, :passport_expiry_date, :select_pf, :pf_max_amount, :have_esic, :payment_mode_id, :cost_center_id, :employee_category_id, :department_id, :have_retention, :retirement_date, :reserved_category_id, :is_da,:is_employeer_pf,:is_employeer_esic,:is_insurance,:have_passport, :is_family_pension, :is_bonus, :gps_track, :restricted_area)
   end
 end

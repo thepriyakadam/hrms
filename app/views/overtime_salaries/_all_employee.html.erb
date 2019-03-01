@@ -1,5 +1,5 @@
 <%= form_for :overtime_salary, url: { action: 'destroy_overtime_salary',month: @month,year: @year} do |f| %>
-  <table id="example1" class="table table-bordered table-hover table-condensed">
+  <table id="example6" class="table table-bordered table-hover table-condensed">
     <thead>
       <tr>
         <th><input type="checkbox" id="selectAll" value="selectAll"></th>
@@ -39,4 +39,12 @@
   });
 
   $("#example1").DataTable();
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
 </script>

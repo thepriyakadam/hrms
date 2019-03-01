@@ -1,7 +1,7 @@
 <div class="box-header with-border">
 </div><!-- /.box-header --><!-- 
 <div class="box-body"></div> -->
-<table id="example1" class="table table-bordered table-hover table-condensed">
+<table id="example6" class="table table-bordered table-hover table-condensed">
  <thead>
     <tr>
       <th>Percentage</th>
@@ -22,8 +22,8 @@
           <% else %>
             <%= link_to '', edit_employer_insurance_path(employer_insurance) ,class: 'btn btn-xs btn-success fa fa-edit',remote:true %>
             <%= link_to '',  employer_insurance, method: :delete, data: { confirm: 'Are you sure?',remote:true },class: 'btn btn-xs btn-danger fa fa-close' %>
-            <%= link_to '', is_confirm_employer_insurances_path(employer_insurance: employer_insurance),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
-             <%= link_to '',employer_insurances_modal_employer_insurances_path(employer_insurance),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
+            <%= link_to '',is_confirm_employer_insurances_path(employer_insurance: employer_insurance),data: { confirm: 'Are you sure?'},class: 'btn btn-xs btn-info fa fa-check' %>
+            <%= link_to '',employer_insurances_modal_employer_insurances_path(employer_insurance),class: 'btn btn-xs btn-default fa fa-eye',remote:true %>
           <% end %>
         </td>
       </tr>
@@ -32,3 +32,11 @@
 </table>
 
 <div id="Mymodal" class="modal fade">
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

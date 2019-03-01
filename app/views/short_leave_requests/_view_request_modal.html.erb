@@ -1,0 +1,64 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title"><center> Short Leave Detail </center></h4>
+    </div>
+    <div class="modal-body">
+	    <table class="table table-bordered table-hover table-condensed">
+				<thead>
+				  <tr>
+			  	  <th>Employee ID</th>
+			  	  <td><%= @short_leave_request.employee.try(:manual_employee_code) %></td>
+			      <th>Employee Name</th>
+			      <td><%= full_name(@short_leave_request.employee) %></td>
+				  </tr>
+				  <tr>   
+			      <th>Reason</th>
+			      <td><%= @short_leave_request.leave_reason %></td>  
+			      <th>Day</th>
+			      <td><%= @short_leave_request.day %> -  <%= @short_leave_request.try(:day).strftime("%a") %></td> 
+				  </tr>
+				  <tr> 
+		        <th>Out Time</th>
+		          <td><%= @short_leave_request.out_time %></td>
+			    <th>In Time</th>
+			      <td><%= @short_leave_request.in_time %></td> 
+				  </tr>
+				 <tr>   
+		        <th>Leave/On-Duty(Hours)</th>
+		        <td><%= @short_leave_request.count %></td>
+		        <th>Manager</th>
+		        <td><%= full_name(@short_leave_request.manager) %></td>
+				 </tr>
+				  <tr>
+		        <th>Status</th>
+		       <td>
+                <% case @short_leave_request.status %>
+                  <% when "Pending" %>
+                    <small class="label label-default">Pending</small>
+                  <% when "Approved" %>
+                    <small class="label label-primary">Approved</small>
+                  <% when "Rejected" %>
+                    <small class="label label-danger">Rejected</small>
+                  <% when "Cancelled" %>
+                    <small class="label label-warning">Cancelled</small>
+                  <% else %>
+                    <small class="label label-info">Else</small>
+                <%end%>
+              </td>
+		        <th>Reason</th>
+		        <td><%= @short_leave_request.description %></td>
+				  </tr>
+				  <tr>
+				  	<th colspan="4"><center>
+				  		<%= link_to 'Approve', approve_short_leave_requests_path(@short_leave_request), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary' %> 
+              <%= link_to 'Reject', reject_short_leave_requests_path(@short_leave_request), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger' %></center>
+				  	</th>
+				  </tr>
+				</thead>
+  		</table>
+		</div>
+			<div class="modal-footer"></div>
+	</div>
+</div>    

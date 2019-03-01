@@ -11,6 +11,7 @@
           <th><input type="checkbox" id="selectAll" value="selectAll"></th>
           <th>ID</th>
           <th>Employee</th>
+           <th>Desingnation</th>
           <th>Day</th>
           <th>From</th>
           <th>To</th>
@@ -26,6 +27,7 @@
 
             <td><%= week_off_master.employee.manual_employee_code %></td>
             <td><%= full_name(week_off_master.employee) %></td>
+             <td><%= week_off_master.employee.joining_detail.try(:employee_designation).try(:name) %></td>
             <td><%= week_off_master.day %></td>
             <td><%= week_off_master.from %></td>
             <td><%= week_off_master.to %></td>
@@ -36,7 +38,7 @@
                 <small class="label label-primary">Already Assign</small>
               <% else %>
               	<%= link_to '', edit_modal_week_off_masters_path(week_off_master),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
-                <%= link_to '',  week_off_master, method: :delete, data: { confirm: 'Are you sure?'},class: 'btn btn-danger btn-xs fa fa-close' %>
+                <%= link_to '',  week_off_master, method: :delete, data: { confirm: 'Are you sure? This will permanantly delete this record!'},class: 'btn btn-danger btn-xs fa fa-close' %>
               <% end %>
             </td>
           </tr>

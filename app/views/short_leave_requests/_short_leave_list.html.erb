@@ -1,0 +1,31 @@
+<h6><%= full_name(@employee) + " " + params[:collect][:day] %></h6>
+<table id="example2" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Sr. No</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Percentage</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @flag == true %>
+      <% i = 0 %>
+      <% @short_leave_requests.each do |short_leave_request| %>
+        <tr>
+          <td><%= i = i + 1 %></td>
+          <td><%= short_leave_request[:start_time] %></td>
+          <td><%= short_leave_request[:end_time] %></td>
+          <td><%= short_leave_request[:percentage]%></td>
+          <td></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td colspan="5"><%= @error %></td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="myModal" class="modal fade"></div>

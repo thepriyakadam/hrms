@@ -2,6 +2,9 @@
   <div class="box-header with-border">
     <h3 class="box-title">Joining Checklist Master</h3>
     <div class="pull-right">
+
+    <%= link_to 'Assign To Employee', set_checklist_joining_checklist_masters_path,class: 'btn btn-warning btn-xl fa fa-check' %>
+
     <%= link_to " PDF ", joining_checklist_master_joining_checklist_masters_path(id: @joining_checklist_master.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
     
     <%= link_to " XLS ", joining_checklist_master_joining_checklist_masters_path(id: @joining_checklist_master.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print",:target => "_blank" %>

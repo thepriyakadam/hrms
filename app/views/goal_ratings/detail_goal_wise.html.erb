@@ -2,10 +2,10 @@
   <div class="box-body">
     <div class="pull-right">
       <%= link_to 'Back',employee_goal_wise_goal_ratings_path,class: 'btn btn-sm btn-default fa fa-arrow-left'%>
-      <%= link_to 'Print PDF', print_goal_wise_goal_ratings_path(format: "pdf",goal_bunch_ids: @goal_bunches,period_id: @period.id ), method: :post,class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
+      <%= link_to 'PDF', print_goal_wise_goal_ratings_path(format: "pdf",goal_bunch_ids: @goal_bunches,period_id: @period.id ), method: :post,class: "btn btn-xl btn-info fa fa-print", :target => "_blank" %>
 
-      <%= link_to " Print excel ",detail_goal_wise_goal_ratings_path(format: "xls",goal_bunch_ids: @goal_bunches,period_id: @period.id), method: :post,class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
-      <%= link_to 'PDF', detail_goal_wise_pdf_goal_ratings_path(format: "pdf",goal_bunch_ids: @goal_bunches,period_id: @period.id ), method: :post,class: "btn btn-xl btn-success fa fa-print", :target => "_blank" %>
+      <%= link_to "Excel ",detail_goal_wise_goal_ratings_path(format: "xls",goal_bunch_ids: @goal_bunches,period_id: @period.id), method: :post,class: "btn btn-xl btn-primary fa fa-print", :target => "_blank" %>
+      <%#= link_to 'PDF', detail_goal_wise_pdf_goal_ratings_path(format: "pdf",goal_bunch_ids: @goal_bunches,period_id: @period.id ), method: :post,class: "btn btn-xl btn-success fa fa-print", :target => "_blank" %>
     </div>
     <h6><center>Performance Report for Period: <%= @period.name %> From: <%= @period.from %> To: <%= @period.to %></center></h6>
     <% i=0%>

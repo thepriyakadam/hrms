@@ -5,6 +5,7 @@ class CreateInvestmentHeads < ActiveRecord::Migration
       t.text :description
       t.decimal :limit
       t.string :document_name
+      t.boolean :multiple_investment
 
       t.timestamps null: false
     end

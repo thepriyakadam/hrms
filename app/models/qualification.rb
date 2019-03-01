@@ -24,9 +24,17 @@ class Qualification < ActiveRecord::Base
   def self.import(file)
   spreadsheet = open_spreadsheet(file)
     (2..spreadsheet.last_row).each do |i|
-        @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
-        if @employee == nil
-        else
+      manual_employee_code = spreadsheet.cell(i,'B').to_i
+      if manual_employee_code == 0
+         manual_employee_code = spreadsheet.cell(i,'B')
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B'))
+      else
+         manual_employee_code = spreadsheet.cell(i,'B').to_i
+         @employee = Employee.find_by_manual_employee_code(spreadsheet.cell(i,'B').to_i)
+      end
+
+      if @employee == nil
+      else
 
         employee_id = @employee.id
         @degree_type = DegreeType.find_by_name(spreadsheet.cell(i,'C'))
@@ -72,8 +80,14 @@ class Qualification < ActiveRecord::Base
         university_id = @university.id
         end
 
-        @qualification = Qualification.create(employee_id: employee_id,degree_type_id: degree_type_id,degree_id: degree_id,
+        @qualification = Qualification.where(employee_id: employee_id,degree_type_id: degree_type_id).take
+        if @qualification.nil?
+          @qualification = Qualification.create(employee_id: employee_id,degree_type_id: degree_type_id,degree_id: degree_id,
           degree_stream_id: degree_stream_id,marks: marks,year_id: year_id,college: college,university_id: university_id)
+        else
+          @qualification.update(employee_id: employee_id,degree_type_id: degree_type_id,degree_id: degree_id,
+          degree_stream_id: degree_stream_id,marks: marks,year_id: year_id,college: college,university_id: university_id)
+        end
    end
 
   end

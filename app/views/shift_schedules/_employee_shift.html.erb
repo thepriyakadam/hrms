@@ -1,0 +1,116 @@
+<div class="box">
+  <div class="box-header">
+    <h4 class="box-title">
+    <div>Employee Shift</div></h4>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <%= form_for :shift_schedule, url: { action: 'set_employee_shift',shift_schedule: @shift_schedule.id} do |f| %>
+	    <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th colspan="5"><font color='#0077b3'><center> <%= @shift_schedule.shift_time.try(:shift) %> - <%= @shift_schedule.shift_time.try(:name) %></center>
+            <center><%= @shift_schedule.from.strftime("%d-%B") %> to <%= @shift_schedule.to.strftime("%d-%B") %></center></font></th>
+          </tr>
+          <tr>
+        		<th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>ID</th>
+            <th>Employee Name</th>
+            <th>Designation</th>
+            <th>Reporting Manager</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        	<% @employees.each do |employee| %>
+	        	<tr>
+	        		<td><%= check_box_tag "employee_ids[]", employee.id %></td>
+	          	<td><%= employee.try(:manual_employee_code) %></td>
+	          	<td><%= full_name(employee) %></td>
+	          	<td><%= employee.department.try(:name) %></td>
+              <% manager = Employee.find_by(id: employee.manager_id)%>
+              <td><%= short_name(manager) %></td>
+	        	</tr>
+	      	<% end %>
+	    	</tbody>
+	  	</table>
+	    <div class="col-sm-3">
+	      <%= f.submit " Employee Shift", class: "btn btn-primary btn-sm" %>
+	    </div>
+	  <% end %>
+ 	</div>
+</div>
+ 
+
+<div class="box">
+  <div class="box-header">
+    <h4 class="box-title">
+    <div>Created Employee Shift</div></h4>
+    <div class="pull-right">
+      <%= link_to " PDF ", shift_employee_shift_schedules_path(shift_schedule_id: @shift_schedule.id, format: "pdf"), class: "btn btn-xl btn-info fa fa-print",:target => "_blank" %>
+      <%= link_to " XLS ", shift_employee_shift_schedules_path(shift_schedule_id: @shift_schedule.id, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    </div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example7" class="table table-bordered table-hover table-condensed">
+      <thead>
+          <tr>
+            <th colspan="5"><font color='#0077b3'><center> <%= @shift_schedule.shift_time.try(:shift) %> - <%= @shift_schedule.shift_time.try(:name) %></center>
+            <center><%= @shift_schedule.from.strftime("%d-%B") %> to <%= @shift_schedule.to.strftime("%d-%B") %></center></font></th>
+          </tr>
+        <tr>
+          <th>Sr. No</th>
+          <th>ID</th>
+          <th>Employee Name</th>
+          <th>Reporting Manager</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% i = 0 %>
+        <% @shift_employees.each do |employee| %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= employee.try(:manual_employee_code) %></td>
+            <td><%= full_name(employee) %></td>
+            <% manager = Employee.find(employee.manager_id)%>
+            <td><%= short_name(manager) %></td>
+            <td>
+              <%= link_to '',  view_employee_shift_shift_schedules_path(emp_id: employee.id,shift_schedule_id: @shift_schedule.id),class: "btn btn-xs btn-default fa fa-eye",remote:true %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="view_shift_modal" class="modal fade"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+
+$(document).ready(function() {
+    $('#example7').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+
+ $(function () {
+    $('#selectAll').click(function() {
+      if (this.checked) {
+        $(':checkbox').each(function() {
+          this.checked = true;                       
+        });
+      } 
+      else {
+        $(':checkbox').each(function() {
+          this.checked = false;                        
+        });
+      } 
+    });
+  });
+</script>

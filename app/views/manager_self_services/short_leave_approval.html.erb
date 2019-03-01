@@ -1,0 +1,46 @@
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Short Leave Approval</h3>
+    <div class="pull-right"></div>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+        <table id="example6" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Sr.No</th>
+              <th>ID</th>
+              <th>Employee</th>
+              <th>Day</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% i = 0 %>
+            <% @short_leave_requests.try(:each) do |short_leave_request| %>
+              <tr>
+                <td><%= i = i + 1 %></td>
+                <td><%= short_leave_request.employee.try(:manual_employee_code) %></td>
+                <td><%= short_leave_request.employee.try(:first_name) %> <%= short_leave_request.employee.try(:middle_name) %> <%=short_leave_request.employee.try(:last_name) %></td>
+                <td><%= short_leave_request.try(:day) %> - <%=  short_leave_request.try(:day).strftime("%a") %></td>
+                <td>
+                  <%= link_to '', approve_short_leave_requests_path(short_leave_request), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-primary fa fa-check' %> 
+                  <%= link_to '', reject_short_leave_requests_path(short_leave_request), data: { confirm: 'Are you sure?' },class: 'btn btn-xs btn-danger fa fa-trash' %>
+                  <%#= link_to '', view_request_short_leave_requests_path(short_leave_request),class: 'btn btn-xs btn-default fa fa-eye' %>
+                   <%= link_to '', view_request_short_leave_requests_path(short_leave_request), class: 'btn btn-xs btn-default fa fa-eye',remote: true%>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+  </div>
+</div>
+
+<div id="myModal" class="modal fade"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

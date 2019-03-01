@@ -1,0 +1,48 @@
+  <br>
+<div class="box">
+  <div class="box-header">
+    <div class="box-body">
+      <table id="example6" class="table table-bordered table-hover table-condensed">
+        <thead>
+          <tr>
+            <th colspan="7"><center> Date : <%= @from %></center></th>
+          </tr>
+          <tr>
+            <th>Sr.No.</th>
+            <th>Emp. No.</th>
+            <th>Employee Name</th>
+            <th>In Time</th>
+            <th>Remark</th>
+            <th>Out Time</th>
+            <th>Remark</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employee_attendances.try(:each) do |e| %>
+          <% emp_out = EmployeeAttendance.where(employee_id: e.employee_id,day: @to.to_date).take %>
+             <tr>
+              <td><%= e.employee.try(:sr_no) %></td>
+              <td><%= e.employee.manual_employee_code %></td>
+              <td><%= full_name(e.employee) %></td>
+              <td><%= e.try(:in_time) %></td>
+              <td><%= %></td>
+              <td><%= emp_out.try(:out_time) %></td>
+              <td><%= %></td> 
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+
+      <%= link_to " PDF Report ",officers_daily_employee_attendances_path(:employee => {:from => params[:employee][:from], :to => params[:employee][:to]}, format: "pdf"), class: "btn btn-xl btn-info fa fa-print", target: "_blank" %>
+      <%= link_to " Excel Report ",officers_daily_employee_attendances_path(:employee => {:from => params[:employee][:from], :to => params[:employee][:to]}, format: "xls"), class: "btn btn-xl btn-success fa fa-print" %>
+    </div>
+  </div> 
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example6').DataTable( {
+        "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

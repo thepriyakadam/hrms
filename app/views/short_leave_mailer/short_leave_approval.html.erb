@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <h4>Short Leave Approved</h4>
+    <p> 
+      This is to inform you that your Short Leave Request has been Approved,details for Short Leave is given below.<br><br>
+       1. <b>Reason :-</b><%= @short_leave_request.leave_reason %><br><br>
+       2. <b>Day:-</b> <%= @short_leave_request.day %><br><br>
+       3. <b>Out Time :-</b> <%= @short_leave_request.out_time %><br><br>
+       4. <b>In Time :-</b> <%= @short_leave_request.in_time %><br><br>
+       5. <b>Count :-</b> <%= @short_leave_request.count %><br><br>
+       5. <b>Status :-</b> <%= @short_leave_request.status %><br><br>
+       5. <b>Description :-</b> <%= @short_leave_request.description %>
+     </p>
+  </body>
+</html>

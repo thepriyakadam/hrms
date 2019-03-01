@@ -1,4 +1,6 @@
-
+  <% @numbers.each do |k, v| %>
+    <%= k %> = <%= v %> </br>
+  <% end %>
   <div class="box-body">
     <table id="example6" class="table table-bordered table-hover table-condensed">
     <% i = 0%>
@@ -6,8 +8,8 @@
         <tr><th colspan="8"><center> Employee Attendance Report : <%= @from.to_date %> To <%= @to.to_date %></center></th></tr>
       <tr>
         <td>ID : <%= current_user.employee.manual_employee_code %></td>
-        <td>Employee : <%= full_name(current_user.employee) %></td>
-        <td colspan="6">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= current_user.employee.try(:department).try(:name) %> <%= current_user.employee.try(:sub_department).try(:name) %></td>
+        <td colspan="4">Employee : <%= full_name(current_user.employee) %></td>
+        <td colspan="3">Department : <%= current_user.employee.company_location.try(:name) %> - <%= current_user.employee.try(:joining_detail).try(:cost_center).try(:name) %> - <%= current_user.employee.try(:department).try(:name) %> <%= current_user.employee.try(:sub_department).try(:name) %></td>
       </tr>
         <tr>
           <th>Sr.No.</th>
@@ -15,9 +17,10 @@
           <th>Day</th>
           <th>In Time</th>
           <th>Out Time</th>
-          <th>Working Hrs.</th>
-          <th>Comment</th>
+          <!-- <th>Working Hrs.</th> -->
           <th>Present</th>
+          <th>Comment</th>
+          <th>Shift</th>
         </tr>
       </thead>
       <tbody>
@@ -27,10 +30,19 @@
             <td><%= employee_attendance.try(:day) %></td>
             <th><%= employee_attendance.try(:day).strftime("%A") %></th>
             <td><%= employee_attendance.try(:in_time) %></td>
-            <td><%= employee_attendance.try(:out_time) %></td>
-            <td><%= employee_attendance.try(:working_hrs) %></td>
-            <td><%= employee_attendance.try(:comment) %></td>
-            <td><%= employee_attendance.try(:present) %></td>
+            <% if employee_attendance.try(:in_time) == employee_attendance.try(:out_time) %>
+              <td></td>
+            <% else %>
+              <td><%= employee_attendance.try(:out_time) %></td>
+            <% end %>
+            <%# if employee_attendance.try(:in_time) == employee_attendance.try(:out_time) %>
+              <!-- <td></td> -->
+            <%# else %>
+              <!-- <td><%#= employee_attendance.try(:working_hrs) %></td> -->
+            <%# end %>
+            <td><%= employee_attendance.present %></td>
+            <td><%= employee_attendance.status %></td>
+            <td><%= employee_attendance.shift_time.try(:name) %></td>
           </tr>
         <% end %>
       </tbody>

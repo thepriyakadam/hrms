@@ -1,0 +1,42 @@
+<style type="text/css">
+    th { text-align: left; }
+    tr { page-break-inside: avoid; }
+    div.alwaysbreak { page-break-before: always; }
+    div.nobreak:before { clear:both; }
+    div.nobreak{ page-break-inside: avoid;}
+</style>
+
+<table style="border-collapse: collapse; font-size:12pt;" border=1 width=1200 cellpadding="10">
+  <thead>
+    <tr>
+      <td colspan="5 ">
+        <% if current_user.company_location.company.company_logo == nil %>
+        <% else %>
+          <center> <%= wicked_pdf_image_tag current_user.company_location.company.company_logo.url, :size => "90x50" %></center>
+        <%end%>
+          <center><strong><%= current_user.company_location.company.try(:description) %></strong><br><%= current_user.company_location.try(:address) %>, <%= current_user.company_location.try(:name) %>. <br><strong>Society Membership Report</strong></center>
+      </td>           
+    </tr>
+    <tr>
+      <th>Sr.No.</th>
+      <th>Recruiter</th>
+      <th>Total Vacancy</th>
+      <th>Closed</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
+    <% @vacancy_masters.each do |vacancy_master| %>
+      <tr>
+        <td><%= i=i+1 %></td>
+        <td><%= full_name(vacancy_master.recruiter) %></td>
+        <% vacancy = VacancyMaster.where(recruiter_id: vacancy_master.recruiter_id) %>
+        <% vacancy_closed = VacancyMaster.where(recruiter_id: vacancy_master.recruiter_id,is_confirmed: true) %>
+
+        <td><%= vacancy.count %></td>
+        <td><%= vacancy_closed.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

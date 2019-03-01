@@ -49,11 +49,11 @@ class ListedCompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @listed_company.update(listed_company_params)
-        format.html { redirect_to @listed_company, notice: 'Listed company was successfully updated.' }
+        format.html { redirect_to listed_companies_path, notice: 'Listed company was successfully updated.' }
         format.json { render :show, status: :ok, location: @listed_company }
       else
         format.html { render :edit }
-        format.json { render json: @listed_company.errors, status: :unprocessable_entity }
+        format.json { render json: listed_companies_path.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -68,6 +68,35 @@ class ListedCompaniesController < ApplicationController
     end
   end
 
+  def listed_company
+      @listed_companies = ListedCompany.all
+      respond_to do |f|
+      f.js
+      f.xls {render template: 'listed_companies/listed_company.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'listed_company',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'listed_companies/listed_company.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+            end
+          end
+  end
+
+
+    def import
+    file = params[:file]
+      if file.nil?
+        flash[:alert] = "Please Select File!"
+        redirect_to import_xl_listed_companies_path
+      else
+     ListedCompany.import(params[:file])
+     redirect_to listed_companies_path, notice: "File imported."
+     end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_listed_company
@@ -76,6 +105,6 @@ class ListedCompaniesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listed_company_params
-      params.require(:listed_company).permit(:name, :contact_no, :email, :location)
+      params.require(:listed_company).permit(:status,:name, :contact_no, :email, :location, :code, :optinal_contact_no)
     end
 end

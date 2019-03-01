@@ -165,6 +165,7 @@
           <tr><th colspan="4"><center>Period : <%= @period.try(:name) %> : <%= @period.try(:from) %> - <%= @period.try(:to) %></center></th></tr>
            <tr><th colspan="4"><center>Goal List</center></th></tr>
             <tr>
+              <th>Sr. No</th>
               <th>Goal perspective</th>
               <th>Target</th>
               <th>Weightage</th>
@@ -172,9 +173,11 @@
             </tr>
           </thead>
           <tbody>
+            <% i = 0 %>
           <% weightage_sum = 0 %>
             <% @goal_ratings.each do |goal_rating| %>
               <tr>
+                <td><%= i = i + 1 %></td>
                 <td><%= goal_rating.goal_perspective.try(:name) %></td>
                 <td><%= goal_rating.target %></td>
                 <td><%= weightage = goal_rating.goal_weightage %></td>
@@ -201,6 +204,7 @@
           <thead>
           <tr><th colspan="4"><center>Attribute List</center></th></tr>
             <tr>
+              <th>Sr. No</th>
               <th>Attribute</th>
               <th>Target</th>
               <th>Weightage</th>
@@ -208,9 +212,11 @@
             </tr>
           </thead>
           <tbody>
+            <% i = 0 %>
           <% weightage_sum = 0 %>
             <% @goal_attribute_ratings.each do |goal_rating| %>
               <tr>
+                <td><%= i = i + 1 %></td>
                 <td><%= goal_rating.attribute_master.try(:name) %></td>
                 <td><%= goal_rating.target %></td>
                 <td><%= weightage = goal_rating.goal_weightage %></td> 
@@ -236,9 +242,11 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="actions">
-            <%= f.submit "Confirm",class: 'btn btn-primary btn-sm', data: { confirm: 'Are you sure?' } %> |
-            <%= link_to 'Reject', revert_goal_goal_bunches_path(goal_bunch_id: @goal_bunch_id.id,period_id: @period.id), data: { confirm: 'Are you sure?' },class: 'btn btn-sm btn-danger' %>
-            <%= link_to 'Back',goal_period_list_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
+            <% if @goal_bunches.goal_approval == false %>
+              <%= f.submit "Confirm",class: 'btn btn-primary btn-sm', data: { confirm: 'Are you sure?' } %> |
+              <%= link_to 'Reject', revert_goal_goal_bunches_path(goal_bunch_id: @goal_bunch_id.id,period_id: @period.id,emp_id: @employee.id), data: { confirm: 'Are you sure? You want to confirm goals!!' },class: 'btn btn-sm btn-danger' %>
+            <% end %>
+              <%= link_to 'Back',goal_period_list_goal_bunches_path(period_id: @period.id),class: 'btn btn-sm btn-default fa fa-arrow-left'%>
           </div>
         </div>
       </div>

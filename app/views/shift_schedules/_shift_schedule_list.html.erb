@@ -1,0 +1,48 @@
+<br>
+<table id="example4" class="table table-bordered table-hover table-condensed">
+  <thead>
+    <tr> 
+    	<th>Sr. No</th>
+      <th>Shift</th>
+      <th>Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+  	<% i = 0 %>
+    <% @shift_schedules.each do |shift_schedule| %>
+      <tr>
+      	<td><%= i = i + 1 %></td>
+          <% if shift_schedule.status == true %>
+           <td><%= shift_schedule.shift_time.try(:shift) %> - <%= shift_schedule.shift_time.try(:name) %></td>
+          <%else%>
+           <td><font color='red'><%= shift_schedule.shift_time.try(:shift) %> - <%= shift_schedule.shift_time.try(:name) %></font></td>
+          <%end%>
+
+        <td><%= shift_schedule.from.strftime("%d-%b") %> to <%= shift_schedule.to.strftime("%d-%b") %></td>
+        <td>
+          <% if ShiftEmployee.exists?(shift_schedule_id: shift_schedule.id) %>
+          <% else %>
+            <% if current_user.role.name == "GroupAdmin" || current_user.role.name == "HOD" %>
+              <%= link_to '', edit_shift_schedule_path(shift_schedule),class: 'btn btn-success btn-xs fa fa-edit',remote:true %> 
+              <%= link_to '',  shift_schedule, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-xs fa fa-close',remote:true %>
+            <% end %>
+          <% end %>
+          <% if shift_schedule.status == true %>
+            <%= link_to 'Shift',  employee_shift_shift_schedules_path(shift_schedule),class: "btn btn-xs btn-info ",remote:true %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+       <div id="employee_shift"></div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#example4').DataTable( {
+        "lengthMenu": [[5,10, 25, 50,100, -1], [5,10, 25, 50,100, "All"]]
+    } );
+} );
+</script>

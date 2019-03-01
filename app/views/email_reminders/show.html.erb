@@ -1,0 +1,61 @@
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Email Reminder </h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <table id="example2" class="table table-bordered table-hover table-condensed">
+    <tr>
+      <th><strong>Task</strong></th>
+      <td><%= @email_reminder.task.try(:name) %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Frequency</strong></th>
+      <td><%= @email_reminder.frequency %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Task Date</strong></th>
+      <td><%= @email_reminder.task_date %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Reminder From</strong></th>
+      <td><%= @email_reminder.reminder_from %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Reminder To</strong></th>
+      <td><%= @email_reminder.reminder_to %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Email To</strong></th>
+      <td><%= @email_reminder.email_to %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Email CC</strong></th>
+      <td><%= @email_reminder.email_cc %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Email BCC</strong></th>
+      <td><%= @email_reminder.email_bcc %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Email Text</strong></th>
+      <td><%= @email_reminder.email_text %></td>
+    </tr>
+
+    <tr>
+      <th><strong>Status</strong></th>
+      <td><%= @email_reminder.status ? "Active" : "Inactive" %></td>
+    </tr>
+  </table> <br>
+    <%= link_to 'Edit', edit_email_reminder_path(@email_reminder),class: 'btn btn-sm btn-default' %> |
+    <%= link_to 'Back', email_reminders_path,class: 'btn btn-sm btn-default fa fa-arrow-left' %>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

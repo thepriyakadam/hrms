@@ -10,6 +10,9 @@ class CreateDailyAttendances < ActiveRecord::Migration
       t.string :controller
       t.string :reader_name
       t.string :access_status
+      t.float  :latitude
+      t.float  :longitude
+      t.string :place
 
       t.timestamps null: false
     end

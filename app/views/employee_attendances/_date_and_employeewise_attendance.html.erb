@@ -16,8 +16,8 @@
           <th>Present</th>
           <th>In Time</th>
           <th>Out Time</th>
-          <th>Working Hours</th>
-          <th>Comment</th>
+          <!-- <th>Working Hours</th> -->
+          <!-- <th>Comment</th> -->
           <th>Action</th>
         </tr>
       </thead>
@@ -29,20 +29,27 @@
             <td><%= a.try(:day) %></td>
             <td><%= a.try(:present) %></td>
             <td><%= a.try(:in_time) %></td>
-            <td><%= a.try(:out_time) %></td>
-            <td><%= a.try(:working_hrs) %></td>
-            <td><%= a.try(:comment) %></td>
-            <td>
+            <% if a.try(:in_time) == a.try(:out_time) %>
+              <td></td>
+            <% else %>
+              <td><%= a.try(:out_time) %></td>
+            <% end %>
+            <%# if a.try(:in_time) == a.try(:out_time) %>
+              <!-- <td></td> -->
+            <%# else %>
+              <!-- <td><#%= a.try(:working_hrs) %></td> -->
+            <%# end %>
+            <!-- <td><#%= a.try(:comment) %></td> -->
+             <td>
               <% if a.employee_leav_request_id != nil %>
                 <small class="label label-primary">Leave</small>
               <% elsif a.on_duty_request_id != nil %>
                 <small class="label label-info">On Duty</small>
               <%elsif a.employee_week_off_id != nil %>
                 <small class="label label-warning">Week Off</small>
-              <%elsif a.holiday_id != nil %>
+              <%elsif a.try(:holiday_id) != nil %>
                 <small class="label label-success">Holiday</small>
               <% else %>
-
                 <% if a.is_confirm == true %>
                   <small class="label label-primary">Attendance Confirmed</small>
                 <% else %>
@@ -52,7 +59,6 @@
                     <%= link_to ' ',modal_edit_for_show_employee_attendances_path(a,from: params[:employee_attendance][:from],to: params[:employee_attendance][:to],employee_id: params[:employee_attendance][:employee_id]),class: 'btn btn-success btn-xs fa fa-edit',remote: true %>
                   <% end%> <!-- params[:employee].present? -->
                 <% end %> <!-- a.is_confirm == true -->
-
               <% end %> <!-- if a.employee_leav_request_id != nil -->
             </td>
           </tr>

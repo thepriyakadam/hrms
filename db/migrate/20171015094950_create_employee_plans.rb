@@ -9,12 +9,14 @@ class CreateEmployeePlans < ActiveRecord::Migration
       t.string :meeting_with
       t.string :location
       t.text :meeting_agenda
-      t.string :lat
-      t.string :lng
-      t.boolean :conform
+      t.boolean :confirm
       t.boolean :status
       t.string :current_status
       t.references :manager
+      t.float :latitude
+      t.float :longitude 
+      t.integer :plan_reason_master_id
+      t.text :feedback
 
       t.timestamps null: false
     end

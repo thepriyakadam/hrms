@@ -23,13 +23,76 @@ class EmployeeLeavRequestsController < ApplicationController
     @leave_c_offs = LeaveCOff.where(employee_id: @employee.id)
 
     leav_category = LeavCategory.find_by(code: "C.Off")
-    @leav_category_id = leav_category.id
+    @leav_category_id = leav_category.try(:id)
     @leav_id = @leav_category_id.to_s.split('')
 
     @leave_id = params[:leav_category_id]
   end
 
   def edit
+  end
+
+  def particular_leave_record
+  end
+
+  def show_particular_record
+    @from_date = params[:employee] ? params[:employee][:from_date] : params[:from_date]
+    @to_date = params[:employee] ? params[:employee][:to_date] : params[:to_date]
+    @employee_id = params[:employee] ? params[:employee][:employee_id] : params[:employee_id]
+    @company_id = params[:employee] ? params[:employee][:company_id] : params[:company_id]
+    @location = params[:family] ? params[:family][:company_location_id] : params[:company_location_id]
+    @department = params[:family] ? params[:family][:department_id] : params[:department_id]
+
+    if @employee_id.nil? || @employee_id == ""
+      employee = Employee.where(status: "Active").pluck(:id)
+    else
+      employee = @employee_id
+    end
+    
+     if current_user.class == Group
+      if @company_id == ""
+        @employees = Employee.where(id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      elsif @location == ""
+        @employees = Employee.where(company_id: @company_id.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @location.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      else
+        @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      end
+    elsif current_user.class == Member
+      if @company_id == ""
+        @employees = Employee.where(id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      elsif @location == ""
+        @employees = Employee.where(company_id: @company_id.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      elsif @department == ""
+        @employees = Employee.where(company_location_id: @location.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      else
+        @employees = Employee.where(company_id: @company_id.to_i,company_location_id: @location.to_i,department_id: @department.to_i,id: employee).pluck(:id)
+        @particular_leave_records = ParticularLeaveRecord.where(leave_date: @from_date.to_date..@to_date.to_date,employee_id: @employees)
+      end
+    end
+    
+    respond_to do |f|
+      f.js
+      f.xls {render template: 'employee_leav_requests/particular_record.xls.erb'}
+      f.html
+      f.pdf do
+        render pdf: 'particular_record',
+        layout: 'pdf.html',
+        orientation: 'Landscape',
+        template: 'employee_leav_requests/particular_record.pdf.erb',
+        show_as_html: params[:debug].present?
+        #margin:  { top:1,bottom:1,left:1,right:1 }
+      end
+    end
+
   end
 
   def from_hr
@@ -130,11 +193,8 @@ class EmployeeLeavRequestsController < ApplicationController
 
     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
     #c_off
-    
     if @leav_category.id == leav_category.id
-
       end_date = params['employee_leav_request']['start_date']
-      
         @leave_c_off_id = params[:common][:c_off_date]
 
   #nil fields
@@ -153,7 +213,6 @@ class EmployeeLeavRequestsController < ApplicationController
                     flash[:alert] = "Please check Compensatory off day"
                   end
                 end
-
 
                 if @employee_leav_request.is_available_coff?
                   flash[:alert] = "Your Leave Request already has been sent"
@@ -187,21 +246,27 @@ class EmployeeLeavRequestsController < ApplicationController
                     @emp_leave_bal = EmployeeLeavBalance.where('employee_id = ? AND leav_category_id = ? AND is_active = ?', @employee.id, @employee_leav_request.leav_category_id,true).take
                     LeaveCOff.find_by(id: @leave_c_off_id).update(taken_date: start_date)
                     @employee_leav_request.leave_status_records.build(change_status_employee_id: current_user.employee_id,status: "Pending", change_date: Date.today)
-                    @employee_leav_request.save
-                    @employee_leav_request.leave_record_create_coff(@employee_leav_request)
                     unless @emp_leave_bal.nil?
                       # if @employee_leav_request.leave_count == 0.5
                       #   no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                       #   @emp_leave_bal.update(no_of_leave: no_of_leave)
                       # else
+                      if @emp_leave_bal.no_of_leave.to_f >= @employee_leav_request.leave_count.to_f
                         no_of_leave = @emp_leave_bal.no_of_leave.to_f - @employee_leav_request.leave_count.to_f
                         @emp_leave_bal.update(no_of_leave: no_of_leave)
                       # end
     #emp_leav_bal_id
                         @employee_leav_request.update(employee_leav_balance_id: @emp_leave_bal.id)
+                      
+                        @employee_leav_request.save
+                        @employee_leav_request.leave_record_create_coff(@employee_leav_request)
+                        flash[:notice] = "Created successfully!"
+                        LeaveRequestMailer.pending(@employee_leav_request).deliver_now 
+                      else
+                        flash[:alert] = "You dont have enough COff balance"
+                      end   
                     end
-                    flash[:notice] = "Created successfully!"
-                       LeaveRequestMailer.pending(@employee_leav_request).deliver_now    
+                    
                 end#@leave_c_off.expiry_date < start_date.to_date
 
               else#start_date.to_date > @leave_c_off.c_off_date.to_date
@@ -966,6 +1031,6 @@ class EmployeeLeavRequestsController < ApplicationController
 
 # Never trust parameters from the scary internet, only allow the white list through.
   def employee_leav_request_params
-    params.require(:employee_leav_request).permit(:present_status,:first_half,:last_half,:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
+    params.require(:employee_leav_request).permit(:lta,:present_status,:first_half,:last_half,:current_status,:current_status1,:employee_id, :leav_category_id, :leave_type, :date_range, :start_date, :end_date, :reason)
   end
 end

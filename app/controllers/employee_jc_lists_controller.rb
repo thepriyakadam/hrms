@@ -63,6 +63,19 @@ class EmployeeJcListsController < ApplicationController
     end
   end
 
+  # def assign_to_employee
+  #   employee = Employee.find(params[:employee_id])
+  #   @joining_checklist_masters = JoiningChecklistMaster.where(status: true)
+  #     @joining_checklist_masters.each do |jc|
+  #       if EmployeeJcList.exists?(joining_checklist_master_id: jc.id,employee_id: employee.id)
+  #       else
+  #         EmployeeJcList.create(joining_checklist_master_id: jc.id,employee_id: employee.id,status: false)
+  #         flash[:notice] = "Successfully Added!"
+  #       end
+  #     end#do |jc|
+  #   redirect_to employees_path(employee.id)
+  # end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee_jc_list

@@ -84,6 +84,8 @@
               <%= render 'sidebars/employee' %>
             <% elsif current_user.role.name == 'CEO' %>
               <%= render 'sidebars/ceo' %>
+            <% elsif current_user.role.name == 'Costomize' %>
+              <%= render 'sidebars/costomize' %>
             <% else %>
               <%= render 'sidebars/employee' %>
               

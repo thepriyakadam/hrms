@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :premier_reports do
     collection do
       get :attendances
+      get :employee_wise_attendance
     end
 
     member do

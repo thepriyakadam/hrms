@@ -3,6 +3,9 @@ Rails.application.routes.draw do
     collection do
       get :attendances
       get :employee_wise_attendance
+      get :late_comming_report
+      get :workman_register
+      get :shift_error_report
     end
 
     member do

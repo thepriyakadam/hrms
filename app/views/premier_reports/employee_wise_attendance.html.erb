@@ -1,62 +1,92 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Attendance Report</h3>
+    <h3 class="box-title">Premier Report</h3>
   </div><!-- /.box-header -->
   <div class="box-body">
     <div id="short_leave_list">
     	<div id="attendances">
+    		Name : <%= full_name(@employee) %> Month: <%= @date.strftime("%B") %>
 	      <table id="example2" class="table table-bordered table-hover table-condensed">
 	        <thead>
 	          <tr>
-	            <th>Emp No</th>
 	            <th>Date</th>
+	            <th>Shift</th>
 	            <th>Time In1</th>
 	            <th>Time Out1</th>
 	            <th>Time In2</th>
 	            <th>Time Out2</th>
-	            <th>Shift</th>
+	            <th>Time In3</th>
+	            <th>Time Out3</th>
+	            <th>REM</th>
 	          </tr>
 	        </thead>
 
 	        <tbody>
-	        	<% @employees.each do |employee| %>
+	        	<% 1.upto(@day).each do |date| %>
 	            <tr>
-	              <th><%= employee.manual_employee_code %></th>
-	              <th><%= @day %></th>
-	              <% attendances = employee.attendance_by_date(@day) %>
+	              <th><%= date %></th>
+	              <% new_date = Date.new(@year.to_i, Workingday.months[@month], date)%>
+		            <th><%= @employee.get_shift_by_date(new_date).try(:shift_time_id) %></th>
+		            <% attendances = @employee.attendance_by_date(new_date) %>
 	              <% case attendances.count %>
 		              <% when 0 %>
-		              	<th>Missing</th>
-		              	<th>Missing</th>
-		              	<th>Missing</th>
-		              	<th>Missing</th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
 		              <% when 1 %>
 		              	<th><%= attendances.first.time_to_hm %></th>
-		              	<th>Missing</th>
-		              	<th>Missing</th>
-		              	<th>Missing</th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
 		              <% when 2 %>
 		              	<th><%= attendances.first.time_to_hm %></th>
 		              	<th><%= attendances.second.time_to_hm %></th>
-		              	<th>Missing</th>
-		              	<th>Missing</th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
 		              <% when 3 %>
 		              	<th><%= attendances.first.time_to_hm %></th>
 		              	<th><%= attendances.second.time_to_hm %></th>
 		              	<th><%= attendances.third.time_to_hm %></th>
-		              	<th>Missing</th>
+		              	<th></th>
+		              	<th></th>
+		              	<th></th>
 		              <% when 4 %>
 		              	<th><%= attendances.first.time_to_hm %></th>
 		              	<th><%= attendances.second.time_to_hm %></th>
 		              	<th><%= attendances.third.time_to_hm %></th>
 		              	<th><%= attendances.fourth.time_to_hm %></th>
+		              	<th></th>
+		              	<th></th>
+		              <% when 5 %>
+		              	<th><%= attendances.first.time_to_hm %></th>
+		              	<th><%= attendances.second.time_to_hm %></th>
+		              	<th><%= attendances.third.time_to_hm %></th>
+		              	<th><%= attendances.fourth.time_to_hm %></th>
+		              	<th><%= attendances.fifth.time_to_hm %></th>
+		              	<th></th>
+		              <% when 6 %>
+		              	<th><%= attendances.first.time_to_hm %></th>
+		              	<th><%= attendances.second.time_to_hm %></th>
+		              	<th><%= attendances.third.time_to_hm %></th>
+		              	<th><%= attendances.fourth.time_to_hm %></th>
+		              	<th><%= attendances.fifth.time_to_hm %></th>
+		              	<th><%= attendances.last.time_to_hm %></th>
 		              <% else %>
-		              	<th>More than 4 punch</th>
+		              	<th>More than 6 punch</th>
+		              	<th></th>
+		              	<th></th>
 		              	<th></th>
 		              	<th></th>
 		              	<th></th>
 		            <%end%>
-	              <th><%= ShiftSchedule.opposite_mapping(employee.get_shift_by_date(@day).shift_time_id) %></th>
+		            <th>REM</th>
 	            </tr>
 	          <%end%>
 	        </tbody>

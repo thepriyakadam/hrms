@@ -375,4 +375,12 @@ class DailyAttendance < ActiveRecord::Base
     time.strftime("%H:%M")
   end
 
+  def employee
+    Employee.find_by_manual_employee_code(employee_code)
+  end
+
+  def self.range start_date, end_date
+    DailyAttendance.where("date >= ? and date <= ?", start_date, end_date).order("date ASC").order("time asc").group("date")
+  end
+
 end

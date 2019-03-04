@@ -1,0 +1,39 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Shift Error Report</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    From: <%= @start_date %> To: <%= @end_date %> <br>
+    <div id="short_leave_list">
+      <div id="attendances">
+        <table id="example2" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Ticket No</th>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Shift DB</th>
+              <th>IN</th>
+              <th>OUT</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @shift_errors.each do |attendance| %>
+              <% shift = attendance.employee.get_shift_by_date(attendance.date) %>
+              <% shift_time = shift.shift_time %>
+              <tr>
+                <th><%= attendance.employee.manual_employee_code %></th>
+                <th><%= full_name(attendance.employee) %></th>
+                <th><%= attendance.date %></th>
+                <th><%= attendance.time_to_hm %></th>
+                <th><%= attendance.time_to_hm %></th>
+                <th>OUT</th>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

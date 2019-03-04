@@ -1,0 +1,41 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Late coming report</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div id="short_leave_list">
+      <div id="attendances">
+        From : <%= @start_date %> - <%= @end_date %>
+        <table id="example2" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Employee Code</th>
+              <th>Name</th>
+              <th>Date</th>
+              <th>In time</th>
+              <th>Shift No</th>
+              <th>REM</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @late_commings.each do |attendance| %>
+              <% shift = attendance.employee.get_shift_by_date(attendance.date) %>
+              <% shift_time = shift.shift_time %>
+              <% if attendance.punch > shift_time.start_time(attendance.date) %>
+                <tr>
+                  <th><%= attendance.employee_code %></th>
+                  <th><%= attendance.employee.first_name + " " + attendance.employee.last_name %></th>
+                  <th><%= attendance.date %></th>
+                  <th><%= attendance.time_to_hm %></th>
+                  <th><%= attendance.employee.get_shift_by_date(attendance.date).shift_time_id %></th>
+                  <th><%= "Late" %></th>
+                </tr>
+              <% end %>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

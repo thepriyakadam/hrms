@@ -1,0 +1,83 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h3 class="box-title">Workman register</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    Name: <%=full_name(@employee)%> <br>
+    Employee No: <%= @employee.manual_employee_code %> <br>
+    Dept: <%= @employee.department.manual_department_code %> <br>
+    Joining Date: <%= @employee.joining_detail.joining_date %> <br>
+    Left Date: <%= @employee.joining_detail.leaving_date %> <br>
+    Grade:  <br>
+    Trade:  <br>
+    <div id="short_leave_list">
+      <div id="attendances">
+        <table id="example2" class="table table-bordered table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>MD</th>
+              <th>WD</th>
+              <th>PT</th>
+              <th>TR</th>
+              <th>CL</th>
+              <th>CO</th>
+              <th>ABS</th>
+              <th>WP</th>
+              <th>SW</th>
+              <th>AC</th>
+              <th>SS</th>
+              <th>LO</th>
+              <th>LATE</th>
+              <th>ML</th>
+              <th>TL</th>
+              <th>WH</th>
+              <th>FH</th>
+              <th>AH</th>
+              <th>-</th>
+              <th>LD</th>
+              <th>SP</th>
+              <th>SD</th>
+              <th>Paid</th>
+              <th>-</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @months.each do |key, value| %>
+              <% date = Date.new(@year, value.to_i) %>
+              <% attendance = EmployeeAttendance.where("DATE_FORMAT(day,'%m/%Y') = ? and employee_id = ?", date.strftime('%m/%Y'), @employee.id) %>
+              <tr>
+                <th><%= key %></th>
+                <th><%= date.end_of_month.day %></th>
+                <th><%= attendance.where(present: "P").count %></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
